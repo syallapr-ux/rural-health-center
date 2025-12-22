@@ -3,112 +3,142 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rural Health Connect | Integrated Medical Portal</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>Rural Health Connect | Professional Enterprise Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <style>
-        .live-indicator { width: 10px; height: 10px; background-color: #28a745; border-radius: 50%; display: inline-block; margin-right: 5px; animation: blink 1.5s infinite; }
-        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
-        .hover-card { transition: all 0.3s ease; border: 1px solid transparent; text-decoration: none !important; color: inherit; display: block; }
-        .hover-card:hover { transform: translateY(-10px); border-color: #007bff; box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important; }
+        body { font-family: 'Poppins', sans-serif; }
+        .hero-section { background: linear-gradient(45deg, rgba(0,74,173,0.8), rgba(0,123,255,0.7)), url('https://images.unsplash.com/photo-1516549655169-df83a0774514?q=80&w=2000'); background-size: cover; height: 80vh; color: white; }
+        .feature-card { border: none; border-radius: 20px; transition: 0.3s; background: #fff; text-decoration: none !important; color: inherit; }
+        .feature-card:hover { transform: scale(1.05); box-shadow: 0 20px 40px rgba(0,0,0,0.1); border-bottom: 4px solid #007bff; }
+        .section-title { font-weight: 700; position: relative; padding-bottom: 15px; margin-bottom: 30px; }
+        .section-title::after { content: ''; width: 60px; height: 4px; background: #007bff; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); }
     </style>
 </head>
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm py-3">
         <div class="container">
-            <a class="navbar-brand fw-bold text-primary" href="index.html">
-                <i class="fa-solid fa-house-chimney-medical me-2"></i>RURALCARE
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+            <a class="navbar-brand fw-bold text-primary fs-3" href="index.html"><i class="fa-solid fa-notes-medical me-2"></i>RH-CONNECT</a>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav mx-auto">
-                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="services.html">Services</a></li>
-                    <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
-                    <li class="nav-item"><a class="nav-link" href="pharmacy.html">Pharmacy</a></li>
+                    <li class="nav-item"><a class="nav-link px-3" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link px-3" href="services.html">Departments</a></li>
+                    <li class="nav-item"><a class="nav-link px-3" href="pharmacy.html">Pharmacy</a></li>
+                    <li class="nav-item"><a class="nav-link px-3" href="lab-reports.html">Diagnostics</a></li>
+                    <li class="nav-item"><a class="nav-link px-3" href="about.html">About</a></li>
                 </ul>
-                <a href="appointments.html" class="btn btn-primary rounded-pill px-4 fw-bold">Book Appointment</a>
+                <a href="appointments.html" class="btn btn-primary rounded-pill px-4 shadow">Book Appointment</a>
             </div>
         </div>
     </nav>
 
-    <header class="hero-section text-white d-flex align-items-center" style="background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&w=2000'); background-size: cover; background-position: center; height: 60vh;">
-        <div class="container text-center">
-            <h1 id="hospital-name" class="display-3 fw-bold mb-3">Connecting Rural Health</h1>
-            <p class="lead fs-4 mb-4">Real-time medical information and digital services for our community.</p>
+    <header class="hero-section d-flex align-items-center text-center">
+        <div class="container">
+            <h1 id="hospital-name" class="display-2 fw-bold mb-4">Empowering Rural Healthcare</h1>
+            <p class="lead fs-3 mb-5 px-lg-5">Advanced diagnostic retrieval, live bed tracking, and digital consultation for the modern village.</p>
+            <div class="d-flex justify-content-center gap-3">
+                <a href="#features" class="btn btn-light btn-lg px-5 rounded-pill fw-bold">Get Started</a>
+                <a href="telemedicine.html" class="btn btn-outline-light btn-lg px-5 rounded-pill">Video Consult</a>
+            </div>
         </div>
     </header>
 
-    <section class="container py-5">
-        <div class="row g-4 text-center">
-            <div class="col-md-3 col-6">
-                <a href="telemedicine.html" class="hover-card p-4 bg-white shadow-sm rounded-4 h-100">
-                    <i class="fa-solid fa-video fa-3x text-primary mb-3"></i>
-                    <h6 class="fw-bold">Tele-Consult</h6>
-                </a>
-            </div>
-            <div class="col-md-3 col-6">
-                <a href="pharmacy.html" class="hover-card p-4 bg-white shadow-sm rounded-4 h-100">
-                    <i class="fa-solid fa-pills fa-3x text-success mb-3"></i>
-                    <h6 class="fw-bold">Medicine Stock</h6>
-                </a>
-            </div>
-            <div class="col-md-3 col-6">
-                <a href="lab-reports.html" class="hover-card p-4 bg-white shadow-sm rounded-4 h-100">
-                    <i class="fa-solid fa-file-medical fa-3x text-info mb-3"></i>
-                    <h6 class="fw-bold">Lab Reports</h6>
-                </a>
-            </div>
-            <div class="col-md-3 col-6">
-                <a href="blood-bank.html" class="hover-card p-4 bg-white shadow-sm rounded-4 h-100">
-                    <i class="fa-solid fa-droplet fa-3x text-danger mb-3"></i>
-                    <h6 class="fw-bold">Blood Bank</h6>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <section id="status" class="container py-5 bg-light rounded-4 my-5 shadow-sm">
-        <div class="text-center mb-5">
-            <h2 class="fw-bold"><span class="live-indicator"></span> Live Facility Status</h2>
-            <p class="text-muted">Directly retrieved from local hospital databases</p>
-        </div>
-        <div class="row g-4 text-center">
+    <section id="status" class="container py-5 mt-n5">
+        <div class="row g-4">
             <div class="col-md-4">
-                <div class="card border-0 shadow-sm p-4 rounded-4 h-100">
-                    <i class="fa-solid fa-bed text-primary fa-3x mb-3"></i>
-                    <h5 class="text-muted fw-bold small uppercase">Available Beds</h5>
+                <div class="card p-4 shadow-lg border-0 rounded-4 text-center">
+                    <i class="fa-solid fa-bed-pulse fa-3x text-primary mb-3"></i>
+                    <h5 class="text-muted fw-bold">LIVE BEDS</h5>
                     <div id="bed-count" class="display-3 fw-bold">--</div>
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="card border-0 shadow-sm p-4 rounded-4 h-100 border-top border-success border-4">
-                    <i class="fa-solid fa-clock text-success fa-3x mb-3"></i>
-                    <h5 class="text-muted fw-bold small uppercase">Facility Status</h5>
-                    <div id="site-status" class="h3 fw-bold py-2">--</div>
+                <div class="card p-4 shadow-lg border-0 rounded-4 text-center border-top border-4 border-success">
+                    <i class="fa-solid fa-hospital fa-3x text-success mb-3"></i>
+                    <h5 class="text-muted fw-bold">FACILITY STATUS</h5>
+                    <div id="site-status" class="h2 fw-bold py-2">--</div>
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="card border-0 shadow-sm p-4 rounded-4 h-100">
-                    <i class="fa-solid fa-truck-medical text-info fa-3x mb-3"></i>
-                    <h5 class="text-muted fw-bold small uppercase">Next Drive</h5>
-                    <div id="clinic-date" class="h5 fw-bold mt-2">--</div>
+                <div class="card p-4 shadow-lg border-0 rounded-4 text-center">
+                    <i class="fa-solid fa-user-doctor fa-3x text-info mb-3"></i>
+                    <h5 class="text-muted fw-bold">DOCS ON CALL</h5>
+                    <div class="display-3 fw-bold">08</div>
                 </div>
             </div>
         </div>
     </section>
 
-    <div class="fixed-bottom bg-danger text-white py-3 shadow-lg">
-        <div class="container d-flex justify-content-between align-items-center">
-            <span class="h5 mb-0 fw-bold"><i class="fa-solid fa-phone-volume me-2"></i> 24/7 Support</span>
-            <a href="tel:108" class="btn btn-light fw-bold px-4 rounded-pill">EMERGENCY: <span id="contact">108</span></a>
+    <section id="features" class="container py-5 text-center">
+        <h2 class="section-title">Digital Health Modules</h2>
+        <div class="row g-4">
+            <div class="col-md-3">
+                <a href="lab-reports.html" class="feature-card p-5 shadow-sm h-100">
+                    <i class="fa-solid fa-microscope fa-3x text-primary mb-4"></i>
+                    <h4>Lab Reports</h4>
+                    <p class="text-muted small">Download diagnostic results instantly.</p>
+                </a>
+            </div>
+            <div class="col-md-3">
+                <a href="pharmacy.html" class="feature-card p-5 shadow-sm h-100">
+                    <i class="fa-solid fa-pills fa-3x text-success mb-4"></i>
+                    <h4>Pharmacy</h4>
+                    <p class="text-muted small">Check real-time medicine availability.</p>
+                </a>
+            </div>
+            <div class="col-md-3">
+                <a href="blood-bank.html" class="feature-card p-5 shadow-sm h-100">
+                    <i class="fa-solid fa-droplet fa-3x text-danger mb-4"></i>
+                    <h4>Blood Bank</h4>
+                    <p class="text-muted small">Critical blood group stock levels.</p>
+                </a>
+            </div>
+            <div class="col-md-3">
+                <a href="telemedicine.html" class="feature-card p-5 shadow-sm h-100">
+                    <i class="fa-solid fa-video fa-3x text-info mb-4"></i>
+                    <h4>Tele-Health</h4>
+                    <p class="text-muted small">Remote video specialist consults.</p>
+                </a>
+            </div>
+            <div class="col-md-3">
+                <a href="vaccination.html" class="feature-card p-5 shadow-sm h-100">
+                    <i class="fa-solid fa-syringe fa-3x text-warning mb-4"></i>
+                    <h4>Vaccination</h4>
+                    <p class="text-muted small">Schedule and track immunizations.</p>
+                </a>
+            </div>
+            <div class="col-md-3">
+                <a href="ambulance.html" class="feature-card p-5 shadow-sm h-100">
+                    <i class="fa-solid fa-truck-medical fa-3x text-secondary mb-4"></i>
+                    <h4>Ambulance</h4>
+                    <p class="text-muted small">Track live GPS for emergency vehicles.</p>
+                </a>
+            </div>
+            <div class="col-md-3">
+                <a href="maternity.html" class="feature-card p-5 shadow-sm h-100">
+                    <i class="fa-solid fa-baby fa-3x text-primary mb-4"></i>
+                    <h4>Maternity</h4>
+                    <p class="text-muted small">Pre-natal and neonatal support portal.</p>
+                </a>
+            </div>
+            <div class="col-md-3">
+                <a href="education.html" class="feature-card p-5 shadow-sm h-100">
+                    <i class="fa-solid fa-graduation-cap fa-3x text-success mb-4"></i>
+                    <h4>Health Ed</h4>
+                    <p class="text-muted small">Awareness videos and hygiene tips.</p>
+                </a>
+            </div>
         </div>
-    </div>
+    </section>
+
+    <footer class="bg-dark text-white py-5 mt-5">
+        <div class="container text-center">
+            <p>&copy; 2025 Rural Health Connect. Integrated Digital Health Management System.</p>
+        </div>
+    </footer>
 
     <script src="script.js"></script>
 </body>
