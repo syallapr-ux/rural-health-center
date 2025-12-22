@@ -3,11 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rural Health Connect | Official Portal</title>
+    <title>Rural Health Connect | Live Medical Portal</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* Extra polish for the "Live" effect */
+        .live-indicator {
+            width: 10px;
+            height: 10px;
+            background-color: #28a745;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 5px;
+            animation: blink 1.5s infinite;
+        }
+        @keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 0.3; }
+            100% { opacity: 1; }
+        }
+        .hover-effect {
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+        .hover-effect:hover {
+            transform: translateY(-10px);
+            border-color: #007bff;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+        }
+    </style>
 </head>
 <body>
 
@@ -24,7 +50,7 @@
                     <li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="services.html">Services</a></li>
                     <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#status">Live Status</a></li>
+                    <li class="nav-item"><a class="nav-link" href="pharmacy.html">Pharmacy</a></li>
                 </ul>
                 <div class="d-flex align-items-center">
                     <button class="btn btn-outline-primary btn-sm me-3" onclick="changeLanguage('local')">తెలుగు</button>
@@ -34,78 +60,82 @@
         </div>
     </nav>
 
-    <header class="hero-section text-white d-flex align-items-center" style="background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&w=2000'); background-size: cover; background-position: center; height: 75vh;">
+    <header class="hero-section text-white d-flex align-items-center" style="background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&w=2000'); background-size: cover; background-position: center; height: 70vh;">
         <div class="container text-center">
             <h1 id="hospital-name" class="display-2 fw-bold mb-3">Connecting Rural Health</h1>
             <p class="lead fs-3 mb-5">Providing specialized medical info and resources to your doorstep.</p>
-            <div class="d-flex justify-content-center gap-3">
-                <a href="services.html" class="btn btn-light btn-lg rounded-pill px-5 fw-bold">Explore Services</a>
-                <a href="appointments.html" class="btn btn-outline-light btn-lg rounded-pill px-5">Book Appointment</a>
+            <div class="d-grid gap-3 d-sm-flex justify-content-sm-center">
+                <a href="appointments.html" class="btn btn-primary btn-lg rounded-pill px-5 fw-bold">Book Online</a>
+                <a href="services.html" class="btn btn-outline-light btn-lg rounded-pill px-5">View All Services</a>
             </div>
         </div>
     </header>
 
-    <section class="container py-5 mt-n5">
-        <div class="row g-3 text-center">
-            <div class="col-6 col-md-3">
-                <div class="p-4 bg-white shadow-sm rounded-4 border-bottom border-primary border-4 h-100">
-                    <a href="telemedicine.html" class="text-decoration-none text-dark">
-                        <i class="fa-solid fa-video fa-2x text-primary mb-2"></i>
-                        <h6 class="fw-bold">Tele-Consult</h6>
-                    </a>
-                </div>
+    <section class="container py-5">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">Digital Health Services</h2>
+            <p class="text-muted">Fast access to essential medical modules</p>
+        </div>
+        <div class="row g-4 text-center">
+            <div class="col-md-3 col-6">
+                <a href="telemedicine.html" class="text-decoration-none">
+                    <div class="p-4 bg-white shadow-sm rounded-4 hover-effect h-100">
+                        <i class="fa-solid fa-video fa-3x text-primary mb-3"></i>
+                        <h6 class="fw-bold text-dark">Tele-Consult</h6>
+                    </div>
+                </a>
             </div>
-            <div class="col-6 col-md-3">
-                <div class="p-4 bg-white shadow-sm rounded-4 border-bottom border-primary border-4 h-100">
-                    <a href="pharmacy.html" class="text-decoration-none text-dark">
-                        <i class="fa-solid fa-pills fa-2x text-primary mb-2"></i>
-                        <h6 class="fw-bold">Medicine Stock</h6>
-                    </a>
-                </div>
+            <div class="col-md-3 col-6">
+                <a href="pharmacy.html" class="text-decoration-none">
+                    <div class="p-4 bg-white shadow-sm rounded-4 hover-effect h-100">
+                        <i class="fa-solid fa-pills fa-3x text-success mb-3"></i>
+                        <h6 class="fw-bold text-dark">Medicine Stock</h6>
+                    </div>
+                </a>
             </div>
-            <div class="col-6 col-md-3">
-                <div class="p-4 bg-white shadow-sm rounded-4 border-bottom border-primary border-4 h-100">
-                    <a href="records.html" class="text-decoration-none text-dark">
-                        <i class="fa-solid fa-file-medical fa-2x text-primary mb-2"></i>
-                        <h6 class="fw-bold">Health Records</h6>
-                    </a>
-                </div>
+            <div class="col-md-3 col-6">
+                <a href="lab-reports.html" class="text-decoration-none">
+                    <div class="p-4 bg-white shadow-sm rounded-4 hover-effect h-100">
+                        <i class="fa-solid fa-file-medical fa-3x text-info mb-3"></i>
+                        <h6 class="fw-bold text-dark">Lab Reports</h6>
+                    </div>
+                </a>
             </div>
-            <div class="col-6 col-md-3">
-                <div class="p-4 bg-white shadow-sm rounded-4 border-bottom border-primary border-4 h-100">
-                    <a href="about.html" class="text-decoration-none text-dark">
-                        <i class="fa-solid fa-circle-info fa-2x text-primary mb-2"></i>
-                        <h6 class="fw-bold">Clinic Info</h6>
-                    </a>
-                </div>
+            <div class="col-md-3 col-6">
+                <a href="blood-bank.html" class="text-decoration-none">
+                    <div class="p-4 bg-white shadow-sm rounded-4 hover-effect h-100">
+                        <i class="fa-solid fa-droplet fa-3x text-danger mb-3"></i>
+                        <h6 class="fw-bold text-dark">Blood Bank</h6>
+                    </div>
+                </a>
             </div>
         </div>
     </section>
 
-    <section id="status" class="container py-5">
+    <section id="status" class="container py-5 bg-light rounded-4 my-5 shadow-sm">
         <div class="text-center mb-5">
-            <h2 class="fw-bold">Real-Time Facility Status</h2>
-            <p class="text-muted">Live data retrieved for your local area</p>
+            <h2 class="fw-bold"><span class="live-indicator"></span> Real-Time Facility Status</h2>
+            <p class="text-muted">Live monitoring of local health resources</p>
         </div>
         <div class="row g-4 text-center">
             <div class="col-md-4">
                 <div class="card border-0 shadow-sm p-4 rounded-4 h-100">
                     <i class="fa-solid fa-bed text-primary fa-3x mb-3"></i>
-                    <h5 class="text-muted fw-bold">Available Beds</h5>
-                    <div id="bed-count" class="display-4 fw-bold text-dark">--</div>
+                    <h5 class="text-muted fw-bold small text-uppercase">Available Beds</h5>
+                    <div id="bed-count" class="display-3 fw-bold text-dark">--</div>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="card border-0 shadow-sm p-4 rounded-4 h-100 border-top border-success border-4">
                     <i class="fa-solid fa-clock text-success fa-3x mb-3"></i>
-                    <h5 class="text-muted fw-bold">Facility Status</h5>
-                    <div id="site-status" class="h2 fw-bold text-dark">--</div>
+                    <h5 class="text-muted fw-bold small text-uppercase">Facility Status</h5>
+                    <div id="site-status" class="h3 fw-bold text-dark py-2">--</div>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="card border-0 shadow-sm p-4 rounded-4 h-100">
-                    <i class="fa-solid fa-calendar-check text-info fa-3x mb-3"></i>
-                    <h5 class="text-muted fw-bold">Next Drive</h5>
+                    <i class="fa-solid fa-truck-medical text-info fa-3x mb-3"></i>
+                    <h5 class="text-muted fw-bold small text-uppercase">Next Drive</h5>
                     <div id="clinic-date" class="h5 fw-bold text-dark mt-2">--</div>
                 </div>
             </div>
@@ -114,10 +144,15 @@
 
     <div class="fixed-bottom bg-danger text-white py-3 shadow-lg">
         <div class="container d-flex justify-content-between align-items-center">
-            <span class="h5 mb-0 fw-bold"><i class="fa-solid fa-phone-volume me-2"></i> Emergency Support</span>
-            <a href="tel:108" class="btn btn-light fw-bold px-4 rounded-pill shadow">Call Now: <span id="contact">108</span></a>
+            <span class="h5 mb-0 fw-bold"><i class="fa-solid fa-phone-volume me-2"></i> 24/7 Support</span>
+            <a href="tel:108" class="btn btn-light fw-bold px-4 rounded-pill shadow">EMERGENCY: <span id="contact">108</span></a>
         </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="script.js"></script>
