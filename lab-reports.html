@@ -1,98 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Diagnostic Portal | Lab Reports</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
-<body class="bg-light">
-    <div class="bg-primary text-white py-5 text-center shadow">
-        <div class="container">
-            <h1 class="fw-bold">Centralized Diagnostic Retrieval</h1>
-            <p>Access your medical history and laboratory findings securely.</p>
-        </div>
-    </div>
-
-    <div class="container py-5">
-        <div class="row g-4">
-            <div class="col-lg-4">
-                <div class="card border-0 shadow rounded-4 p-4 mb-4">
-                    <h5 class="fw-bold text-primary mb-3">Retrieve New Report</h5>
-                    <form>
-                        <div class="mb-3">
-                            <label class="form-label">Patient UHID</label>
-                            <input type="text" class="form-control rounded-pill" placeholder="e.g., TS-5021">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Phone Number</label>
-                            <input type="tel" class="form-control rounded-pill" placeholder="+91-XXXXX-XXXXX">
-                        </div>
-                        <button class="btn btn-primary w-100 rounded-pill">SEARCH</button>
-                    </form>
-                </div>
-                <div class="card border-0 shadow rounded-4 p-4 bg-info text-white">
-                    <h6><i class="fa-solid fa-lightbulb me-2"></i>Preparation Tip</h6>
-                    <p class="small mb-0">For Blood Sugar (Fasting) tests, please do not consume any food or drink (except water) for at least 8-10 hours before the sample collection.</p>
-                </div>
+<div class="mt-5">
+    <h4 class="fw-bold mb-4">How to Read Your Verified Reports</h4>
+    <div class="row g-3">
+        <div class="col-md-4">
+            <div class="p-3 border rounded bg-white">
+                <h6 class="fw-bold">Hemoglobin (Hb)</h6>
+                <p class="mb-0 small">Male: 13.5-17.5 g/dL</p>
+                <p class="mb-0 small">Female: 12.0-15.5 g/dL</p>
+                <hr>
+                <small class="text-muted">Source: ICMR Guidelines</small>
             </div>
-
-            <div class="col-lg-8">
-                <div class="card border-0 shadow rounded-4 p-4">
-                    <h4 class="fw-bold mb-4">Available Diagnostics</h4>
-                    <div class="table-responsive">
-                        <table class="table table-hover align-middle">
-                            <thead class="bg-light">
-                                <tr>
-                                    <th>Test ID</th>
-                                    <th>Diagnostic Type</th>
-                                    <th>Physician</th>
-                                    <th>Result</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>#LAB-99</td>
-                                    <td><strong>Hematology (CBC)</strong></td>
-                                    <td>Dr. Srinivas</td>
-                                    <td><span class="badge bg-success rounded-pill px-3">DOWNLOAD READY</span></td>
-                                </tr>
-                                <tr>
-                                    <td>#LAB-84</td>
-                                    <td><strong>Lipid Profile</strong></td>
-                                    <td>Dr. Srinivas</td>
-                                    <td><span class="badge bg-success rounded-pill px-3">DOWNLOAD READY</span></td>
-                                </tr>
-                                <tr>
-                                    <td>#LAB-21</td>
-                                    <td><strong>Thyroid (T3 T4 TSH)</strong></td>
-                                    <td>Dr. Reddy</td>
-                                    <td><span class="badge bg-warning text-dark rounded-pill px-3">IN PROCESSING</span></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                
-                <div class="mt-4 p-4 bg-white rounded-4 shadow-sm">
-                    <h5 class="fw-bold text-primary mb-3">Understanding Your Reports</h5>
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <h6><strong>What is a Normal Range?</strong></h6>
-                            <p class="small text-muted">A reference range is a set of values that includes upper and lower limits of a lab test based on a group of otherwise healthy people.</p>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <h6><strong>Privacy & Security</strong></h6>
-                            <p class="small text-muted">Your data is encrypted. Do not share your UHID or OTP with anyone else to ensure your health records remain private.</p>
-                        </div>
-                    </div>
-                </div>
+        </div>
+        <div class="col-md-4">
+            <div class="p-3 border rounded bg-white">
+                <h6 class="fw-bold">Blood Glucose (Fasting)</h6>
+                <p class="mb-0 small">Normal: 70–99 mg/dL</p>
+                <p class="mb-0 small">Prediabetes: 100–125 mg/dL</p>
+                <hr>
+                <small class="text-muted">Source: WHO Diabetes Criteria</small>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="p-3 border rounded bg-white">
+                <h6 class="fw-bold">Blood Pressure</h6>
+                <p class="mb-0 small">Normal: 120/80 mmHg</p>
+                <p class="mb-0 small">Hypertensive: Above 140/90</p>
+                <hr>
+                <small class="text-muted">Source: AHA Standards</small>
             </div>
         </div>
     </div>
-    <div class="text-center pb-5">
-        <a href="index.html" class="btn btn-outline-secondary px-5 rounded-pill">Back to Home</a>
-    </div>
-</body>
-</html>
+</div>
