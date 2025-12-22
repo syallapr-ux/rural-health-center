@@ -1,0 +1,62 @@
+/* style.css */
+body {
+    background-color: #f4f7f6;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+.hero {
+    background: linear-gradient(135deg, #0056b3 0%, #007bff 100%);
+    color: white;
+    padding: 50px 20px;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+}
+
+.data-card {
+    background: white;
+    border-radius: 15px;
+    border: none;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease;
+    height: 100%;
+}
+
+.data-card:hover {
+    transform: translateY(-5px);
+}
+
+.stat-number {
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: #007bff;
+    margin: 10px 0;
+}
+
+.emergency-section {
+    position: sticky;
+    bottom: 20px;
+    z-index: 1000;
+}
+
+.emergency-btn {
+    background-color: #d9534f !important;
+    color: white !important;
+    font-size: 1.5rem !important;
+    font-weight: bold !important;
+    border: 4px solid white !important;
+    box-shadow: 0 8px 20px rgba(217, 83, 79, 0.4);
+    animation: pulse-animation 2s infinite;
+}
+
+@keyframes pulse-animation {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.language-toggle .btn {
+    margin: 5px;
+    border-radius: 20px;
+}
