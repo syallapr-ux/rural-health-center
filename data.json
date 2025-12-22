@@ -1,0 +1,9 @@
+{
+  "hospitalName": "Rural Health Connect",
+  "location": "Telangana Region",
+  "status": "Open 24/7",
+  "bedsAvailable": 14,
+  "doctorsOnCall": 5,
+  "emergencyContact": "108",
+  "nextClinicDate": "December 28, 2025"
+}
