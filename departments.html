@@ -3,39 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hospital Departments | RH-Connect</title>
+    <title>Clinical Departments | Rural Health Connect</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg-light">
-    <div class="bg-dark text-white py-5 shadow">
-        <div class="container text-center">
-            <h1 class="display-4 fw-bold">Specialized Departments</h1>
-            <p class="lead">World-class infrastructure bringing specialty care to rural zones.</p>
+<body>
+    <header class="bg-dark text-white py-5 shadow-lg" style="background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&w=2000'); background-size: cover;">
+        <div class="container py-4">
+            <h1 class="display-4 fw-bold">Specialized Clinical Departments</h1>
+            <p class="lead opacity-75">Advanced infrastructure and expert physicians bringing tertiary care to rural landscapes.</p>
         </div>
-    </div>
+    </header>
 
     <div class="container py-5">
-        <div class="row g-4">
-            <div class="col-md-6">
-                <div class="card border-0 shadow-sm rounded-4 overflow-hidden d-flex flex-row">
-                    <img src="https://images.unsplash.com/photo-1628177142898-93e36e4e3a50?q=80&w=400" style="width: 200px; object-fit: cover;" alt="Cardiology">
-                    <div class="p-4">
-                        <h4 class="fw-bold text-primary">Cardiology Unit</h4>
-                        <p class="small text-muted">Equipped with ECG, TMT, and Echo-Cardiogram facilities for cardiac screening.</p>
-                        <span class="badge bg-soft-primary text-primary border border-primary px-3">HOD: Dr. R. Verma</span>
-                    </div>
+        <div class="row align-items-center mb-5 pb-5 border-bottom">
+            <div class="col-md-5">
+                <img src="https://images.unsplash.com/photo-1628177142898-93e36e4e3a50?q=80&w=600" class="img-fluid rounded-4 shadow-lg" alt="Cardiology">
+            </div>
+            <div class="col-md-7 ps-md-5">
+                <span class="text-primary fw-bold text-uppercase">Department 01</span>
+                <h2 class="fw-bold mb-3">Cardiology & Vascular Sciences</h2>
+                <p class="text-muted">Our Cardiology department is equipped with the latest non-invasive diagnostic tools to detect heart conditions early. We focus on preventive care and chronic heart disease management.</p>
+                <div class="row g-3 mb-4">
+                    <div class="col-6"><strong><i class="fa-solid fa-check text-success me-2"></i>ECG & TMT</strong></div>
+                    <div class="col-6"><strong><i class="fa-solid fa-check text-success me-2"></i>Echocardiography</strong></div>
+                    <div class="col-6"><strong><i class="fa-solid fa-check text-success me-2"></i>Holter Monitoring</strong></div>
+                    <div class="col-6"><strong><i class="fa-solid fa-check text-success me-2"></i>BP Management</strong></div>
+                </div>
+                <div class="p-3 bg-light rounded-3 border-start border-4 border-primary">
+                    <h6 class="mb-0">Head of Department: Dr. Rajesh Kumar, MD (Cardiology)</h6>
+                    <small class="text-muted">Specialist in Rural Preventive Heart Care</small>
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="card border-0 shadow-sm rounded-4 overflow-hidden d-flex flex-row">
-                    <img src="https://images.unsplash.com/photo-1581594632702-f2b5b32ec615?q=80&w=400" style="width: 200px; object-fit: cover;" alt="Pediatrics">
-                    <div class="p-4">
-                        <h4 class="fw-bold text-success">Pediatrics Wing</h4>
-                        <p class="small text-muted">Specialized neonatal intensive care (NICU) and 24/7 child emergency services.</p>
-                        <span class="badge bg-soft-success text-success border border-success px-3">HOD: Dr. S. Kulkarni</span>
-                    </div>
-                </div>
+        </div>
+
+        <div class="row align-items-center mb-5 pb-5">
+            <div class="col-md-7 pe-md-5 order-2 order-md-1">
+                <span class="text-success fw-bold text-uppercase">Department 02</span>
+                <h2 class="fw-bold mb-3">Pediatrics & Neonatology</h2>
+                <p class="text-muted">Dedicated to the health and well-being of infants, children, and adolescents. Our pediatric wing is designed to be child-friendly and features a specialized NICU for newborns requiring extra care.</p>
+                <ul class="list-unstyled row g-2">
+                    <li class="col-md-6 border-bottom py-2"><i class="fa-solid fa-baby me-2 text-success"></i>Neonatal Intensive Care</li>
+                    <li class="col-md-6 border-bottom py-2"><i class="fa-solid fa-syringe me-2 text-success"></i>Full Immunization Wing</li>
+                    <li class="col-md-6 border-bottom py-2"><i class="fa-solid fa-apple-whole me-2 text-success"></i>Nutritional Counseling</li>
+                    <li class="col-md-6 border-bottom py-2"><i class="fa-solid fa-face-smile me-2 text-success"></i>Growth Monitoring</li>
+                </ul>
+            </div>
+            <div class="col-md-5 order-1 order-md-2">
+                <img src="https://images.unsplash.com/photo-1581594632702-f2b5b32ec615?q=80&w=600" class="img-fluid rounded-4 shadow-lg" alt="Pediatrics">
             </div>
         </div>
     </div>
