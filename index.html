@@ -3,92 +3,145 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rural Health Connect | Official Portal</title>
+    <title>Rural Health Connect | Professional Medical Portal</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm">
         <div class="container">
-            <a class="navbar-brand" href="#"><i class="fa-solid fa-house-medical me-2"></i>RuralHealth</a>
-            <div class="ms-auto language-toggle">
-                <button class="btn btn-sm btn-outline-light me-2" onclick="changeLanguage('en')">English</button>
-                <button class="btn btn-sm btn-outline-info" onclick="changeLanguage('local')">తెలుగు</button>
+            <a class="navbar-brand fw-bold text-primary" href="#">
+                <i class="fa-solid fa-house-chimney-medical me-2"></i>RURALCARE
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#directory">Centers</a></li>
+                </ul>
+                <div class="d-flex align-items-center">
+                    <button class="btn btn-outline-primary btn-sm me-3" onclick="changeLanguage('local')">తెలుగు / हिन्दी</button>
+                    <a href="appointments.html" class="btn btn-primary rounded-pill px-4">Book Now</a>
+                </div>
             </div>
         </div>
     </nav>
 
-    <header class="hero-section text-center text-white">
+    <header class="hero-section text-white d-flex align-items-center">
         <div class="container">
-            <h1 id="hospital-name" class="display-3 fw-bold">Loading...</h1>
-            <p class="lead mb-4">Dedicated to the health and well-being of our rural community.</p>
-            <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-                <a href="#status" class="btn btn-light btn-lg px-4 gap-3">View Live Status</a>
-                <a href="tel:108" class="btn btn-danger btn-lg px-4">Emergency Call: <span id="contact">--</span></a>
+            <div class="row">
+                <div class="col-lg-7">
+                    <span class="badge bg-info mb-3 px-3 py-2 rounded-pill">Government of Telangana Initiative</span>
+                    <h1 id="hospital-name" class="display-2 fw-bold mb-4">Connecting Care...</h1>
+                    <p class="fs-4 mb-5 opacity-75">Providing high-quality, tech-enabled healthcare to every village and doorstep.</p>
+                    <div class="d-flex gap-3">
+                        <a href="#status" class="btn btn-light btn-lg px-5 rounded-pill fw-bold">Live Status</a>
+                        <a href="#directory" class="btn btn-outline-light btn-lg px-5 rounded-pill">Find Clinic</a>
+                    </div>
+                </div>
             </div>
         </div>
     </header>
 
-    <section id="status" class="py-5 bg-light">
+    <div class="container translate-middle-y">
+        <div class="card shadow-lg border-0 rounded-pill p-2">
+            <div class="row g-0 align-items-center">
+                <div class="col-10">
+                    <input type="text" class="form-control border-0 ps-4" placeholder="Search for doctors, specialists, or nearby hospitals...">
+                </div>
+                <div class="col-2">
+                    <button class="btn btn-primary w-100 rounded-pill py-2">Search</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section id="status" class="py-5">
         <div class="container">
-            <div class="row g-4 text-center">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold">Real-Time Facility Status</h2>
+                <p class="text-muted">Directly retrieved from our central healthcare database</p>
+            </div>
+            <div class="row g-4">
                 <div class="col-md-4">
-                    <div class="card data-card shadow-sm h-100 p-4">
-                        <i class="fa-solid fa-bed-pulse fa-3x text-primary mb-3"></i>
-                        <h4 class="text-uppercase text-muted">Available Beds</h4>
-                        <div id="bed-count" class="stat-number">--</div>
+                    <div class="card data-card p-4 text-center h-100 border-0 shadow-sm">
+                        <div class="icon-box mb-3 mx-auto bg-soft-primary">
+                            <i class="fa-solid fa-bed text-primary fa-2x"></i>
+                        </div>
+                        <h5 class="text-muted text-uppercase small fw-bold">Available Beds</h5>
+                        <div id="bed-count" class="display-3 fw-bold text-dark">--</div>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="card data-card shadow-sm h-100 p-4 border-primary">
-                        <i class="fa-solid fa-clock fa-3x text-success mb-3"></i>
-                        <h4 class="text-uppercase text-muted">Facility Status</h4>
-                        <div id="site-status" class="h3 py-3">--</div>
+                    <div class="card data-card p-4 text-center h-100 border-0 shadow-sm highlight-card">
+                        <div class="icon-box mb-3 mx-auto bg-soft-success">
+                            <i class="fa-solid fa-door-open text-success fa-2x"></i>
+                        </div>
+                        <h5 class="text-muted text-uppercase small fw-bold">Facility Status</h5>
+                        <div id="site-status" class="h2 fw-bold py-3">--</div>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="card data-card shadow-sm h-100 p-4">
-                        <i class="fa-solid fa-syringe fa-3x text-info mb-3"></i>
-                        <h4 class="text-uppercase text-muted">Next Drive</h4>
-                        <div id="clinic-date" class="h4 py-3 text-primary">--</div>
+                    <div class="card data-card p-4 text-center h-100 border-0 shadow-sm">
+                        <div class="icon-box mb-3 mx-auto bg-soft-info">
+                            <i class="fa-solid fa-calendar-check text-info fa-2x"></i>
+                        </div>
+                        <h5 class="text-muted text-uppercase small fw-bold">Next Health Drive</h5>
+                        <div id="clinic-date" class="h4 fw-bold py-3">--</div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="container py-5">
-        <h2 class="text-center mb-5 fw-bold">Our Medical Services</h2>
-        <div class="row g-4">
-            <div class="col-md-4">
-                <div class="p-3 border-start border-4 border-primary shadow-sm bg-white">
-                    <h5><i class="fa-solid fa-user-doctor me-2"></i> General Medicine</h5>
-                    <p class="text-muted small">Daily checkups and fever clinics for all ages.</p>
+    <section id="services" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center fw-bold mb-5">Specialized Rural Departments</h2>
+            <div class="row g-4">
+                <div class="col-md-3">
+                    <div class="service-box p-4 text-center bg-white rounded-4 shadow-sm h-100">
+                        <i class="fa-solid fa-stethoscope fa-2x text-primary mb-3"></i>
+                        <h6>General OPD</h6>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-4">
-                <div class="p-3 border-start border-4 border-primary shadow-sm bg-white">
-                    <h5><i class="fa-solid fa-baby me-2"></i> Maternal Care</h5>
-                    <p class="text-muted small">Specialized support for mothers and newborns.</p>
+                <div class="col-md-3">
+                    <div class="service-box p-4 text-center bg-white rounded-4 shadow-sm h-100">
+                        <i class="fa-solid fa-person-breastfeeding fa-2x text-primary mb-3"></i>
+                        <h6>Maternal Health</h6>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-4">
-                <div class="p-3 border-start border-4 border-primary shadow-sm bg-white">
-                    <h5><i class="fa-solid fa-microscope me-2"></i> Lab Testing</h5>
-                    <p class="text-muted small">Blood tests and diagnostic services available.</p>
+                <div class="col-md-3">
+                    <div class="service-box p-4 text-center bg-white rounded-4 shadow-sm h-100">
+                        <i class="fa-solid fa-pills fa-2x text-primary mb-3"></i>
+                        <h6>Free Pharmacy</h6>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="service-box p-4 text-center bg-white rounded-4 shadow-sm h-100">
+                        <i class="fa-solid fa-truck-medical fa-2x text-primary mb-3"></i>
+                        <h6>Mobile Clinics</h6>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <footer class="bg-dark text-white py-4 mt-5">
-        <div class="container text-center">
-            <p class="mb-0">&copy; 2025 Rural Health Connect Portal. Government of Telangana Initiative.</p>
+    <div class="emergency-bar fixed-bottom bg-danger text-white py-2 shadow-lg">
+        <div class="container d-flex justify-content-between align-items-center">
+            <span class="fw-bold"><i class="fa-solid fa-triangle-exclamation me-2"></i>Medical Emergency?</span>
+            <a href="tel:108" class="btn btn-light btn-sm fw-bold px-4">CALL 108: <span id="contact">--</span></a>
         </div>
-    </footer>
+    </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
