@@ -1,14 +1,85 @@
-<div class="container py-5">
-    <h2 class="fw-bold text-primary mb-4">Live Medicine Inventory</h2>
-    <table class="table table-hover bg-white shadow-sm rounded">
-        <thead class="table-dark">
-            <tr><th>Medicine Name</th><th>Purpose</th><th>Availability</th></tr>
-        </thead>
-        <tbody>
-            <tr><td>Paracetamol</td><td>Fever/Pain</td><td><span class="badge bg-success">In Stock</span></td></tr>
-            <tr><td>Amoxicillin</td><td>Antibiotic</td><td><span class="badge bg-warning text-dark">Limited</span></td></tr>
-            <tr><td>Insulin</td><td>Diabetes</td><td><span class="badge bg-danger">Out of Stock</span></td></tr>
-        </tbody>
-    </table>
-    <a href="index.html" class="btn btn-secondary mt-3">Back to Home</a>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medicine Stock | Rural Health Connect</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-light">
+    <nav class="navbar navbar-dark bg-success shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="index.html"><i class="fa-solid fa-arrow-left me-2"></i> Return to Portal</a>
+            <span class="navbar-text text-white"><i class="fa-solid fa-circle-check me-1 text-warning"></i> Inventory Updated 2h ago</span>
+        </div>
+    </nav>
+
+    <header class="bg-white py-5 shadow-sm mb-4">
+        <div class="container text-center">
+            <h1 class="fw-bold text-success"><i class="fa-solid fa-pills me-2"></i>Pharmacy Live Inventory</h1>
+            <p class="lead text-muted">Real-time availability of essential medicines at the District Health Center.</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="card border-0 shadow-sm p-3 mb-4 rounded-4">
+            <div class="row g-2">
+                <div class="col-md-10">
+                    <input type="text" class="form-control border-0 bg-light rounded-pill" placeholder="Search for a medicine (e.g. Paracetamol, Insulin)...">
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-success w-100 rounded-pill">Search</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="bg-light">
+                        <tr class="text-uppercase small fw-bold text-muted">
+                            <th class="ps-4">Medicine Name</th>
+                            <th>Category</th>
+                            <th>Stock Status</th>
+                            <th class="text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="ps-4"><strong>Paracetamol 500mg</strong></td>
+                            <td>Fever & Pain</td>
+                            <td><span class="badge bg-success rounded-pill px-3">High Stock</span></td>
+                            <td class="text-center"><button class="btn btn-sm btn-outline-success">Reserve</button></td>
+                        </tr>
+                        <tr>
+                            <td class="ps-4"><strong>Amoxicillin (Antibiotic)</strong></td>
+                            <td>Infection Control</td>
+                            <td><span class="badge bg-warning text-dark rounded-pill px-3">Limited</span></td>
+                            <td class="text-center"><button class="btn btn-sm btn-outline-success">Reserve</button></td>
+                        </tr>
+                        <tr>
+                            <td class="ps-4"><strong>Insulin Glargine</strong></td>
+                            <td>Diabetes</td>
+                            <td><span class="badge bg-danger rounded-pill px-3">Out of Stock</span></td>
+                            <td class="text-center"><button class="btn btn-sm btn-secondary disabled">Notify Me</button></td>
+                        </tr>
+                        <tr>
+                            <td class="ps-4"><strong>ORS Sachets</strong></td>
+                            <td>Dehydration</td>
+                            <td><span class="badge bg-success rounded-pill px-3">In Stock</span></td>
+                            <td class="text-center"><button class="btn btn-sm btn-outline-success">Reserve</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <div class="mt-4 p-4 bg-white rounded-4 shadow-sm border-start border-4 border-success">
+            <h6><i class="fa-solid fa-circle-info text-success me-2"></i>Note for Patients</h6>
+            <p class="small text-muted mb-0">Medicines are free for BPL card holders. Please bring your original prescription and ID for collection.</p>
+        </div>
+    </div>
+</body>
+</html>
