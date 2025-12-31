@@ -1,34 +1,73 @@
+:root {
+    --primary: #0d6efd;
+    --secondary: #6c757d;
+    --success: #198754;
+    --danger: #dc3545;
+    --light-bg: #f8f9fa;
+}
+
 body {
-  background: #f8f9fa;
-  font-family: "Inter", system-ui, sans-serif;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background-color: var(--light-bg);
+    line-height: 1.6;
 }
 
+/* HERO */
 .hero-section {
-  padding: 80px 20px;
-  background: linear-gradient(rgba(0,0,0,.6), rgba(0,0,0,.6)),
-              url("https://images.unsplash.com/photo-1586773860418-d37222d8fce3");
-  background-size: cover;
-  background-position: center;
+    background: linear-gradient(
+        rgba(13, 110, 253, 0.85),
+        rgba(13, 110, 253, 0.85)
+    ),
+    url('https://images.unsplash.com/photo-1586773860418-d37222d8fce3');
+    background-size: cover;
+    background-position: center;
 }
 
+/* STATUS CARDS */
+.status-cards {
+    margin-top: -40px;
+    position: relative;
+    z-index: 10;
+}
+
+/* NAV CARDS */
 .nav-card {
-  display: block;
-  padding: 25px;
-  background: white;
-  border-radius: 12px;
-  text-decoration: none;
-  color: #212529;
-  font-weight: 600;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-  transition: 0.3s;
+    display: block;
+    padding: 30px 20px;
+    background: white;
+    border-radius: 16px;
+    text-decoration: none;
+    color: #212529;
+    transition: all 0.3s ease;
+    height: 100%;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.05);
+}
+
+.nav-card i {
+    margin-bottom: 15px;
+    color: var(--primary);
 }
 
 .nav-card:hover {
-  background: #0d6efd;
-  color: white;
-  transform: translateY(-5px);
+    transform: translateY(-6px);
+    background: var(--primary);
+    color: white;
 }
 
-.mt-n4 {
-  margin-top: -40px;
+.nav-card:hover i {
+    color: white;
+}
+
+/* FOOTER */
+footer {
+    border-top: 4px solid var(--primary);
+}
+
+/* UTILITIES */
+.card {
+    border-radius: 16px;
+}
+
+.badge {
+    font-size: 0.85rem;
 }
