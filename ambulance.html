@@ -1,14 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><meta charset="UTF-8"><title>Ambulance Dispatch</title><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"></head>
-<body class="bg-light text-center">
-    <div class="container py-5">
-        <h1 class="text-danger fw-bold">108 Emergency Dispatch</h1>
-        <div class="card p-5 shadow mt-4">
-            <h3>Assigned Unit: AP-31-AX-108</h3>
-            <p>Status: **On Station (Ready)**</p>
-            <button class="btn btn-danger btn-lg rounded-pill">SOS: Request Dispatch</button>
-        </div>
-    </div>
+<head>
+<meta charset="UTF-8">
+<title>Emergency Ambulance | Rural Health Connect</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body class="bg-light">
+
+<div class="container py-5 text-center">
+<h1 class="text-danger fw-bold">🚨 Emergency Ambulance Service</h1>
+
+<div class="card shadow-lg p-4 mt-4">
+<h4>Nearest Ambulance Unit</h4>
+<p class="fw-bold">AP-31-AX-108</p>
+
+<p id="ambulance-status" class="text-success fw-bold">
+Status: Ready & On Standby
+</p>
+
+<p class="text-muted">
+Integrated with 108 Emergency Response System
+</p>
+
+<button class="btn btn-danger btn-lg rounded-pill px-5"
+        onclick="requestAmbulance()">
+SOS – Request Ambulance
+</button>
+</div>
+
+<a href="index.html" class="d-block mt-4">← Back to Dashboard</a>
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
