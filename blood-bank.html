@@ -1,54 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Blood Bank | Rural Health Connect</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<title>Blood Bank Availability | Rural Health Connect</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="style.css">
 </head>
+
 <body class="bg-light">
 
-    <div class="container py-5">
-        <div class="mb-4">
-            <h2 class="fw-bold text-primary">
-                <i class="fa-solid fa-droplet me-2"></i>District Blood Bank Status
-            </h2>
-            <p class="text-muted">
-                Component-wise blood availability from the nearest government-approved blood storage unit.
-                Data is periodically synced and intended for emergency guidance only.
-            </p>
-        </div>
+<div id="navbar-placeholder"></div>
 
-        <!-- DYNAMIC BLOOD DATA -->
-        <div id="blood-container" class="mb-5">
-            <div class="text-center text-muted">
-                Loading blood inventory...
-            </div>
-        </div>
+<div class="container py-5">
+<h2 class="fw-bold text-danger mb-3">
+<i class="fa-solid fa-droplet me-2"></i>
+District Blood Bank Status
+</h2>
 
-        <!-- GUIDELINES -->
-        <div class="card border-0 shadow-sm p-4">
-            <h5 class="fw-bold">
-                <i class="fa-solid fa-circle-info me-2"></i>Important Information
-            </h5>
-            <ul class="small text-muted mb-0">
-                <li>Availability may change during emergencies.</li>
-                <li>Valid government ID is required for blood requisition.</li>
-                <li>For critical cases, contact emergency services immediately.</li>
-            </ul>
-        </div>
+<p class="text-muted">
+Real-time component availability integrated with district hospitals
+to support emergency transfusions in rural regions.
+</p>
 
-        <!-- ACTION -->
-        <div class="mt-4">
-            <button onclick="activateEmergencyMode()" class="btn btn-danger">
-                <i class="fa-solid fa-triangle-exclamation me-2"></i>Emergency Assistance
-            </button>
-        </div>
-    </div>
+<div class="row g-4 mt-3">
 
-    <script src="script.js"></script>
+<div class="col-md-3">
+<div class="card shadow border-0 text-center p-3">
+<h5 class="fw-bold">A+</h5>
+<p class="display-6 text-success fw-bold">4</p>
+<p class="small text-muted">Units Available</p>
+</div>
+</div>
+
+<div class="col-md-3">
+<div class="card shadow border-0 text-center p-3">
+<h5 class="fw-bold">O+</h5>
+<p class="display-6 text-success fw-bold">8</p>
+<p class="small text-muted">Units Available</p>
+</div>
+</div>
+
+<div class="col-md-3">
+<div class="card shadow border-0 text-center p-3">
+<h5 class="fw-bold">B+</h5>
+<p class="display-6 text-warning fw-bold">2</p>
+<p class="small text-muted">Critical Level</p>
+</div>
+</div>
+
+<div class="col-md-3">
+<div class="card shadow border-0 text-center p-3">
+<h5 class="fw-bold">AB+</h5>
+<p class="display-6 text-danger fw-bold">0</p>
+<p class="small text-muted">Not Available</p>
+</div>
+</div>
+
+</div>
+
+<div class="alert alert-warning mt-4">
+<strong>Critical Notice:</strong>
+B+ stock is below safety threshold.
+Nearby donation camps are being notified.
+</div>
+
+<div class="card shadow border-0 mt-4 p-4">
+<h5 class="fw-bold">
+<i class="fa-solid fa-user-plus me-2"></i>
+Register as Voluntary Donor
+</h5>
+
+<p class="text-muted small">
+Donor registration supports emergency rural transfusion needs.
+</p>
+
+<div class="row g-3">
+<div class="col-md-4">
+<input class="form-control" placeholder="Full Name">
+</div>
+<div class="col-md-4">
+<select class="form-select">
+<option>Blood Group</option>
+<option>A+</option><option>B+</option><option>O+</option>
+</select>
+</div>
+<div class="col-md-4">
+<button class="btn btn-danger w-100 fw-bold">
+Register Donor
+</button>
+</div>
+</div>
+</div>
+
+</div>
+
+<div id="footer-placeholder"></div>
+
+<script src="script.js"></script>
 </body>
 </html>
