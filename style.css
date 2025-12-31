@@ -1,81 +1,34 @@
-:root {
-    --primary: #0d6efd;
-    --danger: #dc3545;
-    --light-bg: #f8f9fa;
-}
-
 body {
-    font-family: 'Inter', system-ui, sans-serif;
-    background: var(--light-bg);
+  background: #f8f9fa;
+  font-family: "Inter", system-ui, sans-serif;
 }
 
-/* HERO */
 .hero-section {
-    padding: 90px 15px;
-    background:
-        linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
-        url('https://images.unsplash.com/photo-1584515933487-779824d29309');
-    background-size: cover;
-    background-position: center;
+  padding: 80px 20px;
+  background: linear-gradient(rgba(0,0,0,.6), rgba(0,0,0,.6)),
+              url("https://images.unsplash.com/photo-1586773860418-d37222d8fce3");
+  background-size: cover;
+  background-position: center;
 }
 
-/* STATUS CARDS */
-.status-section {
-    margin-top: -40px;
-    position: relative;
-    z-index: 10;
-}
-
-.status-card {
-    background: white;
-    padding: 25px;
-    border-radius: 16px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-}
-
-.status-card h2 {
-    color: var(--primary);
-    font-weight: 800;
-}
-
-.status-card.danger h2 {
-    color: var(--danger);
-}
-
-/* NAV CARDS */
 .nav-card {
-    display: block;
-    height: 100%;
-    padding: 25px 15px;
-    background: white;
-    border-radius: 18px;
-    text-decoration: none;
-    color: #222;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.07);
+  display: block;
+  padding: 25px;
+  background: white;
+  border-radius: 12px;
+  text-decoration: none;
+  color: #212529;
+  font-weight: 600;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  transition: 0.3s;
 }
 
 .nav-card:hover {
-    background: var(--primary);
-    color: white;
-    transform: translateY(-6px);
+  background: #0d6efd;
+  color: white;
+  transform: translateY(-5px);
 }
 
-.nav-card i {
-    margin-bottom: 12px;
-}
-
-/* SECTION TITLE */
-.section-title {
-    font-weight: 700;
-}
-
-/* TABLES */
-.table thead th {
-    font-weight: 600;
-}
-
-/* ALERTS */
-.alert {
-    border-radius: 0;
+.mt-n4 {
+  margin-top: -40px;
 }
