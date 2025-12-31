@@ -5,35 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us | Rural Health Connect</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg-light">
-    <nav class="navbar navbar-light bg-white shadow-sm mb-5">
+<body>
+    <nav class="navbar navbar-dark bg-primary shadow">
         <div class="container">
-            <a class="navbar-brand fw-bold text-primary" href="index.html">← Back to Home</a>
+            <a class="navbar-brand fw-bold" href="index.html">← BACK TO HOME</a>
         </div>
     </nav>
 
     <div class="container py-5">
         <div class="row align-items-center">
-            <div class="col-md-6">
-                <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=1000" class="img-fluid rounded-4 shadow" alt="Doctor">
+            <div class="col-lg-6">
+                <h2 class="fw-bold text-primary">Digitizing Rural Care</h2>
+                <p class="mt-4">RH-Connect is a **Integrated Health Information System (IHIS)** designed to bridge the urban-rural healthcare divide. We focus on three core pillars of the **National Health Mission (NHM)**:</p>
+                <ul class="list-group list-group-flush mb-4">
+                    <li class="list-group-item"><i class="fa-solid fa-circle-check text-success me-2"></i><strong>Information Retrieval:</strong> Providing real-time visibility into bed and medicine availability.</li>
+                    <li class="list-group-item"><i class="fa-solid fa-circle-check text-success me-2"></i><strong>ABDM Interoperability:</strong> Preparing local clinics for the Ayushman Bharat Digital Mission.</li>
+                    <li class="list-group-item"><i class="fa-solid fa-circle-check text-success me-2"></i><strong>Offline Resilience:</strong> Utilizing Service Workers to ensure accessibility in low-connectivity zones.</li>
+                </ul>
             </div>
-            <div class="col-md-6 p-4">
-                <h2 class="fw-bold text-primary mb-3">Our Mission</h2>
-                <p class="fs-5 text-muted">Rural Health Connect is dedicated to bridging the medical gap in remote areas. We use modern technology to provide real-time information about bed availability, doctor schedules, and vaccination drives.</p>
-                <div class="mt-4">
-                    <div class="d-flex mb-3">
-                        <div class="bg-primary text-white p-2 rounded-circle me-3"><i class="fa-solid fa-check"></i></div>
-                        <p class="mb-0 fw-bold">Government Certified Facilities</p>
-                    </div>
-                    <div class="d-flex mb-3">
-                        <div class="bg-primary text-white p-2 rounded-circle me-3"><i class="fa-solid fa-check"></i></div>
-                        <p class="mb-0 fw-bold">24/7 Emergency Support</p>
-                    </div>
-                    <div class="d-flex mb-3">
-                        <div class="bg-primary text-white p-2 rounded-circle me-3"><i class="fa-solid fa-check"></i></div>
-                        <p class="mb-0 fw-bold">Free Medicine for Below Poverty Line (BPL)</p>
+            <div class="col-lg-6">
+                <div class="p-4 bg-white shadow rounded-4 border-start border-5 border-primary">
+                    <h5 class="fw-bold">Technical Compliance</h5>
+                    <p class="small text-muted">This project adheres to the following standards:</p>
+                    <div class="d-flex flex-wrap gap-2">
+                        <span class="badge bg-secondary">IPHS 2022</span>
+                        <span class="badge bg-secondary">NLEM 2022</span>
+                        <span class="badge bg-secondary">HL7 FHIR (Simulation)</span>
+                        <span class="badge bg-secondary">ISO/TS 22220</span>
                     </div>
                 </div>
             </div>
