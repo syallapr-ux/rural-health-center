@@ -1,55 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Rural Health Connect | ABDM Portal</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>Rural Health Connect | ABDM Integrated</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="bg-light">
 
-<div id="navbar-placeholder"></div>
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm sticky-top">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="index.html">
+            <i class="fa-solid fa-house-medical me-2"></i>RURAL HEALTH CONNECT
+        </a>
+        <a href="appointments.html" class="btn btn-warning btn-sm fw-bold">BOOK OPD</a>
+    </div>
+</nav>
 
-<header class="hero-section text-white">
-  <div class="container text-center">
-    <h1 class="fw-bold">Rural Health Information System</h1>
-    <p class="lead">
-      Digitally connecting rural citizens to healthcare services
-      under Ayushman Bharat Digital Mission
-    </p>
-  </div>
+<!-- HERO -->
+<header class="bg-primary text-white py-5 text-center">
+    <div class="container">
+        <h1 class="fw-bold">Integrated Rural Health Information System</h1>
+        <p class="lead">ABDM • NHM • IPHS 2022 Compliant</p>
+    </div>
 </header>
 
-<section class="container mt-n4">
-  <div class="row g-4 text-center">
-    <div class="col-md-3">
-      <div class="card shadow-sm p-4">
-        <small class="text-muted">Beds Available</small>
-        <h2 class="fw-bold text-primary" id="bed-count">--</h2>
-      </div>
+<!-- STATS -->
+<div class="container mt-n4">
+    <div class="row g-3 justify-content-center">
+        <div class="col-md-3">
+            <div class="card shadow-sm border-0 text-center p-3">
+                <small class="text-muted">AVAILABLE BEDS</small>
+                <h2 id="bed-count" class="fw-bold text-primary">--</h2>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card shadow-sm border-0 text-center p-3">
+                <small class="text-muted">EMERGENCY</small>
+                <h2 class="fw-bold text-danger">108</h2>
+            </div>
+        </div>
     </div>
-    <div class="col-md-3">
-      <div class="card shadow-sm p-4">
-        <small class="text-muted">Emergency Helpline</small>
-        <h2 class="fw-bold text-danger">108</h2>
-      </div>
-    </div>
-  </div>
-</section>
+</div>
 
+<!-- SERVICES -->
 <section class="container py-5">
-  <div class="row g-4 text-center">
-    <div class="col-md-3"><a href="appointments.html" class="nav-card">OPD Booking</a></div>
-    <div class="col-md-3"><a href="lab-reports.html" class="nav-card">Diagnostics</a></div>
-    <div class="col-md-3"><a href="blood-bank.html" class="nav-card">Blood Bank</a></div>
-    <div class="col-md-3"><a href="telemedicine.html" class="nav-card">Telemedicine</a></div>
-  </div>
+    <div class="row g-4 text-center">
+        <div class="col-6 col-md-3"><a href="lab-reports.html" class="nav-card"><i class="fa-solid fa-file-medical fa-2x"></i><h6>Diagnostics</h6></a></div>
+        <div class="col-6 col-md-3"><a href="pharmacy.html" class="nav-card"><i class="fa-solid fa-pills fa-2x"></i><h6>Pharmacy</h6></a></div>
+        <div class="col-6 col-md-3"><a href="blood-bank.html" class="nav-card"><i class="fa-solid fa-droplet fa-2x"></i><h6>Blood Bank</h6></a></div>
+        <div class="col-6 col-md-3"><a href="telemedicine.html" class="nav-card"><i class="fa-solid fa-video fa-2x"></i><h6>Telemedicine</h6></a></div>
+        <div class="col-6 col-md-3"><a href="ambulance.html" class="nav-card"><i class="fa-solid fa-truck-medical fa-2x"></i><h6>Ambulance</h6></a></div>
+        <div class="col-6 col-md-3"><a href="departments.html" class="nav-card"><i class="fa-solid fa-hospital-user fa-2x"></i><h6>Departments</h6></a></div>
+        <div class="col-6 col-md-3"><a href="vaccination.html" class="nav-card"><i class="fa-solid fa-syringe fa-2x"></i><h6>Vaccination</h6></a></div>
+        <div class="col-6 col-md-3"><a href="about.html" class="nav-card"><i class="fa-solid fa-circle-info fa-2x"></i><h6>About</h6></a></div>
+    </div>
 </section>
 
-<div id="footer-placeholder"></div>
+<!-- FOOTER -->
+<footer class="bg-dark text-light mt-5">
+    <div class="container py-4 text-center">
+        <p class="fw-semibold mb-1">Rural Health Connect</p>
+        <p class="small mb-0">Government of India • Prototype • 2025</p>
+    </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
+
 
 <script src="script.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
