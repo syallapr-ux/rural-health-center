@@ -1,39 +1,19 @@
 {
-    "facility_metadata": {
-        "hospital_id": "CHC-AP-VZ-2025",
-        "name": "Visakhapatnam Rural Community Health Center",
-        "accreditation": "IPHS 2022 Certified",
-        "last_sync": "2025-12-31T17:30:00Z"
+    "facility": {
+        "id": "CHC-AP-VZ-09",
+        "name": "Visakhapatnam Community Health Center",
+        "type": "First Referral Unit (FRU)",
+        "accreditation": "IPHS 2022 Certified"
     },
-    "live_inventory": {
-        "beds": {
-            "total": 30,
-            "available": 14,
-            "icu": 2,
-            "maternity_beds": 8
-        },
-        "blood_bank": {
-            "A_positive": "5 Units",
-            "O_positive": "12 Units",
-            "B_positive": "3 Units",
-            "AB_negative": "1 Unit"
-        },
-        "critical_emergency_stock": {
-            "snake_antivenom": "15 Vials",
-            "oxygen_cylinders": "22 Units",
-            "insulin_generic": "45 Units"
-        }
+    "inventory": {
+        "beds_available": 14,
+        "oxygen_status": "98% Capacity",
+        "antivenom_vials": 22,
+        "blood_stock": {"A+": 4, "O+": 8, "B+": 2}
     },
-    "health_camp_schedule": [
-        {
-            "date": "2026-01-05",
-            "type": "Cataract Screening",
-            "location": "Panchayat Hall A"
-        },
-        {
-            "date": "2026-01-12",
-            "type": "Antenatal Care (ANC) Drive",
-            "location": "Primary Sub-Center B"
-        }
-    ]
+    "emergency": {
+        "ambulance_id": "AP-31-AX-108",
+        "status": "On-Call",
+        "driver_contact": "+91 9876543210"
+    }
 }
