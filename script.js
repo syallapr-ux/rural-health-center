@@ -1,33 +1,35 @@
-// Core Data Sync
+// ================= CORE DATA ENGINE =================
 async function syncFacilityData() {
-  try {
-    const res = await fetch("data.json");
-    const data = await res.json();
+    try {
+        const response = await fetch('data.json');
+        const data = await response.json();
 
-    if (document.getElementById("bed-count")) {
-      document.getElementById("bed-count").innerText =
-        data.inventory.beds_available;
+        // Beds
+        const bedEl = document.getElementById('bed-count');
+        if (bedEl) bedEl.innerText = data.inventory.beds_available;
+
+        // Oxygen
+        const oxyEl = document.getElementById('oxygen-status');
+        if (oxyEl) oxyEl.innerText = data.inventory.oxygen_status;
+
+        console.log("Facility data synced successfully");
+
+    } catch (error) {
+        console.error("Data sync failed", error);
     }
-  } catch (e) {
-    console.error("Data sync failed");
-  }
 }
 
-// Load Navbar & Footer
-async function loadLayout() {
-  const nav = await fetch("navbar.html").then(r => r.text());
-  const foot = await fetch("footer.html").then(r => r.text());
-
-  document.getElementById("navbar-placeholder").innerHTML = nav;
-  document.getElementById("footer-placeholder").innerHTML = foot;
+// ================= SERVICE WORKER =================
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js')
+            .then(() => console.log("Service Worker Registered"))
+            .catch(err => console.error("SW failed", err));
+    });
 }
 
-window.addEventListener("DOMContentLoaded", () => {
-  syncFacilityData();
-  loadLayout();
-});
-
-// PWA
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("sw.js");
-}
+// ================= INIT =================
+window.onload = () => {
+    syncFacilityData();
+    setInterval(syncFacilityData, 15000);
+};
