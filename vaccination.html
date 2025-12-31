@@ -1,28 +1,92 @@
-<div class="container py-5">
-    <h3 class="fw-bold text-primary mb-4">Official National Immunization Schedule</h3>
-    <div class="row g-4">
-        <div class="col-lg-8">
-            <div class="list-group shadow-sm">
-                <div class="list-group-item p-4">
-                    <h6 class="fw-bold text-danger">At Birth</h6>
-                    <p class="mb-0 small">BCG (Tuberculosis), OPV-0 (Polio), Hep-B (Hepatitis B)</p>
-                </div>
-                <div class="list-group-item p-4">
-                    <h6 class="fw-bold text-primary">6, 10, 14 Weeks</h6>
-                    <p class="mb-0 small">Pentavalent (DPT+HepB+Hib), Rotavirus, OPV 1-2-3, PCV</p>
-                </div>
-                <div class="list-group-item p-4">
-                    <h6 class="fw-bold text-success">9 Months</h6>
-                    <p class="mb-0 small">MR 1st Dose (Measles-Rubella), Vitamin A, JE (Japanese Encephalitis)</p>
-                </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Immunization Tracker | National Health Mission</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root { --primary-color: #2c3e50; --accent-color: #3498db; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; }
+        .uip-header { background: linear-gradient(135deg, #2c3e50, #3498db); color: white; padding: 60px 0; }
+        .vaccine-row:hover { background-color: #f8f9fa; }
+        .badge-pill { border-radius: 50px; padding: 5px 15px; }
+    </style>
+</head>
+<body>
+    <header class="uip-header shadow-sm">
+        <div class="container text-center">
+            <h1 class="fw-bold">Universal Immunization Programme (UIP)</h1>
+            <p class="lead">Official Vaccination Schedule - Government of India Guidelines</p>
+            <div class="mt-4">
+                <a href="https://main.mohfw.gov.in/sites/default/files/National%20Immunization%20Schedule.pdf" target="_blank" class="btn btn-outline-light rounded-pill px-4">Download Official PDF</a>
             </div>
         </div>
-        <div class="col-lg-4">
-            <div class="card bg-primary text-white p-4 rounded-4 shadow">
-                <h5>Official Resource</h5>
-                <p class="small">Direct link to <strong>Ministry of Health & Family Welfare (MoHFW)</strong> immunization portal.</p>
-                <a href="https://main.mohfw.gov.in/sites/default/files/National%20Immunization%20Schedule.pdf" target="_blank" class="btn btn-light rounded-pill w-100">View Official PDF</a>
+    </header>
+
+    <div class="container py-5">
+        <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+            <div class="table-responsive">
+                <table class="table align-middle mb-0">
+                    <thead class="bg-primary text-white">
+                        <tr class="text-center">
+                            <th class="py-3">Age Milestone</th>
+                            <th class="py-3">Vaccine Name</th>
+                            <th class="py-3">Disease Protection</th>
+                            <th class="py-3">Dosage / Route</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="vaccine-row">
+                            <td class="text-center fw-bold">At Birth</td>
+                            <td>BCG, OPV-0, Hep-B (Birth Dose)</td>
+                            <td>Tuberculosis, Polio, Hepatitis B</td>
+                            <td class="text-center"><span class="badge bg-success badge-pill">Mandatory</span></td>
+                        </tr>
+                        <tr class="vaccine-row">
+                            <td class="text-center fw-bold">6, 10, 14 Weeks</td>
+                            <td>Pentavalent 1,2,3 | OPV 1,2,3 | Rotavirus | PCV</td>
+                            <td>Diphtheria, Pertussis, Tetanus, Hib, Hep-B, Pneumonia</td>
+                            <td class="text-center"><span class="badge bg-primary badge-pill">Primary Series</span></td>
+                        </tr>
+                        <tr class="vaccine-row">
+                            <td class="text-center fw-bold">9 - 12 Months</td>
+                            <td>MR 1st Dose (Measles-Rubella), Vit-A, JE-1</td>
+                            <td>Measles, Rubella, Vitamin A deficiency</td>
+                            <td class="text-center"><span class="badge bg-warning text-dark badge-pill">Critical</span></td>
+                        </tr>
+                        <tr class="vaccine-row">
+                            <td class="text-center fw-bold">16 - 24 Months</td>
+                            <td>DPT Booster-1, MR 2nd Dose, OPV Booster</td>
+                            <td>Extended coverage for childhood infections</td>
+                            <td class="text-center"><span class="badge bg-info text-dark badge-pill">Booster</span></td>
+                        </tr>
+                        <tr class="vaccine-row">
+                            <td class="text-center fw-bold">5 - 6 Years</td>
+                            <td>DPT Booster-2</td>
+                            <td>Diphtheria, Pertussis, Tetanus</td>
+                            <td class="text-center"><span class="badge bg-secondary badge-pill">Follow-up</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <div class="col-md-6">
+                <div class="p-4 bg-white shadow-sm rounded-4 h-100 border-start border-4 border-primary">
+                    <h5 class="fw-bold"><i class="fa-solid fa-circle-info text-primary me-2"></i>Mission Indradhanush</h5>
+                    <p class="text-muted small">This facility participates in Mission Indradhanush to ensure 100% vaccination coverage for children in "gray areas" and hard-to-reach rural hamlets.</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="p-4 bg-white shadow-sm rounded-4 h-100 border-start border-4 border-success">
+                    <h5 class="fw-bold"><i class="fa-solid fa-temperature-low text-success me-2"></i>Cold Chain Integrity</h5>
+                    <p class="text-muted small">All vaccines are stored between <strong>+2°C to +8°C</strong>. We use WHO-certified ILRs (Ice Lined Refrigerators) to maintain vaccine potency.</p>
+                </div>
             </div>
         </div>
     </div>
-</div>
+</body>
+</html>
