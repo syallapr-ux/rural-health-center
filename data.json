@@ -1,9 +1,11 @@
 {
-  "hospitalName": "Rural Health Connect",
-  "location": "Telangana Region",
-  "status": "Open 24/7",
-  "bedsAvailable": 14,
-  "doctorsOnCall": 5,
-  "emergencyContact": "108",
-  "nextClinicDate": "December 28, 2025"
+    "beds": 8,
+    "status": "Operational",
+    "emergency_units": 3,
+    "last_updated": "2025-12-31T16:00:00Z",
+    "facility_id": "RHC-TS-04",
+    "active_camps": [
+        {"type": "Eye Clinic", "date": "Jan 5"},
+        {"type": "Vaccination", "date": "Jan 8"}
+    ]
 }
