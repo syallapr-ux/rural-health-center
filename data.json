@@ -1,11 +1,21 @@
 {
-    "beds": 8,
-    "status": "Operational",
-    "emergency_units": 3,
-    "last_updated": "2025-12-31T16:00:00Z",
-    "facility_id": "RHC-TS-04",
-    "active_camps": [
-        {"type": "Eye Clinic", "date": "Jan 5"},
-        {"type": "Vaccination", "date": "Jan 8"}
-    ]
+    "facility_id": "CHC-AP-VIS-04",
+    "facility_name": "Visakhapatnam Rural Community Health Center",
+    "last_synced": "2025-12-31T17:15:00Z",
+    "beds": {
+        "total": 30,
+        "available": 12,
+        "icu": 2,
+        "oxygen_supported": 10
+    },
+    "staff_on_duty": {
+        "doctors": 4,
+        "nurses": 8,
+        "specialists": ["Pediatrics", "Gynecology"]
+    },
+    "emergency": {
+        "ambulance_status": "2 Active",
+        "blood_stock": ["A+", "O+", "B+"],
+        "antivenom_vials": 15
+    }
 }
