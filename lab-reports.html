@@ -1,75 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Diagnostic Analysis | Patient Portal</title>
+    <meta charset="UTF-8"><title>Lab Reports</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body class="bg-light">
-    <nav class="navbar navbar-dark bg-primary shadow-sm">
-        <div class="container">
-            <a class="navbar-brand fw-bold" href="index.html">← Secure Exit</a>
-            <span class="navbar-text text-white">Encryption Active: SSL/TLS</span>
-        </div>
-    </nav>
-
     <div class="container py-5">
-        <div class="row g-4">
-            <div class="col-lg-4">
-                <div class="card border-0 shadow-sm p-4 rounded-4 mb-4">
-                    <h5 class="fw-bold"><i class="fa-solid fa-magnifying-glass me-2"></i>Report Retrieval</h5>
-                    <p class="small text-muted">Enter UHID to query the central diagnostic database.</p>
-                    <input type="text" class="form-control mb-3" placeholder="UHID (e.g. PAT-9921)">
-                    <button class="btn btn-primary w-100 rounded-pill">FETCH DATA</button>
-                </div>
-
-                <div class="alert alert-warning border-0 shadow-sm rounded-4">
-                    <h6><i class="fa-solid fa-triangle-exclamation me-2"></i>Clinical Warning</h6>
-                    <p class="small mb-0">Elevated Glucose levels detected in your last 2 reports. Please consult the Endocrinology department.</p>
-                </div>
-            </div>
-
-            <div class="col-lg-8">
-                <div class="card border-0 shadow-sm p-4 rounded-4">
-                    <h4 class="fw-bold mb-4">Health Trend Analysis</h4>
-                    
-                    <div class="mb-4">
-                        <div class="d-flex justify-content-between mb-1">
-                            <span class="fw-bold">Hemoglobin (Hb)</span>
-                            <span class="text-success">Stable</span>
-                        </div>
-                        <div class="progress" style="height: 30px;">
-                            <div class="progress-bar bg-success" style="width: 85%">14.2 g/dL (Normal)</div>
-                        </div>
-                    </div>
-
-                    <div class="mb-4">
-                        <div class="d-flex justify-content-between mb-1">
-                            <span class="fw-bold">Fasting Glucose</span>
-                            <span class="text-danger">Upward Trend</span>
-                        </div>
-                        <div class="progress" style="height: 30px;">
-                            <div class="progress-bar bg-danger" style="width: 40%">112 mg/dL (Prediabetic)</div>
-                        </div>
-                        <small class="text-muted">Analysis: 12% increase since last month's retrieval.</small>
-                    </div>
-
-                    <hr>
-                    <h5 class="fw-bold mb-3">Verified Documents</h5>
-                    <div class="list-group list-group-flush">
-                        <div class="list-group-item d-flex justify-content-between align-items-center">
-                            <span><i class="fa-solid fa-file-pdf text-danger me-2"></i>CBC_Report_Dec.pdf</span>
-                            <button class="btn btn-sm btn-outline-primary">View</button>
-                        </div>
-                        <div class="list-group-item d-flex justify-content-between align-items-center">
-                            <span><i class="fa-solid fa-file-pdf text-danger me-2"></i>Thyroid_Panel_Nov.pdf</span>
-                            <button class="btn btn-sm btn-outline-primary">View</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <h2 class="fw-bold"><i class="fa-solid fa-microscope text-primary"></i> Diagnostic Retrieval</h2>
+        <div class="card shadow-sm border-0 mt-4">
+            <table class="table mb-0">
+                <thead class="table-dark">
+                    <tr><th>Parameter</th><th>Result</th><th>Biological Reference</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Hemoglobin (Hb)</td><td>13.2 g/dL</td><td>12.0 - 15.5 g/dL</td></tr>
+                    <tr><td>Blood Glucose (F)</td><td>104 mg/dL</td><td>70 - 100 mg/dL</td></tr>
+                    <tr><td>Sputum AFB</td><td>Not Detected</td><td>Negative</td></tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </body>
