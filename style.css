@@ -1,43 +1,9 @@
-body {
-    font-family: 'Inter', sans-serif;
-    background-color: #f8f9fa;
-    padding-bottom: 80px; /* Space for sticky footer */
+:root { --primary: #0d6efd; --danger: #dc3545; }
+body { font-family: 'Inter', sans-serif; background: #f8f9fa; }
+.nav-card { 
+    display: block; padding: 25px; background: white; border-radius: 15px; 
+    text-decoration: none; color: #333; transition: 0.3s; box-shadow: 0 4px 6px rgba(0,0,0,0.05);
 }
-
-.navbar {
-    padding: 1rem 0;
-}
-
-.nav-link {
-    font-weight: 500;
-    margin: 0 10px;
-    color: #444 !important;
-}
-
-.nav-link:hover {
-    color: #007bff !important;
-}
-
-.card {
-    transition: transform 0.3s ease;
-}
-
-.card:hover {
-    transform: translateY(-10px);
-}
-
-.btn-primary {
-    background-color: #007bff;
-    border: none;
-    transition: all 0.3s;
-}
-
-.btn-primary:hover {
-    background-color: #0056b3;
-    box-shadow: 0 5px 15px rgba(0,123,255,0.4);
-} }
-
-.language-toggle .btn {
-    margin: 5px;
-    border-radius: 20px;
-}
+.nav-card:hover { transform: translateY(-5px); background: #0d6efd; color: white; }
+.nav-card i { margin-bottom: 15px; display: block; }
+.mt-n4 { margin-top: -30px; position: relative; z-index: 10; }
