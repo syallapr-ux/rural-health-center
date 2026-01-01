@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard | Rural Health Connect</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Bootstrap & Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="bg-light">
+
+<!-- ================= NAVBAR ================= -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow">
+    <div class="container-fluid px-4">
+        <a class="navbar-brand fw-bold" href="#">
+            <i class="fa-solid fa-hospital-user me-2"></i>
+            Rural Health Connect – Dashboard
+        </a>
+
+        <div class="d-flex align-items-center gap-3">
+            <span id="userBadge" class="badge bg-light text-dark px-3 py-2"></span>
+            <button class="btn btn-sm btn-danger" onclick="logout()">
+                <i class="fa-solid fa-right-from-bracket me-1"></i>Logout
+            </button>
+        </div>
+    </div>
+</nav>
+
+<!-- ================= HEADER ================= -->
+<header class="bg-secondary text-white py-4">
+    <div class="container-fluid px-4">
+        <h2 class="fw-bold mb-1">Integrated Health Operations Dashboard</h2>
+        <p class="mb-0">
+            Real-time monitoring | IPHS compliant | ABDM-ready (simulation)
+        </p>
+    </div>
+</header>
+
+<!-- ================= MAIN ================= -->
+<main class="container-fluid px-4 my-4">
+
+    <!-- ================= SYSTEM STATUS ================= -->
+    <div class="row g-4 mb-4">
+
+        <div class="col-md-3">
+            <div class="card shadow-sm border-0 text-center">
+                <div class="card-body">
+                    <i class="fa-solid fa-bed fa-2x text-primary mb-2"></i>
+                    <h5 class="fw-bold">Beds Available</h5>
+                    <h2 id="bedsCount" class="fw-bold text-success">--</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card shadow-sm border-0 text-center">
+                <div class="card-body">
+                    <i class="fa-solid fa-droplet fa-2x text-danger mb-2"></i>
+                    <h5 class="fw-bold">Blood Units</h5>
+                    <h2 id="bloodCount" class="fw-bold">--</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card shadow-sm border-0 text-center">
+                <div class="card-body">
+                    <i class="fa-solid fa-truck-medical fa-2x text-warning mb-2"></i>
+                    <h5 class="fw-bold">Ambulance</h5>
+                    <p id="ambulanceStatus" class="fw-bold">--</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card shadow-sm border-0 text-center">
+                <div class="card-body">
+                    <i class="fa-solid fa-shield-halved fa-2x text-info mb-2"></i>
+                    <h5 class="fw-bold">System Mode</h5>
+                    <p class="fw-bold text-success">Operational</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ================= ROLE BASED PANELS ================= -->
+    <div class="row g-4">
+
+        <!-- ADMIN PANEL -->
+        <div class="col-lg-4 role-admin d-none">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-body">
+                    <h4 class="fw-bold text-primary">
+                        <i class="fa-solid fa-user-shield me-2"></i>
+                        Administrator Controls
+                    </h4>
+                    <ul class="list-group list-group-flush mt-3">
+                        <li class="list-group-item">Facility Configuration</li>
+                        <li class="list-group-item">User & Role Management</li>
+                        <li class="list-group-item">System Audit Logs</li>
+                        <li class="list-group-item">ABDM Integration Gateway</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- DOCTOR PANEL -->
+        <div class="col-lg-4 role-doctor d-none">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-body">
+                    <h4 class="fw-bold text-success">
+                        <i class="fa-solid fa-stethoscope me-2"></i>
+                        Doctor Workspace
+                    </h4>
+                    <ul class="list-group list-group-flush mt-3">
+                        <li class="list-group-item">Patient Appointments</li>
+                        <li class="list-group-item">Digital Lab Reports</li>
+                        <li class="list-group-item">Telemedicine Consultations</li>
+                        <li class="list-group-item">Clinical Decision Support</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- STAFF PANEL -->
+        <div class="col-lg-4 role-staff d-none">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-body">
+                    <h4 class="fw-bold text-warning">
+                        <i class="fa-solid fa-clipboard-list me-2"></i>
+                        Staff Operations
+                    </h4>
+                    <ul class="list-group list-group-flush mt-3">
+                        <li class="list-group-item">Registration Desk</li>
+                        <li class="list-group-item">Inventory Tracking</li>
+                        <li class="list-group-item">Bed Allocation</li>
+                        <li class="list-group-item">Emergency Intake</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ================= TECH NOTE ================= -->
+    <div class="alert alert-secondary mt-4">
+        <strong>Architecture Note:</strong>
+        This dashboard demonstrates a frontend-only micro-application architecture using:
+        localStorage (session & data), Service Workers (offline), modular JS, and simulated APIs.
+        Backend APIs (FHIR / ABDM) can be plugged in without UI rewrite.
+    </div>
+
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer class="bg-dark text-light py-3 mt-5">
+    <div class="container text-center small">
+        Rural Health Connect – Secure Dashboard Module
+    </div>
+</footer>
+
+<!-- ================= SCRIPT ================= -->
+<script>
+/* ================= AUTH GUARD ================= */
+const session = JSON.parse(localStorage.getItem("session"));
+if (!session) {
+    window.location.href = "login.html";
+}
+
+/* ================= USER BADGE ================= */
+document.getElementById("userBadge").innerText =
+    session.username + " (" + session.role + ")";
+
+/* ================= ROLE VISIBILITY ================= */
+document.querySelectorAll(".role-" + session.role.toLowerCase())
+    .forEach(el => el.classList.remove("d-none"));
+
+/* ================= LOGOUT ================= */
+function logout() {
+    localStorage.removeItem("session");
+    window.location.href = "login.html";
+}
+
+/* ================= FETCH FACILITY DATA ================= */
+fetch("data.json")
+    .then(res => res.json())
+    .then(data => {
+        document.getElementById("bedsCount").innerText =
+            data.inventory.beds_available;
+
+        const blood = data.inventory.blood_stock;
+        document.getElementById("bloodCount").innerText =
+            Object.values(blood).reduce((a, b) => a + b, 0);
+
+        document.getElementById("ambulanceStatus").innerText =
+            data.emergency.status;
+    })
+    .catch(() => {
+        document.getElementById("bedsCount").innerText = "Offline";
+    });
+</script>
+
+</body>
+</html>
