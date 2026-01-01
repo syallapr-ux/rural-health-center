@@ -1,47 +1,222 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Departments | Rural Health Connect</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <title>Clinical Departments | FRU Facility | Rural Health Connect</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Bootstrap & Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Core Styles -->
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body class="bg-light">
 
-<nav class="navbar navbar-dark bg-primary shadow-sm">
+<!-- ================= NAVBAR ================= -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
     <div class="container">
-        <a class="navbar-brand fw-bold" href="index.html">RURAL HEALTH CONNECT</a>
+        <a class="navbar-brand fw-bold" href="index.html">
+            <i class="fa-solid fa-hospital me-2"></i>Rural Health Connect
+        </a>
+        <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#nav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div id="nav" class="collapse navbar-collapse">
+            <ul class="navbar-nav ms-auto fw-semibold">
+                <li class="nav-item"><a class="nav-link" href="services.html">Services</a></li>
+                <li class="nav-item"><a class="nav-link active" href="departments.html">Departments</a></li>
+                <li class="nav-item"><a class="nav-link" href="blood-bank.html">Blood Bank</a></li>
+                <li class="nav-item"><a class="nav-link" href="emergency.html">Emergency</a></li>
+            </ul>
+        </div>
     </div>
 </nav>
 
-<div class="container py-5">
-    <h3 class="fw-bold text-primary mb-4">Clinical Departments</h3>
-
-    <div class="row g-4">
-        <div class="col-md-4">
-            <div class="card shadow-sm border-0 p-4">
-                <h5>Emergency</h5>
-                <p class="small text-muted">24x7 trauma & acute care</p>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card shadow-sm border-0 p-4">
-                <h5>Maternal Health</h5>
-                <p class="small text-muted">Labour room & NBSU</p>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card shadow-sm border-0 p-4">
-                <h5>Diagnostics</h5>
-                <p class="small text-muted">Lab & Imaging</p>
-            </div>
-        </div>
+<!-- ================= HEADER ================= -->
+<header class="bg-primary text-white py-5 shadow">
+    <div class="container">
+        <h1 class="fw-bold">Clinical Departments & Service Units</h1>
+        <p class="mt-2 mb-0">
+            First Referral Unit (FRU) | IPHS 2022 Standards | District Health System
+        </p>
     </div>
-</div>
+</header>
 
-<footer class="bg-dark text-light text-center py-4">
-    <small>IPHS 2022 Compliant</small>
+<!-- ================= CONTENT ================= -->
+<main class="container my-5">
+
+    <!-- FACILITY OVERVIEW -->
+    <section class="mb-5">
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <h4 class="fw-bold mb-3">
+                    <i class="fa-solid fa-building-circle-check me-2"></i>
+                    Facility Classification Overview
+                </h4>
+                <p>
+                    This Community Health Center is designated as a
+                    <strong>First Referral Unit (FRU)</strong> under the National Health Mission.
+                    It provides comprehensive secondary-level healthcare services including
+                    emergency obstetric care, trauma stabilization, and essential diagnostics.
+                </p>
+                <ul>
+                    <li>24×7 emergency and referral stabilization</li>
+                    <li>Maternal & newborn care (EmONC)</li>
+                    <li>National disease control programme integration</li>
+                    <li>Referral linkage to District Hospital</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- DEPARTMENT GRID -->
+    <section class="mb-5">
+        <h3 class="fw-bold mb-4">
+            <i class="fa-solid fa-stethoscope me-2"></i>
+            Core Clinical Departments
+        </h3>
+
+        <div class="row g-4">
+
+            <!-- Emergency -->
+            <div class="col-md-6">
+                <div class="card h-100 shadow-sm border-0">
+                    <div class="card-body">
+                        <h5 class="fw-bold text-danger">
+                            <i class="fa-solid fa-truck-medical me-2"></i>Emergency & Casualty
+                        </h5>
+                        <p class="small text-muted">
+                            24×7 trauma care and life-saving interventions.
+                        </p>
+                        <ul>
+                            <li>Road traffic accident stabilization</li>
+                            <li>Snake bite & poisoning management</li>
+                            <li>Basic life support & triage</li>
+                            <li>108 ambulance coordination</li>
+                        </ul>
+                        <span class="badge bg-danger">Critical Services Active</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Obstetrics -->
+            <div class="col-md-6">
+                <div class="card h-100 shadow-sm border-0">
+                    <div class="card-body">
+                        <h5 class="fw-bold text-primary">
+                            <i class="fa-solid fa-baby me-2"></i>Obstetrics & Gynecology
+                        </h5>
+                        <p class="small text-muted">
+                            Comprehensive maternal healthcare services.
+                        </p>
+                        <ul>
+                            <li>24×7 delivery services</li>
+                            <li>Emergency C-sections</li>
+                            <li>ANC & PNC clinics</li>
+                            <li>High-risk pregnancy referrals</li>
+                        </ul>
+                        <span class="badge bg-success">EmONC Enabled</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Medicine -->
+            <div class="col-md-6">
+                <div class="card h-100 shadow-sm border-0">
+                    <div class="card-body">
+                        <h5 class="fw-bold">
+                            <i class="fa-solid fa-pills me-2"></i>General Medicine
+                        </h5>
+                        <ul>
+                            <li>Non-communicable disease clinics (NCD)</li>
+                            <li>Hypertension & Diabetes management</li>
+                            <li>Fever clinic (Dengue, Malaria, Typhoid)</li>
+                            <li>Telemedicine follow-ups</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pediatrics -->
+            <div class="col-md-6">
+                <div class="card h-100 shadow-sm border-0">
+                    <div class="card-body">
+                        <h5 class="fw-bold">
+                            <i class="fa-solid fa-child me-2"></i>Pediatrics
+                        </h5>
+                        <ul>
+                            <li>Newborn Stabilization Unit (NBSU)</li>
+                            <li>IMNCI implementation</li>
+                            <li>Immunization sessions</li>
+                            <li>Severe acute malnutrition screening</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- DIAGNOSTICS -->
+    <section class="mb-5">
+        <h3 class="fw-bold mb-3">
+            <i class="fa-solid fa-microscope me-2"></i>
+            Diagnostic & Support Services
+        </h3>
+
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <ul>
+                    <li>Clinical pathology & biochemistry lab</li>
+                    <li>X-Ray (300 mA) & Ultrasound</li>
+                    <li>ECG & basic radiology</li>
+                    <li>Sample referral to district lab</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- REFERRAL LOGIC -->
+    <section>
+        <div class="card shadow-sm border-0 bg-white">
+            <div class="card-body">
+                <h5 class="fw-bold mb-3">
+                    <i class="fa-solid fa-arrow-right-arrow-left me-2"></i>
+                    Referral & Escalation Protocol
+                </h5>
+                <p>
+                    Patients requiring tertiary care are stabilized and referred
+                    using government ambulance networks. Digital referral notes
+                    are prepared as per ABDM-FHIR simulation guidelines.
+                </p>
+                <ul>
+                    <li>District Hospital referral linkage</li>
+                    <li>Emergency transport coordination</li>
+                    <li>Digital case summary generation</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer class="bg-dark text-light py-4 mt-5">
+    <div class="container text-center small">
+        <p class="mb-1">
+            Ministry of Health & Family Welfare | NHM (Simulation)
+        </p>
+        <p class="mb-0">
+            Rural Health Connect – FRU Module | Version 1.0
+        </p>
+    </div>
 </footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="script.js"></script>
 
 </body>
 </html>
