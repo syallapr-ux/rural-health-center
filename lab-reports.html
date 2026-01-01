@@ -1,97 +1,217 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Digital Lab Reports | Rural Health Connect</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>Lab Reports | Digital Diagnostics Portal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link rel="stylesheet" href="style.css">
+    <!-- Bootstrap & Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body class="bg-light">
 
+<!-- ================= NAVBAR ================= -->
 <nav class="navbar navbar-dark bg-primary shadow">
     <div class="container">
         <a class="navbar-brand fw-bold" href="index.html">
-            <i class="fa-solid fa-house-medical"></i> Rural Health Connect
+            <i class="fa-solid fa-flask-vial me-2"></i>
+            Rural Diagnostics & Lab Portal
         </a>
-        <span class="text-white small">ABDM Compliant</span>
     </div>
 </nav>
 
-<div class="container py-5">
-
-<div class="card shadow-lg border-0 rounded-4 p-4 mb-4">
-    <h4 class="fw-bold text-primary mb-3">
-        <i class="fa-solid fa-cloud-arrow-down"></i> Retrieve Lab Reports
-    </h4>
-
-    <p class="text-muted">
-        Fetch government-verified diagnostic reports using your
-        <strong>ABHA ID</strong>.
-    </p>
-
-    <div class="input-group mb-3">
-        <input class="form-control form-control-lg"
-               placeholder="12-3456-7890-1234">
-        <button class="btn btn-primary fw-bold" onclick="syncFacilityData()">
-            FETCH REPORTS
-        </button>
+<!-- ================= HEADER ================= -->
+<header class="bg-dark text-white py-4">
+    <div class="container">
+        <h2 class="fw-bold">Digital Laboratory Reports</h2>
+        <p class="mb-0">
+            Secure | Verified | Accessible Anywhere – For Rural Healthcare
+        </p>
     </div>
+</header>
 
-    <div class="d-flex gap-3">
-        <span class="badge bg-success">SSL Encrypted</span>
-        <span class="badge bg-info">Govt Repository</span>
+<!-- ================= MAIN ================= -->
+<main class="container my-5">
+
+    <!-- ================= STATS DASHBOARD ================= -->
+    <section class="mb-5">
+        <div class="row g-3">
+            <div class="col-md-3">
+                <div class="card shadow-sm border-0 p-3">
+                    <h6 class="text-muted">Reports Generated Today</h6>
+                    <h4 class="fw-bold text-primary">186</h4>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card shadow-sm border-0 p-3">
+                    <h6 class="text-muted">Pending Samples</h6>
+                    <h4 class="fw-bold text-warning">42</h4>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card shadow-sm border-0 p-3">
+                    <h6 class="text-muted">Critical Results</h6>
+                    <h4 class="fw-bold text-danger">7</h4>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card shadow-sm border-0 p-3">
+                    <h6 class="text-muted">Partner Labs</h6>
+                    <h4 class="fw-bold">12</h4>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= REPORT SEARCH ================= -->
+    <section class="mb-5">
+        <div class="card shadow border-0">
+            <div class="card-body p-4">
+                <h4 class="fw-bold">
+                    <i class="fa-solid fa-magnifying-glass me-2"></i>
+                    Search Lab Report
+                </h4>
+
+                <div class="row g-3 mt-2">
+                    <div class="col-md-4">
+                        <label class="form-label fw-bold">ABHA / Aadhaar ID</label>
+                        <input type="text" class="form-control" id="patientId">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label fw-bold">Test Type</label>
+                        <select class="form-select" id="testType">
+                            <option>Complete Blood Count (CBC)</option>
+                            <option>Blood Sugar (FBS)</option>
+                            <option>Liver Function Test</option>
+                            <option>COVID-19 RT-PCR</option>
+                            <option>Urine Analysis</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label fw-bold">Date</label>
+                        <input type="date" class="form-control">
+                    </div>
+                </div>
+
+                <button class="btn btn-primary mt-4" onclick="fetchReport()">
+                    Retrieve Report
+                </button>
+
+                <div id="reportStatus" class="alert alert-info mt-3 d-none"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= SAMPLE REPORT ================= -->
+    <section class="mb-5">
+        <div class="card shadow-lg border-0">
+            <div class="card-header bg-primary text-white fw-bold">
+                <i class="fa-solid fa-file-medical me-2"></i>
+                Sample Diagnostic Report (CBC)
+            </div>
+
+            <div class="table-responsive">
+                <table class="table mb-0 align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Result</th>
+                            <th>Normal Range</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Hemoglobin</td>
+                            <td>12.4 g/dL</td>
+                            <td>13 – 17</td>
+                            <td class="text-warning fw-bold">Low</td>
+                        </tr>
+                        <tr>
+                            <td>WBC Count</td>
+                            <td>6,800 /µL</td>
+                            <td>4,000 – 11,000</td>
+                            <td class="text-success fw-bold">Normal</td>
+                        </tr>
+                        <tr>
+                            <td>Platelets</td>
+                            <td>1.9 lakh</td>
+                            <td>1.5 – 4.5</td>
+                            <td class="text-success fw-bold">Normal</td>
+                        </tr>
+                        <tr>
+                            <td>RBC Count</td>
+                            <td>4.1 million</td>
+                            <td>4.5 – 5.9</td>
+                            <td class="text-warning fw-bold">Low</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= UPLOAD REPORT ================= -->
+    <section class="mb-5">
+        <div class="card shadow-sm border-0">
+            <div class="card-body p-4">
+                <h4 class="fw-bold">
+                    <i class="fa-solid fa-upload me-2"></i>
+                    Upload External Lab Report
+                </h4>
+
+                <div class="row g-3 mt-2">
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold">Patient ID</label>
+                        <input type="text" class="form-control">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold">Upload PDF</label>
+                        <input type="file" class="form-control">
+                    </div>
+                </div>
+
+                <button class="btn btn-primary mt-4">
+                    Upload & Verify
+                </button>
+
+                <div class="alert alert-secondary small mt-3">
+                    Uploaded reports are stored with encryption and doctor verification (simulation).
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= TECH NOTE ================= -->
+    <section>
+        <div class="alert alert-warning">
+            <strong>Technical Architecture:</strong>
+            This module integrates with LIS systems, HL7/FHIR standards,
+            cloud storage (AWS S3), and secure doctor dashboards in production.
+        </div>
+    </section>
+
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer class="bg-dark text-light py-3">
+    <div class="container text-center small">
+        Digital Diagnostics Portal | Government Health Infrastructure – Simulation
     </div>
-</div>
+</footer>
 
-<div class="card shadow border-0 rounded-4">
-<div class="card-header bg-dark text-white d-flex justify-content-between">
-    <span>Verified Diagnostic Results</span>
-    <span id="current-timestamp">Last Sync</span>
-</div>
+<!-- ================= SCRIPT ================= -->
+<script>
+function fetchReport() {
+    const status = document.getElementById("reportStatus");
+    status.innerText = "Report retrieved successfully from central health database.";
+    status.classList.remove("d-none");
+}
+</script>
 
-<table class="table mb-0">
-<thead class="table-light">
-<tr>
-<th>Test</th><th>Result</th><th>Normal Range</th><th>Status</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Hemoglobin</td><td>13.2 g/dL</td><td>12 – 15</td>
-<td><span class="badge bg-success">Normal</span></td>
-</tr>
-<tr>
-<td>Fasting Glucose</td><td>104 mg/dL</td><td>70 – 100</td>
-<td><span class="badge bg-warning text-dark">Borderline</span></td>
-</tr>
-<tr>
-<td>TB (AFB)</td><td>Negative</td><td>Negative</td>
-<td><span class="badge bg-success">Normal</span></td>
-</tr>
-</tbody>
-</table>
-</div>
-
-<div class="alert alert-warning mt-4">
-<strong>Clinical Insight:</strong>
-Prediabetic indicators detected. Follow-up recommended at NCD clinic.
-</div>
-
-<div class="d-flex gap-3">
-<button class="btn btn-outline-dark" onclick="window.print()">
-<i class="fa-solid fa-print"></i> Print
-</button>
-<a href="telemedicine.html" class="btn btn-primary">
-<i class="fa-solid fa-video"></i> Consult Doctor
-</a>
-</div>
-
-</div>
-
-<script src="script.js"></script>
 </body>
 </html>
