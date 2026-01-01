@@ -1,27 +1,224 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Health Education</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>Community Health Education | Rural Health Connect</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+    <!-- Bootstrap & Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Core Styles -->
+    <link rel="stylesheet" href="style.css">
 </head>
-<body>
 
-<div id="navbar-placeholder"></div>
+<body class="bg-light">
 
-<div class="container py-5">
-  <h3 class="fw-bold mb-3">Community Health Education</h3>
-  <ul>
-    <li>Nutrition & Hygiene Awareness</li>
-    <li>Maternal Health Education</li>
-    <li>Non-Communicable Disease Prevention</li>
-  </ul>
-</div>
+<!-- ================= NAVBAR ================= -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="index.html">
+            <i class="fa-solid fa-house-medical me-2"></i>Rural Health Connect
+        </a>
+        <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#nav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div id="nav" class="collapse navbar-collapse">
+            <ul class="navbar-nav ms-auto fw-semibold">
+                <li class="nav-item"><a class="nav-link" href="index.html">Dashboard</a></li>
+                <li class="nav-item"><a class="nav-link" href="services.html">Services</a></li>
+                <li class="nav-item"><a class="nav-link active" href="education.html">Education</a></li>
+                <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
 
-<div id="footer-placeholder"></div>
+<!-- ================= HEADER ================= -->
+<header class="bg-success text-white py-5 shadow">
+    <div class="container">
+        <h1 class="fw-bold">Community Health Education</h1>
+        <p class="mb-0">
+            Preventive Healthcare, Awareness & Capacity Building for Rural Populations
+        </p>
+    </div>
+</header>
+
+<!-- ================= MAIN CONTENT ================= -->
+<main class="container my-5">
+
+    <!-- INTRO -->
+    <section class="mb-5">
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <p class="fs-5">
+                    Health education is a core pillar of the
+                    <strong>National Health Mission (NHM)</strong>.
+                    This module delivers structured, accessible and
+                    culturally relevant health information to rural communities,
+                    empowering individuals to make informed decisions.
+                </p>
+                <p>
+                    Content is curated based on
+                    <strong>MoHFW</strong>,
+                    <strong>ICMR</strong> and
+                    <strong>WHO</strong> guidelines and is designed
+                    for low-literacy and low-connectivity environments.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- EDUCATION CATEGORIES -->
+    <section class="mb-5">
+        <div class="row g-4">
+
+            <!-- MATERNAL -->
+            <div class="col-lg-6">
+                <div class="card h-100 shadow-sm border-0">
+                    <div class="card-body">
+                        <h4 class="fw-bold text-primary">
+                            <i class="fa-solid fa-person-pregnant me-2"></i>
+                            Maternal & Child Health
+                        </h4>
+                        <p class="small text-muted">
+                            Safe motherhood and early childhood survival education.
+                        </p>
+                        <ul>
+                            <li>Antenatal care (minimum 4 ANC visits)</li>
+                            <li>Institutional delivery importance</li>
+                            <li>Nutrition during pregnancy</li>
+                            <li>Danger signs during pregnancy & post-partum</li>
+                            <li>Breastfeeding and infant nutrition</li>
+                        </ul>
+                        <div class="alert alert-info small">
+                            <strong>Program linkage:</strong>
+                            Janani Suraksha Yojana (JSY), PMMVY
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NCD -->
+            <div class="col-lg-6">
+                <div class="card h-100 shadow-sm border-0">
+                    <div class="card-body">
+                        <h4 class="fw-bold text-danger">
+                            <i class="fa-solid fa-heart-pulse me-2"></i>
+                            Non-Communicable Diseases (NCDs)
+                        </h4>
+                        <p class="small text-muted">
+                            Early detection and lifestyle modification education.
+                        </p>
+                        <ul>
+                            <li>Hypertension & diabetes awareness</li>
+                            <li>Dietary salt & sugar reduction</li>
+                            <li>Physical activity recommendations</li>
+                            <li>Tobacco & alcohol risk counselling</li>
+                        </ul>
+                        <div class="alert alert-warning small">
+                            <strong>Screening supported:</strong>
+                            NPCDCS Program
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- COMMUNICABLE -->
+            <div class="col-lg-6">
+                <div class="card h-100 shadow-sm border-0">
+                    <div class="card-body">
+                        <h4 class="fw-bold text-success">
+                            <i class="fa-solid fa-virus me-2"></i>
+                            Communicable Diseases
+                        </h4>
+                        <p class="small text-muted">
+                            Prevention, early reporting and treatment compliance.
+                        </p>
+                        <ul>
+                            <li>Tuberculosis symptoms & DOTS adherence</li>
+                            <li>Malaria & dengue prevention</li>
+                            <li>Water-borne disease prevention</li>
+                            <li>Hygiene & sanitation practices</li>
+                        </ul>
+                        <div class="alert alert-success small">
+                            <strong>Linked missions:</strong>
+                            NTEP, NVBDCP, Swachh Bharat
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ADOLESCENT -->
+            <div class="col-lg-6">
+                <div class="card h-100 shadow-sm border-0">
+                    <div class="card-body">
+                        <h4 class="fw-bold text-secondary">
+                            <i class="fa-solid fa-children me-2"></i>
+                            Adolescent Health
+                        </h4>
+                        <p class="small text-muted">
+                            Life-skills education and preventive guidance.
+                        </p>
+                        <ul>
+                            <li>Menstrual hygiene management</li>
+                            <li>Anemia prevention</li>
+                            <li>Mental health awareness</li>
+                            <li>Substance abuse prevention</li>
+                        </ul>
+                        <div class="alert alert-secondary small">
+                            <strong>Program:</strong>
+                            Rashtriya Kishor Swasthya Karyakram (RKSK)
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- DIGITAL DELIVERY -->
+    <section class="mb-5">
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <h3 class="fw-bold mb-3">
+                    <i class="fa-solid fa-mobile-screen-button me-2"></i>
+                    Digital Education Delivery
+                </h3>
+                <p>
+                    This module is designed to support:
+                </p>
+                <ul>
+                    <li>Offline-first access via PWA caching</li>
+                    <li>Multilingual expansion (regional languages)</li>
+                    <li>Audio-visual learning for low-literacy users</li>
+                    <li>Future API integration with health content repositories</li>
+                </ul>
+                <p class="small text-muted">
+                    Content delivery can be dynamically personalized based on
+                    age group, gender and risk profile using ABDM-linked metadata.
+                </p>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer class="bg-dark text-light py-4 mt-5">
+    <div class="container text-center small">
+        <p class="mb-1">
+            Health Education Initiative | National Health Mission (Simulation)
+        </p>
+        <p class="mb-0">
+            Rural Health Connect | Public Health Awareness Platform
+        </p>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="script.js"></script>
+
 </body>
 </html>
