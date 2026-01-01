@@ -2,59 +2,199 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Ambulance Dispatch | Rural Health Connect</title>
+    <title>Emergency Ambulance Services | 108 Response System</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Bootstrap & Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body class="bg-light">
 
+<!-- ================= NAVBAR ================= -->
 <nav class="navbar navbar-dark bg-danger shadow">
     <div class="container">
         <a class="navbar-brand fw-bold" href="index.html">
-            <i class="fa-solid fa-truck-medical me-2"></i>108 EMERGENCY SERVICES
+            <i class="fa-solid fa-truck-medical me-2"></i>
+            Emergency Ambulance Services (108)
         </a>
     </div>
 </nav>
 
-<div class="container py-5 text-center">
-
-    <h2 class="fw-bold text-danger">Emergency Ambulance Dispatch</h2>
-
-    <p class="text-muted mt-2">
-        This module simulates **real-time ambulance assignment**
-        as followed by state emergency response systems.
-    </p>
-
-    <div class="card shadow-lg border-0 rounded-4 p-5 mt-4">
-        <h4 class="fw-bold">Assigned Ambulance</h4>
-        <p class="fs-5 mt-3">
-            Vehicle ID: <strong id="amb-id">--</strong>
+<!-- ================= HEADER ================= -->
+<header class="bg-dark text-white py-4">
+    <div class="container">
+        <h2 class="fw-bold">Integrated Emergency Medical Response System</h2>
+        <p class="mb-0">
+            Real-Time Dispatch | GPS-Enabled | Rural Optimized
         </p>
-        <p>Status: <span class="badge bg-success" id="amb-status">--</span></p>
-
-        <button class="btn btn-danger btn-lg fw-bold rounded-pill mt-3">
-            SOS – REQUEST DISPATCH
-        </button>
     </div>
+</header>
 
-</div>
+<!-- ================= MAIN ================= -->
+<main class="container my-5">
 
-<footer class="bg-dark text-light mt-5">
-    <div class="container py-4 text-center">
-        <p class="small mb-0">Emergency Response System – Simulation</p>
+    <!-- ================= AMBULANCE STATUS ================= -->
+    <section class="mb-5">
+        <div class="card shadow-sm border-0">
+            <div class="card-body p-4">
+                <h4 class="fw-bold text-danger">
+                    <i class="fa-solid fa-signal me-2"></i>
+                    Live Ambulance Status
+                </h4>
+
+                <div class="row mt-3">
+                    <div class="col-md-4">
+                        <div class="border rounded p-3">
+                            <strong>Ambulance ID</strong>
+                            <p class="mb-0" id="amb-id">Loading...</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="border rounded p-3">
+                            <strong>Current Status</strong>
+                            <p class="mb-0 text-success" id="amb-status">Loading...</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="border rounded p-3">
+                            <strong>Driver Contact</strong>
+                            <p class="mb-0" id="amb-driver">Loading...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="alert alert-warning mt-3 small">
+                    Status is synced from facility emergency database (simulated via JSON).
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= EMERGENCY REQUEST ================= -->
+    <section class="mb-5">
+        <div class="card shadow-lg border-0">
+            <div class="card-header bg-danger text-white fw-bold">
+                <i class="fa-solid fa-triangle-exclamation me-2"></i>
+                Request Emergency Ambulance
+            </div>
+
+            <div class="card-body p-4">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold">Patient Name</label>
+                        <input type="text" id="patientName" class="form-control">
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold">Emergency Type</label>
+                        <select id="emergencyType" class="form-select">
+                            <option>Road Traffic Accident</option>
+                            <option>Cardiac Emergency</option>
+                            <option>Pregnancy / Labour</option>
+                            <option>Snake Bite</option>
+                            <option>Unconscious Patient</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-12">
+                        <label class="form-label fw-bold">Brief Description</label>
+                        <textarea id="description" class="form-control" rows="3"></textarea>
+                    </div>
+                </div>
+
+                <button class="btn btn-danger mt-4" onclick="requestAmbulance()">
+                    <i class="fa-solid fa-phone-volume me-2"></i>
+                    Dispatch Ambulance
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= LOCATION ================= -->
+    <section class="mb-5">
+        <div class="card shadow-sm border-0">
+            <div class="card-body p-4">
+                <h5 class="fw-bold">
+                    <i class="fa-solid fa-location-dot me-2"></i>
+                    Caller Location (GPS)
+                </h5>
+
+                <p class="small text-muted">
+                    Used to route the nearest available ambulance.
+                </p>
+
+                <button class="btn btn-outline-dark" onclick="getLocation()">
+                    Capture Current Location
+                </button>
+
+                <p class="mt-3 mb-0" id="locationOutput"></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= TECHNICAL INFO ================= -->
+    <section>
+        <div class="alert alert-secondary">
+            <strong>Technical Note:</strong>
+            This module simulates the 108 Emergency workflow. In real deployments,
+            it integrates with GIS mapping systems, AVL tracking, IVR call centers,
+            and hospital ER dashboards using REST APIs and message queues.
+        </div>
+    </section>
+
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer class="bg-dark text-light py-3">
+    <div class="container text-center small">
+        Emergency Medical Response | Government Health Systems – Simulation
     </div>
 </footer>
 
+<!-- ================= SCRIPT ================= -->
 <script>
-fetch('data.json')
-.then(res => res.json())
-.then(data => {
-    document.getElementById('amb-id').innerText = data.emergency.ambulance_id;
-    document.getElementById('amb-status').innerText = data.emergency.status;
-});
+async function loadAmbulanceData() {
+    try {
+        const res = await fetch('data.json');
+        const data = await res.json();
+
+        document.getElementById('amb-id').innerText = data.emergency.ambulance_id;
+        document.getElementById('amb-status').innerText = data.emergency.status;
+        document.getElementById('amb-driver').innerText = data.emergency.driver_contact;
+    } catch {
+        console.error("Failed to load ambulance data");
+    }
+}
+
+function requestAmbulance() {
+    const log = {
+        patient: document.getElementById('patientName').value,
+        type: document.getElementById('emergencyType').value,
+        description: document.getElementById('description').value,
+        time: new Date().toLocaleString()
+    };
+
+    localStorage.setItem('lastEmergency', JSON.stringify(log));
+    alert("Emergency request logged and ambulance dispatched (simulation)");
+}
+
+function getLocation() {
+    if (!navigator.geolocation) {
+        alert("Geolocation not supported");
+        return;
+    }
+
+    navigator.geolocation.getCurrentPosition(pos => {
+        document.getElementById('locationOutput').innerText =
+            `Latitude: ${pos.coords.latitude}, Longitude: ${pos.coords.longitude}`;
+    });
+}
+
+window.onload = loadAmbulanceData;
 </script>
 
 </body>
