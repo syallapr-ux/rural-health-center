@@ -1,66 +1,211 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>OPD Appointment | Rural Health Connect</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>Book Appointment | Rural Health Connect</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+    <!-- Bootstrap & Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
 </head>
-<body>
 
-<div id="navbar-placeholder"></div>
+<body class="bg-light">
 
-<div class="container py-5">
-  <div class="row justify-content-center">
-    <div class="col-lg-7">
-
-      <div class="card shadow-lg border-0 rounded-4">
-        <div class="card-header bg-primary text-white p-4">
-          <h4 class="fw-bold mb-1">OPD Appointment Booking</h4>
-          <small>Ayushman Bharat Digital Mission (ABDM)</small>
+<!-- ================= NAVBAR ================= -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="index.html">
+            <i class="fa-solid fa-house-medical me-2"></i>Rural Health Connect
+        </a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav ms-auto fw-semibold">
+                <li class="nav-item"><a class="nav-link active" href="appointments.html">Appointments</a></li>
+                <li class="nav-item"><a class="nav-link" href="services.html">Services</a></li>
+            </ul>
         </div>
-
-        <div class="card-body p-4">
-          <form>
-            <div class="mb-3">
-              <label class="form-label fw-bold">ABHA ID / Mobile Number</label>
-              <input type="text" class="form-control" placeholder="example@abdm or 9XXXXXXXXX">
-            </div>
-
-            <div class="mb-3">
-              <label class="form-label fw-bold">Department</label>
-              <select class="form-select">
-                <option>General Medicine</option>
-                <option>Obstetrics & Gynaecology</option>
-                <option>Pediatrics</option>
-                <option>Non-Communicable Diseases (NCD)</option>
-                <option>AYUSH</option>
-              </select>
-            </div>
-
-            <div class="mb-3">
-              <label class="form-label fw-bold">Preferred Date</label>
-              <input type="date" class="form-control">
-            </div>
-
-            <button class="btn btn-primary w-100 fw-bold py-2">
-              Generate OPD Token
-            </button>
-          </form>
-        </div>
-      </div>
-
-      <p class="text-muted small mt-3">
-        * Token generation is subject to doctor availability at the Health & Wellness Centre.
-      </p>
-
     </div>
-  </div>
-</div>
+</nav>
 
-<div id="footer-placeholder"></div>
-<script src="script.js"></script>
+<!-- ================= HEADER ================= -->
+<header class="bg-info text-white py-5">
+    <div class="container">
+        <h1 class="fw-bold">OPD Appointment Booking</h1>
+        <p class="mb-0">
+            Digitally schedule consultations with Primary Health Centers
+        </p>
+    </div>
+</header>
+
+<!-- ================= MAIN ================= -->
+<main class="container my-5">
+
+    <!-- INFO -->
+    <section class="mb-4">
+        <div class="alert alert-primary">
+            <strong>Note:</strong> This appointment system simulates backend storage using
+            <strong>browser-based persistent storage</strong>. In real deployments,
+            this would be connected to a secured hospital database via REST APIs.
+        </div>
+    </section>
+
+    <!-- BOOKING FORM -->
+    <section class="mb-5">
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <h3 class="fw-bold mb-3">
+                    <i class="fa-solid fa-calendar-check me-2"></i>
+                    Book New Appointment
+                </h3>
+
+                <form id="appointmentForm" class="row g-3">
+
+                    <div class="col-md-6">
+                        <label class="form-label">Patient Name</label>
+                        <input type="text" id="patientName" class="form-control" required>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">Mobile Number</label>
+                        <input type="tel" id="mobile" class="form-control" pattern="[0-9]{10}" required>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">Department</label>
+                        <select id="department" class="form-select" required>
+                            <option value="">Select</option>
+                            <option>General Medicine</option>
+                            <option>Pediatrics</option>
+                            <option>Gynecology</option>
+                            <option>Orthopedics</option>
+                            <option>Dental</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label class="form-label">Appointment Date</label>
+                        <input type="date" id="date" class="form-control" required>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label class="form-label">Time Slot</label>
+                        <select id="time" class="form-select" required>
+                            <option value="">Select</option>
+                            <option>09:00 - 10:00</option>
+                            <option>10:00 - 11:00</option>
+                            <option>11:00 - 12:00</option>
+                            <option>14:00 - 15:00</option>
+                            <option>15:00 - 16:00</option>
+                        </select>
+                    </div>
+
+                    <div class="col-12">
+                        <label class="form-label">Health Concern (Optional)</label>
+                        <textarea id="reason" class="form-control" rows="2"></textarea>
+                    </div>
+
+                    <div class="col-12">
+                        <button class="btn btn-success w-100 fw-bold" type="submit">
+                            <i class="fa-solid fa-book-medical me-2"></i>
+                            Confirm Appointment
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- APPOINTMENTS LIST -->
+    <section>
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <h3 class="fw-bold mb-3">
+                    <i class="fa-solid fa-list me-2"></i>
+                    Scheduled Appointments
+                </h3>
+
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Department</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Mobile</th>
+                            </tr>
+                        </thead>
+                        <tbody id="appointmentsTable">
+                            <!-- Filled dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer class="bg-dark text-light py-4 mt-5">
+    <div class="container text-center small">
+        <p class="mb-0">
+            Appointment Booking System | Rural Health Connect (Simulation)
+        </p>
+    </div>
+</footer>
+
+<!-- ================= SCRIPT ================= -->
+<script>
+const form = document.getElementById("appointmentForm");
+const table = document.getElementById("appointmentsTable");
+
+function loadAppointments() {
+    table.innerHTML = "";
+    const data = JSON.parse(localStorage.getItem("appointments")) || [];
+    data.forEach(app => {
+        const row = `
+            <tr>
+                <td>${app.id}</td>
+                <td>${app.name}</td>
+                <td>${app.department}</td>
+                <td>${app.date}</td>
+                <td>${app.time}</td>
+                <td>${app.mobile}</td>
+            </tr>
+        `;
+        table.innerHTML += row;
+    });
+}
+
+form.addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const appointment = {
+        id: "APT-" + Date.now(),
+        name: patientName.value,
+        mobile: mobile.value,
+        department: department.value,
+        date: date.value,
+        time: time.value,
+        reason: reason.value
+    };
+
+    const data = JSON.parse(localStorage.getItem("appointments")) || [];
+    data.push(appointment);
+    localStorage.setItem("appointments", JSON.stringify(data));
+
+    form.reset();
+    loadAppointments();
+    alert("Appointment booked successfully!");
+});
+
+loadAppointments();
+</script>
+
 </body>
 </html>
