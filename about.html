@@ -1,30 +1,206 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>About | Rural Health Connect</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <title>About Rural Health Connect | Digital Public Health Platform</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Bootstrap & Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Core Styles -->
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body class="bg-light">
 
-<nav class="navbar navbar-dark bg-primary shadow-sm">
+<!-- ================= NAVBAR ================= -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
     <div class="container">
-        <a class="navbar-brand fw-bold" href="index.html">RURAL HEALTH CONNECT</a>
+        <a class="navbar-brand fw-bold" href="index.html">
+            <i class="fa-solid fa-house-medical me-2"></i>Rural Health Connect
+        </a>
+        <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#nav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div id="nav" class="collapse navbar-collapse">
+            <ul class="navbar-nav ms-auto fw-semibold">
+                <li class="nav-item"><a class="nav-link" href="index.html">Dashboard</a></li>
+                <li class="nav-item"><a class="nav-link active" href="about.html">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="departments.html">Departments</a></li>
+                <li class="nav-item"><a class="nav-link" href="services.html">Services</a></li>
+            </ul>
+        </div>
     </div>
 </nav>
 
-<div class="container py-5">
-    <h3 class="fw-bold text-primary">About the Project</h3>
-    <p class="mt-3">
-        Rural Health Connect is a prototype Integrated Health Information System
-        aligned with NHM and ABDM standards.
-    </p>
-</div>
+<!-- ================= HEADER ================= -->
+<header class="bg-primary text-white py-5 shadow">
+    <div class="container">
+        <h1 class="fw-bold">About Rural Health Connect</h1>
+        <p class="mb-0">
+            A Digital Public Health Enablement Platform for Rural India
+        </p>
+    </div>
+</header>
 
-<footer class="bg-dark text-light text-center py-4">
-    <small>Digital Health Initiative</small>
+<!-- ================= MAIN CONTENT ================= -->
+<main class="container my-5">
+
+    <!-- VISION -->
+    <section class="mb-5">
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <h3 class="fw-bold mb-3">
+                    <i class="fa-solid fa-bullseye me-2"></i>
+                    Vision & Problem Statement
+                </h3>
+                <p>
+                    Rural Health Connect was conceptualized to address the
+                    <strong>information asymmetry, accessibility gaps, and service fragmentation</strong>
+                    that exist in rural healthcare delivery systems.
+                </p>
+                <p>
+                    In many rural regions, patients travel long distances without
+                    knowing whether essential services such as beds, blood units,
+                    diagnostics, or specialists are available. This platform
+                    digitizes that information layer to improve decision-making
+                    for patients, health workers, and administrators.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- OBJECTIVES -->
+    <section class="mb-5">
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <h3 class="fw-bold mb-3">
+                    <i class="fa-solid fa-list-check me-2"></i>
+                    Core Objectives
+                </h3>
+                <ul class="fs-6">
+                    <li>Provide real-time visibility of facility readiness</li>
+                    <li>Enable rural-first digital access to healthcare information</li>
+                    <li>Simulate ABDM-compliant digital health workflows</li>
+                    <li>Improve referral efficiency and emergency response</li>
+                    <li>Demonstrate offline-capable healthcare portals</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- ARCHITECTURE -->
+    <section class="mb-5">
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <h3 class="fw-bold mb-3">
+                    <i class="fa-solid fa-diagram-project me-2"></i>
+                    System Architecture Overview
+                </h3>
+                <p>
+                    Rural Health Connect follows a
+                    <strong>client-side progressive web architecture</strong>,
+                    optimized for low-bandwidth rural environments.
+                </p>
+
+                <ul>
+                    <li><strong>Frontend:</strong> HTML5, CSS3, Bootstrap, JavaScript</li>
+                    <li><strong>Data Layer:</strong> JSON-based facility datasets</li>
+                    <li><strong>Offline Support:</strong> Service Workers & Cache API</li>
+                    <li><strong>Security:</strong> HTTPS deployment (GitHub Pages)</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- COMPLIANCE -->
+    <section class="mb-5">
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <h3 class="fw-bold mb-3">
+                    <i class="fa-solid fa-shield-halved me-2"></i>
+                    Standards & Policy Alignment
+                </h3>
+
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="p-3 border rounded">
+                            <h6 class="fw-bold">National Health Mission (NHM)</h6>
+                            <p class="small mb-0">
+                                Supports rural healthcare strengthening and referral systems.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="p-3 border rounded">
+                            <h6 class="fw-bold">IPHS 2022</h6>
+                            <p class="small mb-0">
+                                Facility standards for CHCs and FRUs.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="p-3 border rounded">
+                            <h6 class="fw-bold">ABDM (Simulation)</h6>
+                            <p class="small mb-0">
+                                Health ID, digital records & interoperability concepts.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="p-3 border rounded">
+                            <h6 class="fw-bold">HL7 FHIR (Conceptual)</h6>
+                            <p class="small mb-0">
+                                Structured health data exchange model (simulated).
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- INTERVIEW ANGLE -->
+    <section>
+        <div class="card shadow-sm border-0 bg-white">
+            <div class="card-body">
+                <h4 class="fw-bold mb-3">
+                    <i class="fa-solid fa-user-tie me-2"></i>
+                    Interview Perspective
+                </h4>
+                <p>
+                    This project demonstrates not just web development skills,
+                    but an understanding of
+                    <strong>real-world healthcare systems, policy frameworks,
+                    scalability concerns, and user-centered design</strong>.
+                </p>
+                <p class="mb-0">
+                    It is intentionally designed as a static yet extensible
+                    foundation, suitable for future backend integration.
+                </p>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer class="bg-dark text-light py-4 mt-5">
+    <div class="container text-center small">
+        <p class="mb-1">
+            Ministry of Health & Family Welfare | Government of India (Simulation)
+        </p>
+        <p class="mb-0">
+            Rural Health Connect | Academic & Demonstration Project
+        </p>
+    </div>
 </footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="script.js"></script>
 
 </body>
 </html>
