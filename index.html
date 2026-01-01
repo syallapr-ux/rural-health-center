@@ -2,18 +2,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Rural Health Connect | Integrated Healthcare Portal</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rural Health Connect | Government of India</title>
 
     <!-- Bootstrap & Icons -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
 
-    <!-- Custom Styles -->
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="style.css">
 </head>
 
-<body class="bg-light">
+<body>
 
 <!-- ================= NAVBAR ================= -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow sticky-top">
@@ -22,11 +22,19 @@
             <i class="fa-solid fa-house-medical me-2"></i>
             RURAL HEALTH CONNECT
         </a>
-        <div class="d-flex align-items-center gap-3">
-            <span class="badge bg-light text-primary fw-semibold">
-                Facility ID: CHC-AP-VZ-09
-            </span>
-            <a href="appointments.html" class="btn btn-warning btn-sm fw-bold">
+
+        <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#mainNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="mainNav">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0 fw-semibold">
+                <li class="nav-item"><a class="nav-link active" href="index.html">Dashboard</a></li>
+                <li class="nav-item"><a class="nav-link" href="departments.html">Departments</a></li>
+                <li class="nav-item"><a class="nav-link" href="appointments.html">Appointments</a></li>
+                <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+            </ul>
+            <a href="appointments.html" class="btn btn-warning fw-bold ms-lg-3">
                 BOOK OPD
             </a>
         </div>
@@ -34,46 +42,53 @@
 </nav>
 
 <!-- ================= HERO ================= -->
-<section class="hero-section text-white">
-    <div class="container text-center py-5">
-        <h1 class="display-5 fw-bold">
-            Integrated Rural Health Information System
-        </h1>
+<header class="hero-section text-white text-center">
+    <div class="container py-5">
+        <h1 class="display-5 fw-bold">Integrated Rural Health Information System</h1>
         <p class="lead mt-3">
-            A government-aligned digital healthcare platform designed to enhance
-            accessibility, transparency, and continuity of care for rural populations.
+            A digital healthcare platform aligned with <strong>ABDM</strong>,
+            designed to bridge the urban–rural healthcare gap.
         </p>
-        <div class="mt-4 d-flex justify-content-center gap-3 flex-wrap">
-            <span class="badge bg-success px-3 py-2">ABDM Ready</span>
-            <span class="badge bg-info px-3 py-2">IPHS 2022</span>
-            <span class="badge bg-secondary px-3 py-2">PWA Enabled</span>
-            <span class="badge bg-warning text-dark px-3 py-2">Offline Support</span>
+
+        <div class="d-flex justify-content-center gap-3 mt-4 flex-wrap">
+            <span class="badge bg-light text-primary px-3 py-2">
+                ABDM Ready
+            </span>
+            <span class="badge bg-light text-success px-3 py-2">
+                IPHS 2022
+            </span>
+            <span class="badge bg-light text-dark px-3 py-2">
+                Offline PWA Enabled
+            </span>
         </div>
     </div>
-</section>
+</header>
 
-<!-- ================= LIVE STATUS ================= -->
-<section class="container status-cards">
-    <div class="row g-4 justify-content-center">
+<!-- ================= LIVE STATS ================= -->
+<section class="container stats-section">
+    <div class="row g-4 text-center">
         <div class="col-md-3">
-            <div class="card shadow-sm text-center p-4">
-                <h6 class="text-muted">Available Beds</h6>
-                <h2 id="bed-count" class="fw-bold text-primary">--</h2>
-                <p class="small text-muted">Real-time ward occupancy</p>
+            <div class="stat-card">
+                <h6>Available Beds</h6>
+                <h2 id="bed-count">--</h2>
             </div>
         </div>
         <div class="col-md-3">
-            <div class="card shadow-sm text-center p-4">
-                <h6 class="text-muted">Emergency Helpline</h6>
-                <h2 class="fw-bold text-danger">108</h2>
-                <p class="small text-muted">24×7 Ambulance Service</p>
+            <div class="stat-card">
+                <h6>Oxygen Capacity</h6>
+                <h2 id="oxygen-status">--</h2>
             </div>
         </div>
         <div class="col-md-3">
-            <div class="card shadow-sm text-center p-4">
-                <h6 class="text-muted">Oxygen Availability</h6>
-                <h2 id="oxygen-status" class="fw-bold text-success">--</h2>
-                <p class="small text-muted">Medical oxygen capacity</p>
+            <div class="stat-card danger">
+                <h6>Emergency Helpline</h6>
+                <h2>108</h2>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card">
+                <h6>Facility Status</h6>
+                <h2 class="text-success">Operational</h2>
             </div>
         </div>
     </div>
@@ -81,16 +96,15 @@
 
 <!-- ================= SERVICES GRID ================= -->
 <section class="container py-5">
-    <h3 class="fw-bold text-center mb-4">
-        Citizen Health Services Dashboard
-    </h3>
+    <h3 class="fw-bold text-center mb-4">Digital Health Services</h3>
 
     <div class="row g-4 text-center">
+
         <div class="col-6 col-md-3">
             <a href="lab-reports.html" class="nav-card">
                 <i class="fa-solid fa-file-medical fa-2x"></i>
-                <h6>Diagnostics</h6>
-                <p class="small">Digital Lab Reports</p>
+                <h6>Lab Reports</h6>
+                <p>ABDM-linked digital diagnostics</p>
             </a>
         </div>
 
@@ -98,31 +112,7 @@
             <a href="pharmacy.html" class="nav-card">
                 <i class="fa-solid fa-pills fa-2x"></i>
                 <h6>Pharmacy</h6>
-                <p class="small">Drug Availability</p>
-            </a>
-        </div>
-
-        <div class="col-6 col-md-3">
-            <a href="vaccination.html" class="nav-card">
-                <i class="fa-solid fa-syringe fa-2x"></i>
-                <h6>Vaccination</h6>
-                <p class="small">Immunization Records</p>
-            </a>
-        </div>
-
-        <div class="col-6 col-md-3">
-            <a href="telemedicine.html" class="nav-card">
-                <i class="fa-solid fa-video fa-2x"></i>
-                <h6>Telemedicine</h6>
-                <p class="small">Remote Consultation</p>
-            </a>
-        </div>
-
-        <div class="col-6 col-md-3">
-            <a href="ambulance.html" class="nav-card">
-                <i class="fa-solid fa-truck-medical fa-2x"></i>
-                <h6>Ambulance</h6>
-                <p class="small">Emergency Dispatch</p>
+                <p>Medicine availability & info</p>
             </a>
         </div>
 
@@ -130,15 +120,39 @@
             <a href="blood-bank.html" class="nav-card">
                 <i class="fa-solid fa-droplet fa-2x"></i>
                 <h6>Blood Bank</h6>
-                <p class="small">Stock Monitoring</p>
+                <p>Live component availability</p>
+            </a>
+        </div>
+
+        <div class="col-6 col-md-3">
+            <a href="telemedicine.html" class="nav-card">
+                <i class="fa-solid fa-video fa-2x"></i>
+                <h6>Telemedicine</h6>
+                <p>Remote doctor consultation</p>
+            </a>
+        </div>
+
+        <div class="col-6 col-md-3">
+            <a href="ambulance.html" class="nav-card">
+                <i class="fa-solid fa-truck-medical fa-2x"></i>
+                <h6>Ambulance</h6>
+                <p>Emergency dispatch system</p>
+            </a>
+        </div>
+
+        <div class="col-6 col-md-3">
+            <a href="vaccination.html" class="nav-card">
+                <i class="fa-solid fa-syringe fa-2x"></i>
+                <h6>Vaccination</h6>
+                <p>Immunization schedules</p>
             </a>
         </div>
 
         <div class="col-6 col-md-3">
             <a href="maternity.html" class="nav-card">
                 <i class="fa-solid fa-baby fa-2x"></i>
-                <h6>Maternity</h6>
-                <p class="small">Maternal Care</p>
+                <h6>Maternity Care</h6>
+                <p>ANC & delivery services</p>
             </a>
         </div>
 
@@ -146,25 +160,26 @@
             <a href="education.html" class="nav-card">
                 <i class="fa-solid fa-graduation-cap fa-2x"></i>
                 <h6>Health Education</h6>
-                <p class="small">Awareness Programs</p>
+                <p>Community awareness</p>
             </a>
         </div>
+
     </div>
 </section>
 
 <!-- ================= FOOTER ================= -->
-<footer class="bg-dark text-light">
-    <div class="container py-4 text-center">
-        <p class="fw-semibold mb-1">Rural Health Connect</p>
-        <p class="small mb-1">
-            National Health Mission • ABDM • IPHS 2022
+<footer class="footer bg-dark text-white">
+    <div class="container text-center">
+        <p class="mb-1 fw-semibold">
+            Ministry of Health & Family Welfare – Government of India
         </p>
-        <p class="small text-muted mb-0">
-            Prototype for Academic & Interview Demonstration – 2025
-        </p>
+        <small>
+            This is a prototype system built for academic & demonstration purposes under ABDM guidelines.
+        </small>
     </div>
 </footer>
 
 <script src="script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
