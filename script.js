@@ -181,11 +181,10 @@ if ("serviceWorker" in navigator) {
 /* =====================================================
    BLOOD BANK MODULE – STATE + SERVICE
    ===================================================== */
-
 const BLOOD_GROUPS = ["A+","A-","B+","B-","O+","O-","AB+","AB-"];
 const BLOOD_BANK_KEY = "blood_bank_state";
 
-/* Element references (safe for multi-page use) */
+/* Element references */
 const bbGroup = document.getElementById("bb-group");
 const bbUnits = document.getElementById("bb-units");
 
@@ -202,8 +201,7 @@ let BLOOD_BANK_STATE = JSON.parse(localStorage.getItem(BLOOD_BANK_KEY)) || {
 };
 
 BLOOD_GROUPS.forEach(bg => {
-    BLOOD_BANK_STATE.inventory[bg] =
-        BLOOD_BANK_STATE.inventory[bg] || 0;
+    BLOOD_BANK_STATE.inventory[bg] = BLOOD_BANK_STATE.inventory[bg] || 0;
 });
 
 function saveBloodBankState() {
@@ -220,7 +218,6 @@ function bbLog(message) {
 }
 
 const BloodBankService = {
-
     validate(group, units) {
         if (!group || !units || units <= 0 || !Number.isInteger(units)) {
             alert("Select valid blood group and units (>=1)");
