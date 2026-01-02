@@ -9,186 +9,131 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
-    <!-- Core Styles -->
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body class="bg-light">
 
-<!-- ================= NAVBAR ================= -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
+<nav class="navbar navbar-dark bg-primary shadow">
     <div class="container">
         <a class="navbar-brand fw-bold" href="index.html">
             <i class="fa-solid fa-droplet me-2"></i>Rural Health Connect
         </a>
-        <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#nav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div id="nav" class="collapse navbar-collapse">
-            <ul class="navbar-nav ms-auto fw-semibold">
-                <li class="nav-item"><a class="nav-link" href="services.html">Services</a></li>
-                <li class="nav-item"><a class="nav-link" href="departments.html">Departments</a></li>
-                <li class="nav-item"><a class="nav-link active" href="blood-bank.html">Blood Bank</a></li>
-                <li class="nav-item"><a class="nav-link" href="emergency.html">Emergency</a></li>
-            </ul>
-        </div>
     </div>
 </nav>
 
-<!-- ================= HEADER ================= -->
-<header class="bg-danger text-white py-5 shadow">
-    <div class="container text-center">
-        <h1 class="fw-bold">Integrated Blood Bank Information System</h1>
-        <p class="mt-2 mb-0">
-            IPHS-Compliant | Emergency-Ready | District-Level Inventory Visibility
-        </p>
-    </div>
+<header class="bg-danger text-white py-5 text-center shadow">
+    <h1 class="fw-bold">Integrated Blood Bank Information System</h1>
+    <p class="mb-0">e-RaktKosh Aligned | IPHS (Simulation)</p>
 </header>
 
-<!-- ================= MAIN ================= -->
 <main class="container my-5">
 
-    <!-- SYSTEM STATUS -->
-    <section class="mb-5">
-        <div class="alert alert-info d-flex justify-content-between align-items-center shadow-sm">
-            <div>
-                <i class="fa-solid fa-rotate me-2"></i>
-                Last synchronized with district server:
-                <strong id="last-sync">Loading…</strong>
-            </div>
-            <span class="badge bg-success px-3 py-2">LIVE</span>
-        </div>
-    </section>
+<!-- SYSTEM STATUS -->
+<section class="mb-4">
+    <div class="alert alert-info d-flex justify-content-between align-items-center">
+        <span>
+            <i class="fa-solid fa-rotate me-2"></i>
+            Last Sync: <strong id="last-sync">Loading…</strong>
+        </span>
+        <span class="badge bg-success">LIVE</span>
+    </div>
+</section>
 
-    <!-- BLOOD INVENTORY -->
-    <section class="mb-5">
-        <h3 class="fw-bold text-danger mb-3">
-            <i class="fa-solid fa-warehouse me-2"></i>Blood Inventory Status
-        </h3>
+<!-- INVENTORY -->
+<section class="mb-5">
+    <h4 class="fw-bold text-danger mb-3">
+        <i class="fa-solid fa-warehouse me-2"></i>Blood Inventory
+    </h4>
+    <div class="row g-3" id="inventory-cards"></div>
+</section>
 
-        <div class="row g-4">
+<!-- INVENTORY OPERATIONS -->
+<section class="mb-5">
+    <h4 class="fw-bold text-danger mb-3">
+        <i class="fa-solid fa-syringe me-2"></i>Inventory Operations
+    </h4>
 
-            <div class="col-md-3">
-                <div class="card border-0 shadow-sm h-100">
-                    <div class="card-body text-center">
-                        <h5 class="fw-bold">A+</h5>
-                        <p class="display-6 text-success">12 Units</p>
-                        <small class="text-muted">Safe Level</small>
-                    </div>
+    <div class="card shadow-sm border-0">
+        <div class="card-body">
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <select id="bb-group" class="form-select">
+                        <option value="">Blood Group</option>
+                        <option>A+</option><option>A-</option>
+                        <option>B+</option><option>B-</option>
+                        <option>O+</option><option>O-</option>
+                        <option>AB+</option><option>AB-</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <input id="bb-units" type="number" class="form-control" min="1" step="1" placeholder="Units">
+                </div>
+                <div class="col-md-4 d-flex gap-2">
+                    <button class="btn btn-success w-100" onclick="BloodBankService.addUnits()">Add</button>
+                    <button class="btn btn-danger w-100" onclick="BloodBankService.issueUnits()">Issue</button>
                 </div>
             </div>
+        </div>
+    </div>
+</section>
 
-            <div class="col-md-3">
-                <div class="card border-0 shadow-sm h-100">
-                    <div class="card-body text-center">
-                        <h5 class="fw-bold">B+</h5>
-                        <p class="display-6 text-warning">6 Units</p>
-                        <small class="text-muted">Monitor</small>
-                    </div>
+<!-- DONOR REGISTRATION -->
+<section class="mb-5">
+    <h4 class="fw-bold text-danger mb-3">
+        <i class="fa-solid fa-user-plus me-2"></i>Donor Registration
+    </h4>
+
+    <div class="card shadow-sm border-0">
+        <div class="card-body">
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <input id="donor-name" class="form-control" placeholder="Donor Name">
+                </div>
+                <div class="col-md-4">
+                    <select id="donor-group" class="form-select">
+                        <option value="">Blood Group</option>
+                        <option>A+</option><option>A-</option>
+                        <option>B+</option><option>B-</option>
+                        <option>O+</option><option>O-</option>
+                        <option>AB+</option><option>AB-</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <input id="donor-contact" class="form-control" placeholder="10-digit Mobile">
+                </div>
+                <div class="col-12">
+                    <button class="btn btn-danger" onclick="BloodBankService.registerDonor()">
+                        Register Donor
+                    </button>
                 </div>
             </div>
-
-            <div class="col-md-3">
-                <div class="card border-0 shadow-sm h-100">
-                    <div class="card-body text-center">
-                        <h5 class="fw-bold">O+</h5>
-                        <p class="display-6 text-success">15 Units</p>
-                        <small class="text-muted">Safe Level</small>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-3">
-                <div class="card border-0 shadow-sm h-100">
-                    <div class="card-body text-center">
-                        <h5 class="fw-bold">AB+</h5>
-                        <p class="display-6 text-danger">2 Units</p>
-                        <small class="text-muted">Critical</small>
-                    </div>
-                </div>
-            </div>
-
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- DONOR REGISTRATION -->
-    <section class="mb-5">
-        <h3 class="fw-bold text-danger mb-3">
-            <i class="fa-solid fa-user-plus me-2"></i>Voluntary Donor Registration
-        </h3>
+<!-- AUDIT LOGS -->
+<section>
+    <h4 class="fw-bold text-danger mb-3">
+        <i class="fa-solid fa-clipboard-list me-2"></i>Audit Logs
+    </h4>
 
-        <div class="card shadow-sm border-0">
-            <div class="card-body">
-                <form>
-                    <div class="row g-3">
-
-                        <div class="col-md-6">
-                            <label class="form-label">Donor Name</label>
-                            <input type="text" class="form-control" placeholder="Full Name" required>
-                        </div>
-
-                        <div class="col-md-3">
-                            <label class="form-label">Blood Group</label>
-                            <select class="form-select" required>
-                                <option value="">Select</option>
-                                <option>A+</option><option>B+</option>
-                                <option>O+</option><option>AB+</option>
-                            </select>
-                        </div>
-
-                        <div class="col-md-3">
-                            <label class="form-label">Contact</label>
-                            <input type="tel" class="form-control" placeholder="Mobile Number" required>
-                        </div>
-
-                        <div class="col-12">
-                            <button class="btn btn-danger px-4">
-                                <i class="fa-solid fa-paper-plane me-2"></i>
-                                Submit Registration
-                            </button>
-                        </div>
-
-                    </div>
-                </form>
-            </div>
+    <div class="card shadow-sm border-0">
+        <div class="card-body">
+            <ul id="bb-audit-log" class="small mb-2"></ul>
+            <button class="btn btn-sm btn-secondary" onclick="toggleBloodLogs()">
+                Toggle View
+            </button>
         </div>
-    </section>
-
-    <!-- GOVERNMENT COMPLIANCE -->
-    <section>
-        <div class="card shadow-sm border-0 bg-white">
-            <div class="card-body">
-                <h5 class="fw-bold mb-3">
-                    <i class="fa-solid fa-shield-halved me-2"></i>
-                    Regulatory & Compliance Information
-                </h5>
-                <ul class="mb-0">
-                    <li>Compliant with Drugs & Cosmetics Act (Schedule F)</li>
-                    <li>Aligned with e-RaktKosh architecture (simulation)</li>
-                    <li>Cold chain monitoring protocols followed</li>
-                    <li>Audit logs maintained at facility level</li>
-                </ul>
-            </div>
-        </div>
-    </section>
+    </div>
+</section>
 
 </main>
 
-<!-- ================= FOOTER ================= -->
-<footer class="bg-dark text-light py-4 mt-5">
-    <div class="container text-center small">
-        <p class="mb-1">
-            © Ministry of Health & Family Welfare (Simulation)
-        </p>
-        <p class="mb-0">
-            Rural Health Connect | Version 1.0 | Static PWA Deployment
-        </p>
-    </div>
+<footer class="bg-dark text-light py-3 text-center small">
+    © Rural Health Connect – Blood Bank Module
 </footer>
 
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="script.js"></script>
-
 </body>
 </html>
