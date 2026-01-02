@@ -2,231 +2,242 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Integrated Government Pharmacy | Home Delivery</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Integrated Government Pharmacy System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
-        body { background: #f8f9fa; }
-        .badge-available { background-color: #198754; cursor: pointer; }
-        .badge-critical { background-color: #dc3545; cursor: pointer; }
-        .badge-out { background-color: #6c757d; cursor: pointer; }
-        .toast-container { z-index: 1055; }
+        body { background-color: #f4f6f8; }
+
+        .badge-available { background-color: #198754; }
+        .badge-critical { background-color: #dc3545; }
+        .badge-out { background-color: #6c757d; }
+
+        .row-critical { background-color: #fff1f1; }
+        .row-out { background-color: #f2f2f2; }
+
         .stock-critical { color: #dc3545; font-weight: bold; }
+
+        .is-invalid { border-color: #dc3545; }
+
+        .fixed-alert {
+            position: fixed;
+            top: 56px;
+            left: 0;
+            right: 0;
+            z-index: 1050;
+        }
     </style>
 </head>
 
 <body>
 
-<!-- NAVBAR -->
-<nav class="navbar navbar-dark bg-primary shadow">
+<!-- ================= NAVBAR ================= -->
+<nav class="navbar navbar-dark bg-primary fixed-top shadow">
     <div class="container">
-        <span class="navbar-brand fw-bold">
-            Integrated Government Pharmacy System
-        </span>
+        <span class="navbar-brand fw-bold">Integrated Government Pharmacy</span>
     </div>
 </nav>
 
-<div class="container my-5">
+<!-- ================= ERROR ALERT ================= -->
+<div id="errorBox" class="alert alert-danger d-none fixed-alert text-center"></div>
 
-    <!-- ERROR MESSAGE -->
-    <div id="errorMessage" class="alert alert-danger d-none" role="alert"></div>
+<div class="container mt-5 pt-4">
 
-    <!-- SUMMARY -->
+    <!-- ================= SUMMARY ================= -->
     <div class="row g-3 mb-4">
         <div class="col-md-6">
             <div class="card p-3 shadow-sm">
-                <h6>Total Medicines Listed</h6>
-                <h3 id="totalCount" class="fw-bold text-primary"></h3>
+                <h6>Total Medicines</h6>
+                <h3 id="totalMedicines" class="fw-bold text-primary"></h3>
             </div>
         </div>
         <div class="col-md-6">
             <div class="card p-3 shadow-sm">
                 <h6>Critical Stock Alerts</h6>
-                <h3 id="criticalCount" class="fw-bold text-danger"></h3>
+                <h3 id="criticalMedicines" class="fw-bold text-danger"></h3>
             </div>
         </div>
     </div>
 
-    <!-- SEARCH -->
+    <!-- ================= SEARCH ================= -->
     <input type="text" id="searchBox" class="form-control mb-4"
-           placeholder="Search by name, category, or usage"
-           aria-label="Search medicines"
-           onkeyup="searchMedicine()">
+           placeholder="Search medicines..." onkeyup="searchMedicines()">
 
-    <!-- INVENTORY TABLE -->
-    <div class="card mb-5 shadow">
+    <!-- ================= INVENTORY TABLE ================= -->
+    <div class="card shadow mb-5">
         <div class="card-header bg-primary text-white fw-bold">
             Medicine Inventory
         </div>
         <div class="table-responsive">
-            <table class="table mb-0" id="medicineTable" aria-live="polite">
+            <table class="table mb-0">
                 <thead class="table-light">
-                    <tr>
-                        <th>Name</th>
-                        <th>Category</th>
-                        <th>Stock</th>
-                        <th>Usage</th>
-                        <th>Status</th>
-                    </tr>
+                <tr>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Stock</th>
+                    <th>Usage</th>
+                    <th>Status</th>
+                </tr>
                 </thead>
-                <tbody></tbody>
+                <tbody id="medicineTable"></tbody>
             </table>
         </div>
     </div>
 
-    <!-- HOME DELIVERY -->
+    <!-- ================= DELIVERY REQUEST ================= -->
     <div class="card shadow mb-5">
         <div class="card-body">
-            <h5 class="fw-bold mb-3">Request Medicine Home Delivery</h5>
+            <h5 class="fw-bold mb-3">Request Home Delivery</h5>
 
             <div class="row g-3">
                 <div class="col-md-6">
-                    <input type="text" id="abhaId" class="form-control"
-                           placeholder="example@abdm"
-                           aria-label="ABHA ID">
+                    <input type="text" id="abhaId" class="form-control" placeholder="example@abdm">
                 </div>
                 <div class="col-md-6">
-                    <input type="text" id="medicineName" class="form-control"
-                           placeholder="Paracetamol 500mg"
-                           aria-label="Medicine name">
+                    <input type="text" id="medicineName" class="form-control" placeholder="Medicine Name">
                 </div>
                 <div class="col-md-12">
                     <input type="text" id="deliveryAddress" class="form-control"
-                           placeholder="Full delivery address with area & pincode"
-                           aria-label="Delivery address">
+                           placeholder="House no, Street, City, Pincode">
                 </div>
             </div>
 
-            <button class="btn btn-primary mt-4" onclick="requestHomeDelivery()">
-                Request Home Delivery
+            <button class="btn btn-primary mt-4" onclick="confirmDelivery()">
+                Request Delivery
             </button>
         </div>
     </div>
 
-    <!-- DELIVERY HISTORY -->
+    <!-- ================= DELIVERY HISTORY ================= -->
     <div class="card shadow">
-        <div class="card-header bg-dark text-white fw-bold">
+        <div class="card-header bg-dark text-white fw-bold d-flex justify-content-between">
             Delivery History
+            <select id="statusFilter" class="form-select form-select-sm w-auto"
+                    onchange="renderDeliveryHistory()">
+                <option value="all">All</option>
+                <option value="Dispatched">Dispatched</option>
+                <option value="Delivered">Delivered</option>
+            </select>
         </div>
-        <div class="card-body">
-            <ul id="deliveryHistory" class="list-group small"></ul>
-        </div>
+        <ul id="deliveryHistory" class="list-group list-group-flush"></ul>
     </div>
-</div>
 
-<!-- TOASTS -->
-<div class="toast-container position-fixed bottom-0 end-0 p-3">
-    <div id="successToast" class="toast text-bg-success mb-2">
-        <div class="toast-body">Medicine dispatched successfully.</div>
-    </div>
-    <div id="errorToast" class="toast text-bg-danger">
-        <div class="toast-body">Action failed. Please check details.</div>
-    </div>
 </div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
-/* ================= CONFIG ================= */
+/* ============================================================
+   CONFIG & DATA (localStorage = mock backend)
+   NOTE: Not suitable for concurrent users or sensitive data
+   ============================================================ */
 const CRITICAL_LIMIT = 30;
 
-/* ================= DATA ================= */
-// Inventory persistence using localStorage (mock database)
 let medicines = JSON.parse(localStorage.getItem("medicines")) || [
-    { name: "Paracetamol 500mg", category: "Analgesic", stock: 420, usage: "Fever / Pain" },
-    { name: "Amoxicillin", category: "Antibiotic", stock: 110, usage: "Infection" },
-    { name: "Anti-Snake Venom", category: "Emergency", stock: 22, usage: "Snake Bite" },
-    { name: "ORS Packets", category: "Essential", stock: 980, usage: "Dehydration" },
-    { name: "Insulin", category: "Emergency", stock: 50, usage: "Diabetes" }
+    { name: "Paracetamol 500mg", category: "Analgesic", stock: 50, usage: "Fever / Pain" },
+    { name: "Amoxicillin", category: "Antibiotic", stock: 25, usage: "Infection" },
+    { name: "Insulin", category: "Emergency", stock: 15, usage: "Diabetes" }
 ];
 
 let deliveries = JSON.parse(localStorage.getItem("deliveries")) || [];
 
-/* ================= INIT ================= */
+/* ============================================================
+   INITIALIZATION
+   ============================================================ */
 window.onload = () => {
-    renderTable();
+    renderMedicines();
     updateSummary();
     renderDeliveryHistory();
 };
 
-/* ================= SUMMARY ================= */
-function updateSummary() {
-    document.getElementById("totalCount").innerText = medicines.length;
-    document.getElementById("criticalCount").innerText =
-        medicines.filter(m => m.stock > 0 && m.stock <= CRITICAL_LIMIT).length;
-}
-
-/* ================= TABLE ================= */
-function renderTable() {
-    const tbody = document.querySelector("#medicineTable tbody");
-    tbody.innerHTML = "";
-
-    if (medicines.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="5" class="text-center">No medicines available</td></tr>`;
-        return;
-    }
+/* ============================================================
+   RENDERING
+   ============================================================ */
+function renderMedicines() {
+    const table = document.getElementById("medicineTable");
+    table.innerHTML = "";
 
     medicines.forEach(m => {
-        let status = "Available", badge = "badge-available", stockClass = "";
-        if (m.stock === 0) { status = "Out of Stock"; badge = "badge-out"; }
-        else if (m.stock <= CRITICAL_LIMIT) {
-            status = "Critical"; badge = "badge-critical"; stockClass = "stock-critical";
+        let status = "Available", badge = "badge-available", rowClass = "";
+        if (m.stock === 0) {
+            status = "Out of Stock";
+            badge = "badge-out";
+            rowClass = "row-out";
+        } else if (m.stock <= CRITICAL_LIMIT) {
+            status = "Critical";
+            badge = "badge-critical";
+            rowClass = "row-critical";
         }
 
-        tbody.innerHTML += `
-        <tr>
+        table.innerHTML += `
+        <tr class="${rowClass}">
             <td>${m.name}</td>
             <td>${m.category}</td>
-            <td class="${stockClass}">${m.stock}</td>
+            <td class="${m.stock <= CRITICAL_LIMIT ? 'stock-critical' : ''}">${m.stock}</td>
             <td>${m.usage}</td>
             <td><span class="badge ${badge}">${status}</span></td>
         </tr>`;
     });
 }
 
-/* ================= SEARCH ================= */
-function searchMedicine() {
-    const filter = searchBox.value.toLowerCase();
-    document.querySelectorAll("#medicineTable tbody tr").forEach(row => {
-        row.style.display = row.innerText.toLowerCase().includes(filter) ? "" : "none";
+function updateSummary() {
+    totalMedicines.innerText = medicines.length;
+    criticalMedicines.innerText =
+        medicines.filter(m => m.stock > 0 && m.stock <= CRITICAL_LIMIT).length;
+}
+
+/* ============================================================
+   SEARCH
+   ============================================================ */
+function searchMedicines() {
+    const value = searchBox.value.toLowerCase();
+    document.querySelectorAll("#medicineTable tr").forEach(row => {
+        row.style.display = row.innerText.toLowerCase().includes(value) ? "" : "none";
     });
 }
 
-/* ================= VALIDATION ================= */
-function validABHA(abha) {
-    if (!abha || abha.includes(" ")) {
-        showError("ABHA ID cannot contain spaces.");
-        return false;
-    }
-    if (!/^[a-zA-Z0-9._-]+@abdm$/.test(abha)) {
-        showError("ABHA ID must follow example@abdm format.");
-        return false;
-    }
-    return true;
+/* ============================================================
+   VALIDATION
+   ============================================================ */
+function showError(msg, fields = []) {
+    errorBox.innerText = msg;
+    errorBox.classList.remove("d-none");
+
+    fields.forEach(id => document.getElementById(id).classList.add("is-invalid"));
+
+    setTimeout(() => {
+        errorBox.classList.add("d-none");
+        fields.forEach(id => document.getElementById(id).classList.remove("is-invalid"));
+    }, 3000);
 }
 
-/* ================= HOME DELIVERY ================= */
-function requestHomeDelivery() {
+/* ============================================================
+   DELIVERY WORKFLOW
+   ============================================================ */
+function confirmDelivery() {
+    if (!confirm("Confirm delivery request? Stock will be reduced.")) return;
+    requestDelivery();
+}
+
+function requestDelivery() {
     const abha = abhaId.value.trim();
     const medName = medicineName.value.trim();
     const address = deliveryAddress.value.trim();
 
-    if (!validABHA(abha)) return;
-    if (!medName) return showError("Medicine name is required.");
-    if (!address || address.length < 10)
-        return showError("Delivery address must be at least 10 characters.");
+    if (!/^[a-zA-Z0-9._-]+@abdm$/.test(abha))
+        return showError("Invalid ABHA ID format.", ["abhaId"]);
+
+    if (address.length < 10 || !/\d/.test(address))
+        return showError("Invalid delivery address.", ["deliveryAddress"]);
 
     const med = medicines.find(m => m.name.toLowerCase() === medName.toLowerCase());
-    if (!med) return showError("Medicine not found.");
-    if (med.stock <= 0) return showError("Medicine is out of stock.");
+    if (!med) return showError("Medicine not found.", ["medicineName"]);
+    if (med.stock === 0) return showError("Medicine is out of stock.");
 
     med.stock--;
 
     deliveries.push({
-        abha,
         medicine: med.name,
         address,
         time: new Date().toLocaleString(),
@@ -236,33 +247,32 @@ function requestHomeDelivery() {
     localStorage.setItem("medicines", JSON.stringify(medicines));
     localStorage.setItem("deliveries", JSON.stringify(deliveries));
 
-    renderTable();
+    renderMedicines();
     updateSummary();
     renderDeliveryHistory();
-
-    new bootstrap.Toast(successToast).show();
 }
 
-/* ================= DELIVERY HISTORY ================= */
+/* ============================================================
+   DELIVERY HISTORY
+   ============================================================ */
 function renderDeliveryHistory() {
-    const list = document.getElementById("deliveryHistory");
-    list.innerHTML = deliveries.length === 0
-        ? "<li class='list-group-item text-muted'>No deliveries yet</li>"
-        : deliveries.map(d =>
-            `<li class="list-group-item">
-                <strong>${d.medicine}</strong> → ${d.address}<br>
-                <small>${d.time} | ${d.status}</small>
-            </li>`
-        ).join("");
-}
+    const filter = statusFilter.value;
+    const list = deliveryHistory;
+    list.innerHTML = "";
 
-/* ================= ERROR ================= */
-function showError(msg) {
-    const div = document.getElementById("errorMessage");
-    div.textContent = msg;
-    div.classList.remove("d-none");
-    new bootstrap.Toast(errorToast).show();
-    setTimeout(() => div.classList.add("d-none"), 3000);
+    deliveries
+        .filter(d => filter === "all" || d.status === filter)
+        .forEach(d => {
+            list.innerHTML += `
+            <li class="list-group-item">
+                <strong>${d.medicine}</strong><br>
+                ${d.address}<br>
+                <small>${d.time} | ${d.status}</small>
+            </li>`;
+        });
+
+    if (list.innerHTML === "")
+        list.innerHTML = `<li class="list-group-item text-muted">No deliveries</li>`;
 }
 </script>
 
