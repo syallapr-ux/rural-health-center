@@ -20,7 +20,6 @@ function logSystem(msg) {
 }
 
 /* ---------------- MOCK API (STATIC SAFE) ---------------- */
-/* This simulates backend APIs until real endpoints exist */
 async function fetchHealthData() {
     return new Promise(resolve => {
         setTimeout(() => {
@@ -144,14 +143,13 @@ function initMap() {
             height="100%"
             frameborder="0"
             style="border:0"
-            referrerpolicy="no-referrer-when-downgrade"
             src="https://www.google.com/maps?q=Primary+Health+Centre&output=embed"
             allowfullscreen>
         </iframe>
     `;
 }
 
-/* ---------------- TELEMEDICINE FORM ---------------- */
+/* ---------------- TELEMEDICINE ---------------- */
 function handleTelemedicineForm() {
     const form = document.getElementById("telemedicine-form");
     if (!form) return;
@@ -180,13 +178,185 @@ if ("serviceWorker" in navigator) {
     });
 }
 
+/* =====================================================
+   BLOOD BANK MODULE – STATE + SERVICE
+   ===================================================== */
+
+const BLOOD_GROUPS = ["A+","A-","B+","B-","O+","O-","AB+","AB-"];
+const BLOOD_BANK_KEY = "blood_bank_state";
+
+/* Element references (safe for multi-page use) */
+const bbGroup = document.getElementById("bb-group");
+const bbUnits = document.getElementById("bb-units");
+
+const donorName = document.getElementById("donor-name");
+const donorGroup = document.getElementById("donor-group");
+const donorContact = document.getElementById("donor-contact");
+
+let showAllLogs = false;
+
+let BLOOD_BANK_STATE = JSON.parse(localStorage.getItem(BLOOD_BANK_KEY)) || {
+    inventory: {},
+    donors: [],
+    audit: []
+};
+
+BLOOD_GROUPS.forEach(bg => {
+    BLOOD_BANK_STATE.inventory[bg] =
+        BLOOD_BANK_STATE.inventory[bg] || 0;
+});
+
+function saveBloodBankState() {
+    localStorage.setItem(BLOOD_BANK_KEY, JSON.stringify(BLOOD_BANK_STATE));
+}
+
+function bbLog(message) {
+    BLOOD_BANK_STATE.audit.unshift({
+        message,
+        time: new Date().toLocaleString()
+    });
+    saveBloodBankState();
+    renderBloodBankAudit();
+}
+
+const BloodBankService = {
+
+    validate(group, units) {
+        if (!group || !units || units <= 0 || !Number.isInteger(units)) {
+            alert("Select valid blood group and units (>=1)");
+            return false;
+        }
+        return true;
+    },
+
+    addUnits() {
+        if (!bbGroup || !bbUnits) return;
+
+        const group = bbGroup.value;
+        const units = parseInt(bbUnits.value);
+
+        if (!this.validate(group, units)) return;
+
+        BLOOD_BANK_STATE.inventory[group] += units;
+        bbLog(`Added ${units} units of ${group}`);
+
+        renderBloodInventory();
+        bbGroup.value = "";
+        bbUnits.value = "";
+    },
+
+    issueUnits() {
+        if (!bbGroup || !bbUnits) return;
+
+        const group = bbGroup.value;
+        const units = parseInt(bbUnits.value);
+
+        if (!this.validate(group, units)) return;
+
+        if (BLOOD_BANK_STATE.inventory[group] < units) {
+            alert("Insufficient stock");
+            return;
+        }
+
+        BLOOD_BANK_STATE.inventory[group] -= units;
+        bbLog(`Issued ${units} units of ${group}`);
+
+        renderBloodInventory();
+        bbGroup.value = "";
+        bbUnits.value = "";
+    },
+
+    registerDonor() {
+        if (!donorName || !donorGroup || !donorContact) return;
+
+        const name = donorName.value.trim();
+        const group = donorGroup.value;
+        const contact = donorContact.value.trim();
+
+        if (!name || !group || !/^\d{10}$/.test(contact)) {
+            alert("Enter valid donor details");
+            return;
+        }
+
+        BLOOD_BANK_STATE.donors.push({
+            id: crypto.randomUUID(),
+            name,
+            group,
+            contact,
+            time: new Date().toISOString()
+        });
+
+        bbLog(`Donor registered: ${name} (${group})`);
+        donorName.value = "";
+        donorGroup.value = "";
+        donorContact.value = "";
+    }
+};
+
+function renderBloodInventory() {
+    const container = document.getElementById("inventory-cards");
+    if (!container) return;
+
+    container.innerHTML = "";
+
+    BLOOD_GROUPS.forEach(group => {
+        const units = BLOOD_BANK_STATE.inventory[group];
+        let status = "success";
+        let label = "Safe";
+
+        if (units === 0) {
+            status = "secondary";
+            label = "Out of Stock";
+        } else if (units <= 3) {
+            status = "danger";
+            label = "Critical";
+        } else if (units <= 7) {
+            status = "warning";
+            label = "Monitor";
+        }
+
+        container.innerHTML += `
+            <div class="col-md-3">
+                <div class="card border-${status} shadow-sm text-center">
+                    <div class="card-body">
+                        <h5>${group}</h5>
+                        <p class="display-6 text-${status}">${units}</p>
+                        <small>${label}</small>
+                    </div>
+                </div>
+            </div>
+        `;
+    });
+}
+
+function renderBloodBankAudit() {
+    const list = document.getElementById("bb-audit-log");
+    if (!list) return;
+
+    list.innerHTML = "";
+    const logs = showAllLogs
+        ? BLOOD_BANK_STATE.audit
+        : BLOOD_BANK_STATE.audit.slice(0, 10);
+
+    logs.forEach(log => {
+        list.innerHTML += `<li>[${log.time}] ${log.message}</li>`;
+    });
+}
+
+function toggleBloodLogs() {
+    showAllLogs = !showAllLogs;
+    renderBloodBankAudit();
+}
+
 /* ---------------- INIT ---------------- */
 window.addEventListener("load", () => {
     restoreData();
     syncFacilityData();
     initMap();
     handleTelemedicineForm();
+    renderBloodInventory();
+    renderBloodBankAudit();
 });
 
-/* Auto-sync every 15 seconds */
+/* Auto sync */
 setInterval(syncFacilityData, 15000);
