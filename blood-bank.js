@@ -1,9 +1,22 @@
 /* =====================================================
-   BLOOD BANK MODULE – ISOLATED & STABLE
+   BLOOD BANK MODULE – FULLY FUNCTIONAL (INTERVIEW READY)
    ===================================================== */
 
 const BLOOD_GROUPS = ["A+","A-","B+","B-","O+","O-","AB+","AB-"];
 const BLOOD_BANK_KEY = "blood_bank_state";
+const DONATION_COOLDOWN_DAYS = 90;
+
+/* ---------- BLOOD COMPATIBILITY ---------- */
+const COMPATIBILITY = {
+    "A+": ["A+","A-","O+","O-"],
+    "A-": ["A-","O-"],
+    "B+": ["B+","B-","O+","O-"],
+    "B-": ["B-","O-"],
+    "AB+": BLOOD_GROUPS,
+    "AB-": ["AB-","A-","B-","O-"],
+    "O+": ["O+","O-"],
+    "O-": ["O-"]
+};
 
 /* ---------- STATE ---------- */
 let BLOOD_BANK_STATE = JSON.parse(localStorage.getItem(BLOOD_BANK_KEY)) || {
@@ -13,12 +26,10 @@ let BLOOD_BANK_STATE = JSON.parse(localStorage.getItem(BLOOD_BANK_KEY)) || {
 };
 
 BLOOD_GROUPS.forEach(bg => {
-    if (BLOOD_BANK_STATE.inventory[bg] == null) {
-        BLOOD_BANK_STATE.inventory[bg] = 0;
-    }
+    BLOOD_BANK_STATE.inventory[bg] ??= 0;
 });
 
-function saveBloodBankState() {
+function saveState() {
     localStorage.setItem(BLOOD_BANK_KEY, JSON.stringify(BLOOD_BANK_STATE));
 }
 
@@ -28,124 +39,162 @@ function bbLog(message) {
         message,
         time: new Date().toLocaleString()
     });
-    saveBloodBankState();
-    renderBloodBankAudit();
+    saveState();
+    renderAudit();
 }
 
 /* ---------- SERVICE (GLOBAL) ---------- */
 window.BloodBankService = {
 
     addUnits() {
-        const group = document.getElementById("bb-group").value;
-        const units = parseInt(document.getElementById("bb-units").value);
+        const group = val("bb-group");
+        const units = parseInt(val("bb-units"));
 
-        if (!group || !units || units <= 0) {
-            alert("Enter valid blood group and units");
-            return;
-        }
+        if (!group || units <= 0) return alert("Invalid input");
 
         BLOOD_BANK_STATE.inventory[group] += units;
-        bbLog(`Added ${units} units of ${group}`);
-        renderBloodInventory();
-
-        document.getElementById("bb-group").value = "";
-        document.getElementById("bb-units").value = "";
+        bbLog(`Manual stock added: ${units} units of ${group}`);
+        renderInventory();
+        clearInputs();
     },
 
     issueUnits() {
-        const group = document.getElementById("bb-group").value;
-        const units = parseInt(document.getElementById("bb-units").value);
+        const group = val("bb-group");
+        const units = parseInt(val("bb-units"));
 
-        if (!group || !units || units <= 0) {
-            alert("Enter valid blood group and units");
-            return;
-        }
-
-        if (BLOOD_BANK_STATE.inventory[group] < units) {
-            alert("Insufficient stock");
-            return;
-        }
+        if (!group || units <= 0) return alert("Invalid input");
+        if (BLOOD_BANK_STATE.inventory[group] < units)
+            return alert("Insufficient stock");
 
         BLOOD_BANK_STATE.inventory[group] -= units;
         bbLog(`Issued ${units} units of ${group}`);
-        renderBloodInventory();
 
-        document.getElementById("bb-group").value = "";
-        document.getElementById("bb-units").value = "";
+        if (BLOOD_BANK_STATE.inventory[group] <= 3) {
+            suggestCompatible(group);
+        }
+
+        renderInventory();
+        clearInputs();
     },
 
     registerDonor() {
-        const name = document.getElementById("donor-name").value.trim();
-        const group = document.getElementById("donor-group").value;
-        const contact = document.getElementById("donor-contact").value.trim();
+        const name = val("donor-name").trim();
+        const group = val("donor-group");
+        const contact = val("donor-contact").trim();
 
-        if (!name || !group || !/^\d{10}$/.test(contact)) {
-            alert("Enter valid donor details");
-            return;
-        }
+        if (!name || !group || !/^\d{10}$/.test(contact))
+            return alert("Invalid donor details");
 
         BLOOD_BANK_STATE.donors.push({
             id: crypto.randomUUID(),
             name,
             group,
             contact,
-            time: new Date().toISOString()
+            lastDonation: null
         });
 
         bbLog(`Donor registered: ${name} (${group})`);
+        saveState();
+        renderDonors();
+        clearInputs();
+    },
 
-        document.getElementById("donor-name").value = "";
-        document.getElementById("donor-group").value = "";
-        document.getElementById("donor-contact").value = "";
+    acceptDonation(id) {
+        const donor = BLOOD_BANK_STATE.donors.find(d => d.id === id);
+        if (!donor) return;
+
+        if (!isEligible(donor)) {
+            alert("Donor in cooldown period");
+            return;
+        }
+
+        BLOOD_BANK_STATE.inventory[donor.group] += 1;
+        donor.lastDonation = new Date().toISOString();
+
+        bbLog(`Donation accepted: 1 unit of ${donor.group} from ${donor.name}`);
+        saveState();
+        renderInventory();
+        renderDonors();
     }
 };
 
+/* ---------- ELIGIBILITY ---------- */
+function isEligible(donor) {
+    if (!donor.lastDonation) return true;
+
+    const last = new Date(donor.lastDonation);
+    const diffDays = (Date.now() - last) / (1000 * 60 * 60 * 24);
+
+    return diffDays >= DONATION_COOLDOWN_DAYS;
+}
+
 /* ---------- RENDERING ---------- */
-function renderBloodInventory() {
-    const container = document.getElementById("inventory-cards");
-    container.innerHTML = "";
+function renderInventory() {
+    const c = document.getElementById("inventory-cards");
+    if (!c) return;
 
-    BLOOD_GROUPS.forEach(group => {
-        const units = BLOOD_BANK_STATE.inventory[group];
+    c.innerHTML = "";
+    BLOOD_GROUPS.forEach(g => {
+        const u = BLOOD_BANK_STATE.inventory[g];
+        let s="success", l="Safe";
 
-        let status = "success";
-        let label = "Safe";
+        if (u === 0) { s="secondary"; l="Out of Stock"; }
+        else if (u <= 3) { s="danger"; l="Critical"; }
+        else if (u <= 7) { s="warning"; l="Monitor"; }
 
-        if (units === 0) { status = "secondary"; label = "Out of Stock"; }
-        else if (units <= 3) { status = "danger"; label = "Critical"; }
-        else if (units <= 7) { status = "warning"; label = "Monitor"; }
-
-        container.innerHTML += `
-            <div class="col-md-3">
-                <div class="card border-${status} shadow-sm text-center">
-                    <div class="card-body">
-                        <h5>${group}</h5>
-                        <p class="display-6 text-${status}">${units}</p>
-                        <small>${label}</small>
-                    </div>
+        c.innerHTML += `
+        <div class="col-md-3">
+            <div class="card border-${s} text-center shadow-sm">
+                <div class="card-body">
+                    <h5>${g}</h5>
+                    <p class="display-6 text-${s}">${u}</p>
+                    <small>${l}</small>
                 </div>
-            </div>`;
+            </div>
+        </div>`;
     });
 }
 
-let showAllLogs = false;
+function renderDonors() {
+    const table = document.getElementById("donor-table");
+    if (!table) return;
 
-function renderBloodBankAudit() {
+    table.innerHTML = "";
+    BLOOD_BANK_STATE.donors.forEach(d => {
+        const eligible = isEligible(d);
+        table.innerHTML += `
+        <tr>
+            <td>${d.name}</td>
+            <td>${d.group}</td>
+            <td>${d.contact}</td>
+            <td>
+                <button class="btn btn-sm btn-${eligible ? "success":"secondary"}"
+                    ${eligible ? "" : "disabled"}
+                    onclick="BloodBankService.acceptDonation('${d.id}')">
+                    ${eligible ? "Accept Donation":"Cooldown"}
+                </button>
+            </td>
+        </tr>`;
+    });
+}
+
+function renderAudit() {
     const list = document.getElementById("bb-audit-log");
+    if (!list) return;
+
     list.innerHTML = "";
-
-    const logs = showAllLogs
-        ? BLOOD_BANK_STATE.audit
-        : BLOOD_BANK_STATE.audit.slice(0, 10);
-
-    logs.forEach(log => {
-        list.innerHTML += `<li>[${log.time}] ${log.message}</li>`;
+    BLOOD_BANK_STATE.audit.slice(0,10).forEach(a => {
+        list.innerHTML += `<li>[${a.time}] ${a.message}</li>`;
     });
 }
 
-function toggleBloodLogs() {
-    showAllLogs = !showAllLogs;
-    renderBloodBankAudit();
+/* ---------- HELPERS ---------- */
+function val(id){ return document.getElementById(id)?.value || ""; }
+function clearInputs(){ document.querySelectorAll("input,select").forEach(e=>e.value=""); }
+
+function suggestCompatible(group) {
+    const compatible = COMPATIBILITY[group].join(", ");
+    alert(`⚠ Low stock for ${group}\nCompatible groups: ${compatible}`);
 }
 
 /* ---------- INIT ---------- */
@@ -153,6 +202,7 @@ window.addEventListener("load", () => {
     document.getElementById("last-sync").innerText =
         new Date().toLocaleString();
 
-    renderBloodInventory();
-    renderBloodBankAudit();
+    renderInventory();
+    renderDonors();
+    renderAudit();
 });
