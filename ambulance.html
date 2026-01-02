@@ -1,223 +1,271 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Emergency Ambulance Dispatch | Rural Health Connect</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
-
-<style>
-.status-box {
-    border-left: 6px solid #0d6efd;
-    background: #f8f9fa;
-    padding: 1.2rem;
-    border-radius: 8px;
-}
-.status-idle { border-color: #6c757d; }
-.status-accepted { border-color: #ffc107; }
-.status-dispatched { border-color: #0dcaf0; }
-.status-enroute { border-color: #0d6efd; }
-.status-arrived { border-color: #198754; }
-.readonly {
-    background: #e9ecef;
-}
-</style>
+  <meta charset="UTF-8" />
+  <title>Emergency Ambulance Dispatch</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      padding: 20px;
+    }
+    h1 {
+      color: #c62828;
+    }
+    .card {
+      background: #fff;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 6px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+    input, textarea, select {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+    }
+    button {
+      margin-top: 15px;
+      padding: 10px 15px;
+      cursor: pointer;
+    }
+    .danger { background: #c62828; color: white; }
+    .info { background: #1565c0; color: white; }
+    .success { background: #2e7d32; color: white; }
+    .disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+    .status {
+      font-size: 18px;
+      font-weight: bold;
+    }
+    .log {
+      background: #eee;
+      padding: 10px;
+      max-height: 200px;
+      overflow-y: auto;
+      font-size: 14px;
+    }
+  </style>
 </head>
+<body>
 
-<body class="bg-light">
+<h1>🚑 Integrated Emergency Ambulance Dispatch</h1>
 
-<!-- NAVBAR -->
-<nav class="navbar navbar-dark bg-danger shadow">
-  <div class="container">
-    <a class="navbar-brand fw-bold" href="index.html">
-      <i class="fa-solid fa-ambulance me-2"></i> Emergency Ambulance System
-    </a>
-    <span class="text-white small">108 Workflow Simulation (Single Unit)</span>
-  </div>
-</nav>
+<div class="card">
+  <h3>Emergency Request</h3>
 
-<div class="container py-5">
+  <label>Patient Name</label>
+  <input id="patientName" />
 
-<!-- STATUS PANEL -->
-<div class="status-box mb-4" id="statusBox">
-  <h5 class="fw-bold mb-2">🚑 Live Ambulance Status</h5>
-  <p class="mb-1"><strong>Ambulance ID:</strong> <span id="ambId">AP-31-AX-108</span></p>
-  <p class="mb-1"><strong>Current Status:</strong> <span id="ambStatus">IDLE</span></p>
-  <p class="mb-0 small text-muted">
-    Status updates are managed through a finite-state workflow and persisted locally.
-  </p>
+  <label>Emergency Type</label>
+  <select id="emergencyType">
+    <option value="">Select</option>
+    <option>Road Traffic Accident</option>
+    <option>Cardiac Emergency</option>
+    <option>Trauma</option>
+    <option>Pregnancy Emergency</option>
+  </select>
+
+  <label>Description</label>
+  <textarea id="description"></textarea>
+
+  <label>Caller Location</label>
+  <input id="location" readonly placeholder="Click Get Location" />
+  <button onclick="LocationService.getLocation()">Get Location</button>
+
+  <button class="danger" onclick="UIActions.requestAmbulance()">Request Ambulance</button>
 </div>
 
-<!-- REQUEST FORM -->
-<div class="card shadow-sm border-0 rounded-4 mb-4">
-  <div class="card-body p-4">
-    <h4 class="fw-bold mb-3">
-      <i class="fa-solid fa-bell me-2"></i> Request Emergency Ambulance
-    </h4>
+<div class="card">
+  <h3>Ambulance Status</h3>
+  <p class="status" id="statusText">IDLE</p>
 
-    <div class="row g-3">
-
-      <div class="col-md-6">
-        <label class="form-label">Patient Name *</label>
-        <input type="text" class="form-control" id="patientName">
-      </div>
-
-      <div class="col-md-6">
-        <label class="form-label">Emergency Type *</label>
-        <select class="form-select" id="emergencyType">
-          <option value="">Select</option>
-          <option>Road Traffic Accident</option>
-          <option>Cardiac Emergency</option>
-          <option>Pregnancy Complication</option>
-          <option>Snake Bite</option>
-          <option>Unconscious Patient</option>
-        </select>
-      </div>
-
-      <div class="col-12">
-        <label class="form-label">Brief Description *</label>
-        <textarea class="form-control" id="description" rows="3"></textarea>
-      </div>
-
-      <div class="col-md-6">
-        <label class="form-label">Latitude *</label>
-        <input type="text" class="form-control readonly" id="lat" readonly>
-      </div>
-
-      <div class="col-md-6">
-        <label class="form-label">Longitude *</label>
-        <input type="text" class="form-control readonly" id="lng" readonly>
-      </div>
-
-      <div class="col-12 d-flex gap-2">
-        <button class="btn btn-outline-secondary" onclick="getLocation()">
-          <i class="fa-solid fa-location-crosshairs me-1"></i> Capture Location
-        </button>
-        <button class="btn btn-danger fw-bold" id="dispatchBtn" onclick="requestAmbulance()" disabled>
-          <i class="fa-solid fa-truck-medical me-1"></i> Dispatch Ambulance
-        </button>
-      </div>
-
-    </div>
-  </div>
+  <button class="info" onclick="UIActions.dispatch()">Dispatch</button>
+  <button class="info" onclick="UIActions.markEnRoute()">Mark En Route</button>
+  <button class="success" onclick="UIActions.markArrived()">Mark Arrived</button>
+  <button onclick="UIActions.reset()">Reset</button>
 </div>
 
-<!-- LAST REQUEST -->
-<div class="card shadow-sm border-0 rounded-4">
-  <div class="card-body p-4">
-    <h5 class="fw-bold mb-2">📋 Last Emergency Request</h5>
-    <pre class="bg-dark text-white p-3 rounded small" id="lastRequest">No active requests</pre>
-  </div>
-</div>
-
+<div class="card">
+  <h3>System Log</h3>
+  <div class="log" id="logBox"></div>
 </div>
 
 <script>
-/* =========================
-   CORE AMBULANCE ENGINE
-========================= */
+/* ================================
+   STATE MACHINE
+================================ */
+const STATUS_FLOW = {
+  IDLE: ["REQUEST_ACCEPTED"],
+  REQUEST_ACCEPTED: ["DISPATCHED"],
+  DISPATCHED: ["EN_ROUTE"],
+  EN_ROUTE: ["ARRIVED"],
+  ARRIVED: []
+};
 
-const STORAGE_KEY = "RHC_AMBULANCE_STATE";
+/* ================================
+   STORAGE SERVICE
+================================ */
+const STORAGE_KEY = "AMBULANCE_STATE";
 
-let ambulanceState = {
+const StorageService = {
+  save(data) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  },
+  load() {
+    return JSON.parse(localStorage.getItem(STORAGE_KEY));
+  },
+  clear() {
+    localStorage.removeItem(STORAGE_KEY);
+  }
+};
+
+/* ================================
+   STATE
+================================ */
+let ambulanceState = StorageService.load() || {
   status: "IDLE",
-  patientName: "",
-  emergencyType: "",
-  description: "",
-  location: null,
+  request: null,
   timestamps: {}
 };
 
-/* ---------- LOAD STATE ---------- */
-function loadState() {
-  const saved = localStorage.getItem(STORAGE_KEY);
-  if (saved) {
-    ambulanceState = JSON.parse(saved);
-    updateUI();
+/* ================================
+   CORE SERVICE LAYER
+================================ */
+const AmbulanceService = {
+
+  request(data) {
+    if (ambulanceState.status !== "IDLE") {
+      throw new Error("Ambulance already busy");
+    }
+
+    ambulanceState.request = data;
+    this.transition("REQUEST_ACCEPTED");
+  },
+
+  transition(newStatus) {
+    const allowed = STATUS_FLOW[ambulanceState.status];
+
+    if (!allowed.includes(newStatus)) {
+      throw new Error(`Invalid transition from ${ambulanceState.status} to ${newStatus}`);
+    }
+
+    ambulanceState.status = newStatus;
+    ambulanceState.timestamps[newStatus] = new Date().toISOString();
+    StorageService.save(ambulanceState);
+    Logger.log(`Status changed → ${newStatus}`);
+    UI.update();
+  },
+
+  reset() {
+    ambulanceState = {
+      status: "IDLE",
+      request: null,
+      timestamps: {}
+    };
+    StorageService.clear();
+    Logger.log("System reset");
+    UI.update();
   }
-}
-loadState();
+};
 
-/* ---------- SAVE STATE ---------- */
-function saveState() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(ambulanceState));
-}
+/* ================================
+   LOCATION SERVICE
+================================ */
+const LocationService = {
+  getLocation() {
+    if (!navigator.geolocation) {
+      alert("Geolocation not supported");
+      return;
+    }
 
-/* ---------- UI UPDATE ---------- */
-function updateUI() {
-  const statusEl = document.getElementById("ambStatus");
-  const box = document.getElementById("statusBox");
+    navigator.geolocation.getCurrentPosition(
+      pos => {
+        document.getElementById("location").value =
+          `${pos.coords.latitude}, ${pos.coords.longitude}`;
+        Logger.log("Location captured");
+      },
+      () => alert("Location access denied")
+    );
+  }
+};
 
-  statusEl.innerText = ambulanceState.status;
-  box.className = "status-box mb-4 status-" + ambulanceState.status.toLowerCase();
+/* ================================
+   UI ACTIONS
+================================ */
+const UIActions = {
 
-  document.getElementById("lastRequest").innerText =
-    ambulanceState.patientName
-      ? JSON.stringify(ambulanceState, null, 2)
-      : "No active requests";
-}
+  requestAmbulance() {
+    try {
+      const data = {
+        patient: patientName.value.trim(),
+        type: emergencyType.value,
+        description: description.value.trim(),
+        location: location.value
+      };
 
-/* ---------- VALIDATION ---------- */
-function validateForm() {
-  const valid =
-    patientName.value.trim() &&
-    emergencyType.value &&
-    description.value.trim() &&
-    lat.value && lng.value &&
-    ambulanceState.status === "IDLE";
+      if (!data.patient || !data.type || !data.location) {
+        alert("All fields including location are required");
+        return;
+      }
 
-  dispatchBtn.disabled = !valid;
-}
+      AmbulanceService.request(data);
+    } catch (e) {
+      alert(e.message);
+    }
+  },
 
-/* ---------- LOCATION ---------- */
-function getLocation() {
-  navigator.geolocation.getCurrentPosition(pos => {
-    lat.value = pos.coords.latitude.toFixed(6);
-    lng.value = pos.coords.longitude.toFixed(6);
-    validateForm();
-  }, () => {
-    alert("Location access required for dispatch.");
-  });
-}
+  dispatch() {
+    try {
+      AmbulanceService.transition("DISPATCHED");
+    } catch (e) { alert(e.message); }
+  },
 
-/* ---------- REQUEST ---------- */
-function requestAmbulance() {
-  ambulanceState = {
-    status: "REQUEST_ACCEPTED",
-    patientName: patientName.value,
-    emergencyType: emergencyType.value,
-    description: description.value,
-    location: { lat: lat.value, lng: lng.value },
-    timestamps: { requested: new Date().toISOString() }
-  };
-  saveState();
-  updateUI();
-  runWorkflow();
-}
+  markEnRoute() {
+    try {
+      AmbulanceService.transition("EN_ROUTE");
+    } catch (e) { alert(e.message); }
+  },
 
-/* ---------- WORKFLOW ---------- */
-function runWorkflow() {
-  setTimeout(() => transition("DISPATCHED"), 4000);
-  setTimeout(() => transition("EN_ROUTE"), 9000);
-  setTimeout(() => transition("ARRIVED"), 16000);
-}
+  markArrived() {
+    try {
+      AmbulanceService.transition("ARRIVED");
+    } catch (e) { alert(e.message); }
+  },
 
-function transition(newStatus) {
-  ambulanceState.status = newStatus;
-  ambulanceState.timestamps[newStatus.toLowerCase()] = new Date().toISOString();
-  saveState();
-  updateUI();
-}
+  reset() {
+    AmbulanceService.reset();
+  }
+};
 
-/* ---------- EVENT BINDINGS ---------- */
-["patientName","emergencyType","description"].forEach(id => {
-  document.getElementById(id).addEventListener("input", validateForm);
-});
+/* ================================
+   UI RENDERING
+================================ */
+const UI = {
+  update() {
+    document.getElementById("statusText").innerText =
+      ambulanceState.status;
+  }
+};
 
-updateUI();
+/* ================================
+   LOGGER
+================================ */
+const Logger = {
+  log(msg) {
+    const box = document.getElementById("logBox");
+    box.innerHTML += `[${new Date().toLocaleTimeString()}] ${msg}<br>`;
+  }
+};
+
+UI.update();
 </script>
 
 </body>
