@@ -1,6 +1,6 @@
 /* =====================================================
    RURAL HEALTH CONNECT – CORE APPLICATION ENGINE
-   Static + PWA + API Simulation
+   SAFE MULTI-PAGE VERSION
    ===================================================== */
 
 /* ---------------- GLOBAL STATE ---------------- */
@@ -47,7 +47,12 @@ async function syncFacilityData() {
         updateDashboard(data);
         persistData(data);
 
-        if (data.emergency) triggerEmergencyMode();
+        if (data.emergency) {
+            triggerEmergencyMode();
+        }
+
+        logSystem("System synced");
+
     } catch (e) {
         console.warn("Sync failed", e);
     }
@@ -55,24 +60,35 @@ async function syncFacilityData() {
 
 /* ---------------- DASHBOARD UPDATE ---------------- */
 function updateDashboard(data) {
-    if (document.getElementById("bed-count"))
-        document.getElementById("bed-count").innerText = data.inventory.beds_available;
 
-    if (document.getElementById("oxygen-count"))
-        document.getElementById("oxygen-count").innerText = data.inventory.oxygen_units;
+    const bedEl = document.getElementById("bed-count");
+    if (bedEl) bedEl.innerText = data.inventory.beds_available;
 
-    if (document.getElementById("doctor-count"))
-        document.getElementById("doctor-count").innerText = data.staff.doctors;
+    const oxyEl = document.getElementById("oxygen-count");
+    if (oxyEl) oxyEl.innerText = data.inventory.oxygen_units;
 
-    if (document.getElementById("last-sync"))
-        document.getElementById("last-sync").innerText = formatTime(APP_STATE.lastSync);
+    const docEl = document.getElementById("doctor-count");
+    if (docEl) docEl.innerText = data.staff.doctors;
+
+    const syncEl = document.getElementById("last-sync");
+    if (syncEl) syncEl.innerText = formatTime(APP_STATE.lastSync);
 }
 
-/* ---------------- EMERGENCY ---------------- */
+/* ---------------- EMERGENCY MODE ---------------- */
 function triggerEmergencyMode() {
     if (APP_STATE.emergencyActive) return;
+
     APP_STATE.emergencyActive = true;
     logSystem("Emergency mode activated");
+
+    const box = document.getElementById("emergency-box");
+    if (box) {
+        box.classList.remove("d-none");
+        box.innerHTML = `
+            <h5>🚨 Emergency Alert</h5>
+            <p>High patient inflow detected.</p>
+        `;
+    }
 }
 
 /* ---------------- LOCAL STORAGE ---------------- */
@@ -91,160 +107,64 @@ function restoreData() {
     APP_STATE.cachedData = parsed.data;
     APP_STATE.lastSync = parsed.timestamp;
 
-    if (document.getElementById("last-sync"))
-        document.getElementById("last-sync").innerText = formatTime(APP_STATE.lastSync);
+    const syncEl = document.getElementById("last-sync");
+    if (syncEl) syncEl.innerText = formatTime(APP_STATE.lastSync);
+
+    logSystem("Restored cached data");
 }
 
-/* =====================================================
-   BLOOD BANK MODULE
-   ===================================================== */
+/* ---------------- MAP (SAFE) ---------------- */
+function initMap() {
+    const mapEl = document.getElementById("map");
+    if (!mapEl) return;
 
-const BLOOD_GROUPS = ["A+","A-","B+","B-","O+","O-","AB+","AB-"];
-const BLOOD_BANK_KEY = "blood_bank_state";
-
-let BLOOD_BANK_STATE = JSON.parse(localStorage.getItem(BLOOD_BANK_KEY)) || {
-    inventory: {},
-    donors: [],
-    audit: []
-};
-
-BLOOD_GROUPS.forEach(bg => {
-    BLOOD_BANK_STATE.inventory[bg] ??= 0;
-});
-
-function saveBloodBankState() {
-    localStorage.setItem(BLOOD_BANK_KEY, JSON.stringify(BLOOD_BANK_STATE));
+    mapEl.innerHTML = `
+        <iframe
+            width="100%"
+            height="100%"
+            style="border:0"
+            src="https://www.google.com/maps?q=Primary+Health+Centre&output=embed"
+            loading="lazy">
+        </iframe>
+    `;
 }
 
-function bbLog(message) {
-    BLOOD_BANK_STATE.audit.unshift({
-        message,
-        time: new Date().toLocaleString()
-    });
-    saveBloodBankState();
-    renderBloodBankAudit();
-}
+/* ---------------- TELEMEDICINE (SAFE) ---------------- */
+function handleTelemedicineForm() {
+    const form = document.getElementById("telemedicine-form");
+    if (!form) return;
 
-const BloodBankService = {
+    form.addEventListener("submit", e => {
+        e.preventDefault();
 
-    addUnits() {
-        const group = document.getElementById("bb-group")?.value;
-        const units = parseInt(document.getElementById("bb-units")?.value);
+        const name = form.querySelector("#patient-name")?.value;
+        const issue = form.querySelector("#complaint")?.value;
 
-        if (!group || !units || units <= 0) {
-            alert("Enter valid blood group and units");
-            return;
-        }
+        alert(
+            `Consultation Requested\n\nPatient: ${name}\nIssue: ${issue}`
+        );
 
-        BLOOD_BANK_STATE.inventory[group] += units;
-        bbLog(`Added ${units} units of ${group}`);
-        renderBloodInventory();
-
-        document.getElementById("bb-group").value = "";
-        document.getElementById("bb-units").value = "";
-    },
-
-    issueUnits() {
-        const group = document.getElementById("bb-group")?.value;
-        const units = parseInt(document.getElementById("bb-units")?.value);
-
-        if (!group || !units || units <= 0) {
-            alert("Enter valid blood group and units");
-            return;
-        }
-
-        if (BLOOD_BANK_STATE.inventory[group] < units) {
-            alert("Insufficient stock");
-            return;
-        }
-
-        BLOOD_BANK_STATE.inventory[group] -= units;
-        bbLog(`Issued ${units} units of ${group}`);
-        renderBloodInventory();
-
-        document.getElementById("bb-group").value = "";
-        document.getElementById("bb-units").value = "";
-    },
-
-    registerDonor() {
-        const name = document.getElementById("donor-name")?.value.trim();
-        const group = document.getElementById("donor-group")?.value;
-        const contact = document.getElementById("donor-contact")?.value.trim();
-
-        if (!name || !group || !/^\d{10}$/.test(contact)) {
-            alert("Enter valid donor details");
-            return;
-        }
-
-        BLOOD_BANK_STATE.donors.push({
-            id: crypto.randomUUID(),
-            name,
-            group,
-            contact,
-            time: new Date().toISOString()
-        });
-
-        bbLog(`Donor registered: ${name} (${group})`);
-
-        document.getElementById("donor-name").value = "";
-        document.getElementById("donor-group").value = "";
-        document.getElementById("donor-contact").value = "";
-    }
-};
-
-function renderBloodInventory() {
-    const container = document.getElementById("inventory-cards");
-    if (!container) return;
-
-    container.innerHTML = "";
-
-    BLOOD_GROUPS.forEach(group => {
-        const units = BLOOD_BANK_STATE.inventory[group];
-        let status = "success";
-        let label = "Safe";
-
-        if (units === 0) { status = "secondary"; label = "Out of Stock"; }
-        else if (units <= 3) { status = "danger"; label = "Critical"; }
-        else if (units <= 7) { status = "warning"; label = "Monitor"; }
-
-        container.innerHTML += `
-            <div class="col-md-3">
-                <div class="card border-${status} text-center">
-                    <div class="card-body">
-                        <h5>${group}</h5>
-                        <p class="display-6 text-${status}">${units}</p>
-                        <small>${label}</small>
-                    </div>
-                </div>
-            </div>`;
+        form.reset();
     });
 }
 
-let showAllLogs = false;
-
-function renderBloodBankAudit() {
-    const list = document.getElementById("bb-audit-log");
-    if (!list) return;
-
-    list.innerHTML = "";
-    const logs = showAllLogs ? BLOOD_BANK_STATE.audit : BLOOD_BANK_STATE.audit.slice(0,10);
-
-    logs.forEach(l => {
-        list.innerHTML += `<li>[${l.time}] ${l.message}</li>`;
+/* ---------------- PWA ---------------- */
+if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+        navigator.serviceWorker
+            .register("sw.js")
+            .then(() => logSystem("PWA active"))
+            .catch(err => console.error("SW failed", err));
     });
-}
-
-function toggleBloodLogs() {
-    showAllLogs = !showAllLogs;
-    renderBloodBankAudit();
 }
 
 /* ---------------- INIT ---------------- */
 window.addEventListener("load", () => {
     restoreData();
     syncFacilityData();
-    renderBloodInventory();
-    renderBloodBankAudit();
+    initMap();
+    handleTelemedicineForm();
 });
 
+/* Auto sync every 15s */
 setInterval(syncFacilityData, 15000);
