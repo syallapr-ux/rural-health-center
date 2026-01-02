@@ -1,232 +1,170 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Maternity & Maternal Health | Rural Health Connect</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<title>Maternity & Maternal Health | Rural Health Connect</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Bootstrap + Icons -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
-    <link rel="stylesheet" href="style.css">
+<style>
+    .error { border: 2px solid #dc3545; }
+    .high-risk-row { background-color: #fff3cd; }
+    .referred-row { background-color: #f8d7da; }
+    .success-msg { color: #28a745; }
+    .alert { padding: 10px; }
+</style>
 </head>
 
 <body class="bg-light">
 
-<!-- ================= NAVBAR ================= -->
 <nav class="navbar navbar-dark bg-primary shadow">
-    <div class="container">
-        <a class="navbar-brand fw-bold" href="index.html">
-            <i class="fa-solid fa-person-pregnant me-2"></i>
-            Maternal & Child Health Portal
-        </a>
-    </div>
+<div class="container">
+<span class="navbar-brand fw-bold">
+<i class="fa-solid fa-person-pregnant me-2"></i>
+Maternal & Child Health Portal
+</span>
+</div>
 </nav>
 
-<!-- ================= HEADER ================= -->
 <header class="bg-dark text-white py-4">
-    <div class="container">
-        <h2 class="fw-bold">Maternity & Maternal Health Services</h2>
-        <p class="mb-0">
-            Antenatal | Intranatal | Postnatal | High-Risk Pregnancy Monitoring
-        </p>
-    </div>
+<div class="container">
+<h3 class="fw-bold">Maternity & Maternal Health Services</h3>
+<p class="mb-0">ANC | High-Risk Monitoring | Institutional Deliveries</p>
+</div>
 </header>
 
-<!-- ================= MAIN ================= -->
 <main class="container my-5">
 
-    <!-- ================= KEY INDICATORS ================= -->
-    <section class="mb-5">
-        <h4 class="fw-bold mb-3">Facility Maternity Status Dashboard</h4>
-        <div class="row g-3">
-            <div class="col-md-3">
-                <div class="card shadow-sm border-0 p-3">
-                    <h6 class="text-muted">Active Pregnancies</h6>
-                    <h4 class="fw-bold text-primary">124</h4>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card shadow-sm border-0 p-3">
-                    <h6 class="text-muted">High-Risk Cases</h6>
-                    <h4 class="fw-bold text-danger">18</h4>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card shadow-sm border-0 p-3">
-                    <h6 class="text-muted">Institutional Deliveries (Month)</h6>
-                    <h4 class="fw-bold text-success">62</h4>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card shadow-sm border-0 p-3">
-                    <h6 class="text-muted">JSY Beneficiaries</h6>
-                    <h4 class="fw-bold">47</h4>
-                </div>
-            </div>
-        </div>
-    </section>
+<!-- DASHBOARD -->
+<section class="mb-5">
+<h4 class="fw-bold mb-3">Facility Dashboard</h4>
+<div class="row g-3 text-center">
+<div class="col-md-3"><div class="card p-3"><h6>Active Pregnancies</h6><h4 id="activeCount">0</h4></div></div>
+<div class="col-md-3"><div class="card p-3"><h6>High-Risk Cases</h6><h4 class="text-danger" id="riskCount">0</h4></div></div>
+<div class="col-md-3"><div class="card p-3"><h6>Institutional Deliveries</h6><h4 id="deliveryCount">0</h4></div></div>
+<div class="col-md-3"><div class="card p-3"><h6>JSY Beneficiaries</h6><h4 id="jsyCount">0</h4></div></div>
+</div>
+</section>
 
-    <!-- ================= ANC REGISTRATION ================= -->
-    <section class="mb-5">
-        <div class="card shadow border-0">
-            <div class="card-body p-4">
-                <h4 class="fw-bold">
-                    <i class="fa-solid fa-clipboard-list me-2"></i>
-                    Antenatal Care (ANC) Registration
-                </h4>
+<!-- ANC FORM -->
+<section class="mb-5">
+<div class="card shadow">
+<div class="card-body">
+<h4 class="fw-bold mb-3">ANC Registration</h4>
 
-                <div class="row g-3 mt-2">
-                    <div class="col-md-4">
-                        <label class="form-label fw-bold">Mother's Name</label>
-                        <input type="text" class="form-control">
-                    </div>
-                    <div class="col-md-4">
-                        <label class="form-label fw-bold">ABHA / Aadhaar ID</label>
-                        <input type="text" class="form-control">
-                    </div>
-                    <div class="col-md-4">
-                        <label class="form-label fw-bold">Gestational Age (weeks)</label>
-                        <input type="number" class="form-control">
-                    </div>
-                    <div class="col-md-4">
-                        <label class="form-label fw-bold">Blood Group</label>
-                        <select class="form-select">
-                            <option>A+</option><option>B+</option><option>O+</option><option>AB+</option>
-                            <option>A-</option><option>B-</option><option>O-</option><option>AB-</option>
-                        </select>
-                    </div>
-                    <div class="col-md-4">
-                        <label class="form-label fw-bold">Expected Delivery Date</label>
-                        <input type="date" class="form-control">
-                    </div>
-                    <div class="col-md-4">
-                        <label class="form-label fw-bold">Risk Category</label>
-                        <select class="form-select">
-                            <option>Normal</option>
-                            <option>Moderate Risk</option>
-                            <option>High Risk</option>
-                        </select>
-                    </div>
-                </div>
+<div class="row g-3">
+<input class="form-control" placeholder="Mother Name" id="mother">
+<input class="form-control" placeholder="ABHA / Aadhaar" id="abha">
+<input class="form-control" type="number" placeholder="Gestational Age (weeks)" id="weeks">
+<select class="form-select" id="risk">
+<option value="">Risk Category</option>
+<option>Normal</option>
+<option>Moderate Risk</option>
+<option>High Risk</option>
+</select>
+</div>
 
-                <button class="btn btn-primary mt-4">
-                    Register ANC Case
-                </button>
+<button class="btn btn-primary mt-3" onclick="registerANC()">Register ANC</button>
 
-                <div class="alert alert-secondary small mt-3">
-                    All ANC data syncs with RCH Portal & ANM dashboards (simulation).
-                </div>
-            </div>
-        </div>
-    </section>
+<div class="alert alert-info mt-3 small">
+Data stored locally (simulating RCH / HMIS backend).
+</div>
+</div>
+</div>
+</section>
 
-    <!-- ================= HIGH RISK TRACKING ================= -->
-    <section class="mb-5">
-        <h4 class="fw-bold mb-3">
-            <i class="fa-solid fa-triangle-exclamation text-danger me-2"></i>
-            High-Risk Pregnancy Monitoring
-        </h4>
-
-        <div class="table-responsive shadow-sm">
-            <table class="table table-bordered bg-white">
-                <thead class="table-light">
-                    <tr>
-                        <th>Patient ID</th>
-                        <th>Condition</th>
-                        <th>Risk Factor</th>
-                        <th>Referral Status</th>
-                        <th>Assigned Facility</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>ANC-1024</td>
-                        <td>Severe Anemia</td>
-                        <td>Hb &lt; 7 g/dL</td>
-                        <td class="text-warning fw-bold">Under Monitoring</td>
-                        <td>CHC Visakhapatnam</td>
-                    </tr>
-                    <tr>
-                        <td>ANC-1107</td>
-                        <td>Gestational Diabetes</td>
-                        <td>FBS &gt; 126</td>
-                        <td class="text-danger fw-bold">Referred</td>
-                        <td>District Hospital</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </section>
-
-    <!-- ================= DELIVERY MANAGEMENT ================= -->
-    <section class="mb-5">
-        <div class="card shadow border-0">
-            <div class="card-body p-4">
-                <h4 class="fw-bold">
-                    <i class="fa-solid fa-hospital-user me-2"></i>
-                    Labour & Delivery Management
-                </h4>
-
-                <ul class="list-group list-group-flush mt-3">
-                    <li class="list-group-item">
-                        <strong>Normal Deliveries:</strong> 78% this quarter
-                    </li>
-                    <li class="list-group-item">
-                        <strong>C-Sections:</strong> 22% (Emergency referrals)
-                    </li>
-                    <li class="list-group-item">
-                        <strong>Delivery Rooms:</strong> 2 (24×7)
-                    </li>
-                    <li class="list-group-item">
-                        <strong>Newborn Stabilization Unit (NBSU):</strong> Active
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </section>
-
-    <!-- ================= POSTNATAL CARE ================= -->
-    <section class="mb-5">
-        <div class="card shadow-sm border-0">
-            <div class="card-body p-4">
-                <h4 class="fw-bold">
-                    <i class="fa-solid fa-baby me-2"></i>
-                    Postnatal & Newborn Care
-                </h4>
-
-                <p class="mt-2">
-                    Postnatal care services include early breastfeeding initiation,
-                    immunization linkage, neonatal danger sign screening,
-                    and follow-up through ASHA and ANM workers.
-                </p>
-
-                <div class="alert alert-success">
-                    Neonatal Mortality Reduction Protocol Active
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ================= TECHNICAL NOTE ================= -->
-    <section>
-        <div class="alert alert-warning">
-            <strong>Technical Architecture:</strong>
-            This module integrates with RCH Portal, JSY payment tracking,
-            ANM mobile apps, district referral systems,
-            and ABDM health records (simulated).
-        </div>
-    </section>
+<!-- HIGH RISK TABLE -->
+<section>
+<h4 class="fw-bold mb-3 text-danger">High-Risk Pregnancy Monitoring</h4>
+<table class="table table-bordered bg-white">
+<thead class="table-light">
+<tr>
+<th>ANC ID</th><th>Name</th><th>Risk</th><th>Status</th>
+</tr>
+</thead>
+<tbody id="riskTable"></tbody>
+</table>
+</section>
 
 </main>
 
-<!-- ================= FOOTER ================= -->
-<footer class="bg-dark text-light py-3">
-    <div class="container text-center small">
-        Maternal Health Module | National Health Mission – Simulation
-    </div>
+<footer class="bg-dark text-light text-center py-3 small">
+Maternal Health Module – Simulation of NHM Systems
 </footer>
+
+<script>
+// Retrieve data from localStorage, or initialize as empty array if no data exists
+let data = JSON.parse(localStorage.getItem("ancData")) || [];
+
+// Update Dashboard with counts
+function updateDashboard() {
+    document.getElementById("activeCount").innerText = data.length;
+    document.getElementById("riskCount").innerText = data.filter(d => d.risk==="High Risk").length;
+    document.getElementById("deliveryCount").innerText = Math.floor(data.length * 0.4);
+    document.getElementById("jsyCount").innerText = Math.floor(data.length * 0.3);
+}
+
+// Render High-Risk Table
+function renderTable() {
+    const table = document.getElementById("riskTable");
+    table.innerHTML = "";
+    data.filter(d => d.risk === "High Risk").forEach(d => {
+        table.innerHTML += `
+        <tr class="${d.status === 'Referred' ? 'referred-row' : 'high-risk-row'}">
+            <td>${d.id}</td>
+            <td>${d.name}</td>
+            <td>${d.risk}</td>
+            <td>${d.status}</td>
+        </tr>`;
+    });
+}
+
+// Register ANC Case
+function registerANC() {
+    let m = document.getElementById("mother").value,
+        a = document.getElementById("abha").value,
+        w = document.getElementById("weeks").value,
+        r = document.getElementById("risk").value;
+
+    // Clear any previous error highlights
+    document.querySelectorAll(".form-control, .form-select").forEach(f => f.classList.remove("error"));
+
+    // Validate input fields
+    if (!m || !a || !w || !r || a.length < 10) {
+        document.querySelectorAll(".form-control, .form-select").forEach(f => !f.value && f.classList.add("error"));
+        alert("Please fill all fields correctly");
+        return;
+    }
+
+    // Generate ANC ID and add to data
+    data.push({
+        id: "ANC-" + (1000 + data.length),
+        name: m,
+        risk: r,
+        status: r === "High Risk" ? "Under Monitoring" : "Normal"
+    });
+
+    // Store the updated data in localStorage
+    localStorage.setItem("ancData", JSON.stringify(data));
+
+    // Update Dashboard and High-Risk Table
+    updateDashboard();
+    renderTable();
+
+    // Display success message
+    alert("ANC Registered Successfully");
+
+    // Reset the form fields
+    document.querySelectorAll("input,select").forEach(i => i.value = "");
+}
+
+// Initial data loading
+updateDashboard();
+renderTable();
+
+</script>
 
 </body>
 </html>
