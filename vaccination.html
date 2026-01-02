@@ -1,241 +1,211 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Vaccination Services | Rural Health Connect</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<title>Vaccination Management System | Rural Health Connect</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Bootstrap & Icons -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-
-    <link rel="stylesheet" href="style.css">
+<style>
+body { background:#f4f6f8; }
+.card { border-radius:8px; }
+.status { font-weight:bold; }
+.log { background:#f1f1f1; max-height:200px; overflow:auto; padding:10px; font-size:13px; }
+button:disabled { opacity:0.6; cursor:not-allowed; }
+</style>
 </head>
 
-<body class="bg-light">
+<body>
 
-<!-- ================= NAVBAR ================= -->
-<nav class="navbar navbar-dark bg-success shadow">
-    <div class="container">
-        <a class="navbar-brand fw-bold" href="index.html">
-            <i class="fa-solid fa-syringe me-2"></i>
-            National Immunization Portal
-        </a>
-    </div>
+<nav class="navbar navbar-dark bg-success">
+  <div class="container">
+    <span class="navbar-brand fw-bold">National Immunization Management System</span>
+  </div>
 </nav>
 
-<!-- ================= HEADER ================= -->
-<header class="bg-dark text-white py-4">
-    <div class="container">
-        <h2 class="fw-bold">Universal Immunization Programme (UIP)</h2>
-        <p class="mb-0">
-            Child | Maternal | Adult Vaccination Records – Digital & Secure
-        </p>
-    </div>
-</header>
+<main class="container my-4">
 
-<!-- ================= MAIN ================= -->
-<main class="container my-5">
+<!-- DASHBOARD -->
+<section class="row g-3 mb-4">
+  <div class="col-md-4"><div class="card p-3 shadow-sm"><div>Beneficiaries</div><h4 id="statBeneficiaries">0</h4></div></div>
+  <div class="col-md-4"><div class="card p-3 shadow-sm"><div>Scheduled Appointments</div><h4 id="statAppointments">0</h4></div></div>
+  <div class="col-md-4"><div class="card p-3 shadow-sm"><div>Completed Vaccinations</div><h4 id="statCompleted">0</h4></div></div>
+</section>
 
-    <!-- ================= DASHBOARD ================= -->
-    <section class="mb-5">
-        <div class="row g-3">
-            <div class="col-md-3">
-                <div class="card border-0 shadow-sm p-3">
-                    <h6 class="text-muted">Vaccines Available</h6>
-                    <h4 class="fw-bold text-success">14</h4>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card border-0 shadow-sm p-3">
-                    <h6 class="text-muted">Children Registered</h6>
-                    <h4 class="fw-bold">1,248</h4>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card border-0 shadow-sm p-3">
-                    <h6 class="text-muted">Pregnant Mothers</h6>
-                    <h4 class="fw-bold">412</h4>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card border-0 shadow-sm p-3">
-                    <h6 class="text-muted">Upcoming Doses</h6>
-                    <h4 class="fw-bold text-danger">96</h4>
-                </div>
-            </div>
-        </div>
-    </section>
+<!-- BENEFICIARY -->
+<section class="card p-4 shadow mb-4">
+<h5 class="fw-bold">Register Beneficiary</h5>
+<div class="row g-3">
+  <div class="col-md-3"><input class="form-control" id="bName" placeholder="Name"></div>
+  <div class="col-md-2"><input type="number" class="form-control" id="bAge" placeholder="Age"></div>
+  <div class="col-md-3">
+    <select class="form-select" id="bCategory">
+      <option value="">Category</option>
+      <option>Child</option>
+      <option>Pregnant Woman</option>
+      <option>Adult</option>
+      <option>Senior Citizen</option>
+    </select>
+  </div>
+  <div class="col-md-4"><input class="form-control" id="bAbha" placeholder="ABHA / Aadhaar"></div>
+</div>
+<button class="btn btn-success mt-3" onclick="UI.registerBeneficiary()">Register & Set Active</button>
+</section>
 
-    <!-- ================= ELIGIBILITY ================= -->
-    <section class="mb-5">
-        <div class="card shadow border-0">
-            <div class="card-body p-4">
-                <h4 class="fw-bold">
-                    <i class="fa-solid fa-user-check me-2"></i>
-                    Vaccination Eligibility Check
-                </h4>
+<!-- ELIGIBILITY -->
+<section class="card p-4 shadow mb-4">
+<h5 class="fw-bold">Eligibility Engine</h5>
+<button class="btn btn-primary" onclick="UI.checkEligibility()">Check Eligibility</button>
+<div id="eligibilityResult" class="alert alert-info mt-3 d-none"></div>
+</section>
 
-                <div class="row g-3 mt-2">
-                    <div class="col-md-4">
-                        <label class="form-label fw-bold">ABHA / Aadhaar ID</label>
-                        <input type="text" class="form-control" id="abha">
-                    </div>
-                    <div class="col-md-4">
-                        <label class="form-label fw-bold">Age (in years)</label>
-                        <input type="number" class="form-control" id="age">
-                    </div>
-                    <div class="col-md-4">
-                        <label class="form-label fw-bold">Category</label>
-                        <select class="form-select" id="category">
-                            <option>Child</option>
-                            <option>Pregnant Woman</option>
-                            <option>Adult</option>
-                            <option>Senior Citizen</option>
-                        </select>
-                    </div>
-                </div>
+<!-- APPOINTMENT -->
+<section class="card p-4 shadow mb-4">
+<h5 class="fw-bold">Schedule Appointment</h5>
+<div class="row g-3">
+  <div class="col-md-6"><input class="form-control" id="vaccineName" placeholder="Vaccine"></div>
+  <div class="col-md-6"><input type="date" class="form-control" id="apptDate"></div>
+</div>
+<button class="btn btn-warning mt-3" onclick="UI.scheduleAppointment()">Schedule Appointment</button>
+</section>
 
-                <button class="btn btn-success mt-4" onclick="checkEligibility()">
-                    Check Eligibility
-                </button>
+<!-- WORKFLOW -->
+<section class="card p-4 shadow mb-4">
+<h5 class="fw-bold">Vaccination Workflow</h5>
+<button class="btn btn-success me-2" id="completeBtn" onclick="UI.complete()" disabled>Mark Completed</button>
+<button class="btn btn-danger" id="missBtn" onclick="UI.miss()" disabled>Mark Missed</button>
+<p class="mt-3">Current Status: <span class="status" id="apptStatus">N/A</span></p>
+</section>
 
-                <div id="eligibilityResult" class="alert alert-info mt-3 d-none"></div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ================= VACCINE SCHEDULE ================= -->
-    <section class="mb-5">
-        <div class="card shadow-lg border-0">
-            <div class="card-header bg-success text-white fw-bold">
-                <i class="fa-solid fa-calendar-check me-2"></i>
-                National Vaccine Schedule
-            </div>
-
-            <div class="table-responsive">
-                <table class="table mb-0 align-middle">
-                    <thead class="table-light">
-                        <tr>
-                            <th>Vaccine</th>
-                            <th>Age Group</th>
-                            <th>Doses</th>
-                            <th>Purpose</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>BCG</td>
-                            <td>At Birth</td>
-                            <td>1</td>
-                            <td>Tuberculosis</td>
-                        </tr>
-                        <tr>
-                            <td>OPV</td>
-                            <td>Birth – 5 Years</td>
-                            <td>5</td>
-                            <td>Polio</td>
-                        </tr>
-                        <tr>
-                            <td>Hepatitis B</td>
-                            <td>Birth</td>
-                            <td>3</td>
-                            <td>Liver Protection</td>
-                        </tr>
-                        <tr>
-                            <td>TT / Td</td>
-                            <td>Pregnancy</td>
-                            <td>2</td>
-                            <td>Maternal Safety</td>
-                        </tr>
-                        <tr>
-                            <td>COVID-19 Booster</td>
-                            <td>18+</td>
-                            <td>1</td>
-                            <td>Virus Protection</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </section>
-
-    <!-- ================= REGISTRATION ================= -->
-    <section class="mb-5">
-        <div class="card shadow-sm border-0">
-            <div class="card-body p-4">
-                <h4 class="fw-bold">
-                    <i class="fa-solid fa-clipboard-list me-2"></i>
-                    Vaccination Registration (Simulation)
-                </h4>
-
-                <div class="row g-3 mt-2">
-                    <div class="col-md-6">
-                        <label class="form-label fw-bold">Beneficiary Name</label>
-                        <input type="text" class="form-control" id="name">
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label fw-bold">Vaccine</label>
-                        <input type="text" class="form-control" id="vaccine">
-                    </div>
-                </div>
-
-                <button class="btn btn-success mt-4" onclick="registerVaccination()">
-                    Register Vaccination
-                </button>
-
-                <div class="alert alert-secondary small mt-3">
-                    Registration stored securely using client-side storage (demo purpose).
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ================= NOTES ================= -->
-    <section>
-        <div class="alert alert-warning">
-            <strong>System Integration:</strong>
-            In production, this module integrates with CoWIN APIs, state cold-chain systems,
-            Aadhaar/ABHA verification, and SMS reminders for due doses.
-        </div>
-    </section>
+<!-- LOG -->
+<section class="card p-4 shadow">
+<h5 class="fw-bold">Audit Log</h5>
+<div class="log" id="logBox"></div>
+</section>
 
 </main>
 
-<!-- ================= FOOTER ================= -->
-<footer class="bg-dark text-light py-3">
-    <div class="container text-center small">
-        National Immunization Programme | Digital Health Infrastructure – Simulation
-    </div>
-</footer>
-
-<!-- ================= SCRIPT ================= -->
 <script>
-function checkEligibility() {
-    const age = document.getElementById("age").value;
-    const category = document.getElementById("category").value;
-    const result = document.getElementById("eligibilityResult");
+/* ================= STORAGE ================= */
+const StorageService = {
+  save(state) { localStorage.setItem("VACCINE_STATE", JSON.stringify(state)); },
+  load() { return JSON.parse(localStorage.getItem("VACCINE_STATE")); }
+};
 
-    let message = "Eligible vaccines: ";
+/* ================= STATE ================= */
+let vaccinationState = StorageService.load() || {
+  beneficiaries: [],
+  appointments: [],
+  vaccinationRecords: []
+};
 
-    if (age < 5) message += "BCG, OPV, Hepatitis B";
-    else if (category === "Pregnant Woman") message += "TT / Td";
-    else if (age >= 18) message += "COVID-19 Booster, Influenza";
+let activeBeneficiaryId = null;
+let activeAppointmentId = null;
 
-    result.innerText = message;
-    result.classList.remove("d-none");
-}
+/* ================= RULES ================= */
+const ELIGIBILITY_RULES = [
+  { condition: b => b.age < 5, vaccines:["BCG","OPV","HepB"] },
+  { condition: b => b.category === "Pregnant Woman", vaccines:["TT/Td"] },
+  { condition: b => b.age >= 18, vaccines:["COVID Booster"] }
+];
 
-function registerVaccination() {
-    const record = {
-        name: document.getElementById("name").value,
-        vaccine: document.getElementById("vaccine").value,
-        date: new Date().toLocaleDateString()
+const APPOINTMENT_FLOW = {
+  SCHEDULED:["COMPLETED","MISSED"],
+  COMPLETED:[],
+  MISSED:[]
+};
+
+/* ================= SERVICES ================= */
+const VaccinationService = {
+
+  registerBeneficiary(data){
+    if(!data.name || !data.age || !data.category) throw "Invalid beneficiary data";
+    const b = { id:Date.now(), ...data };
+    vaccinationState.beneficiaries.push(b);
+    activeBeneficiaryId = b.id;
+    Logger.log("Beneficiary registered");
+    StorageService.save(vaccinationState);
+  },
+
+  checkEligibility(){
+    if(!activeBeneficiaryId) throw "No active beneficiary";
+    const b = vaccinationState.beneficiaries.find(x=>x.id===activeBeneficiaryId);
+    return ELIGIBILITY_RULES.filter(r=>r.condition(b)).flatMap(r=>r.vaccines);
+  },
+
+  scheduleAppointment(vaccine,date){
+    if(!activeBeneficiaryId) throw "No active beneficiary";
+    if(!vaccine || !date) throw "Invalid appointment data";
+    const a = { id:Date.now(), beneficiaryId:activeBeneficiaryId, vaccine, date, status:"SCHEDULED" };
+    vaccinationState.appointments.push(a);
+    activeAppointmentId = a.id;
+    Logger.log("Appointment scheduled");
+    StorageService.save(vaccinationState);
+  },
+
+  transition(status){
+    if(!activeAppointmentId) throw "No active appointment";
+    const a = vaccinationState.appointments.find(x=>x.id===activeAppointmentId);
+    if(!APPOINTMENT_FLOW[a.status].includes(status)) throw "Invalid transition";
+    a.status=status;
+    if(status==="COMPLETED"){
+      vaccinationState.vaccinationRecords.push({ beneficiaryId:a.beneficiaryId, vaccine:a.vaccine, date:new Date().toISOString() });
+      Logger.log("Vaccination completed");
+    }
+    StorageService.save(vaccinationState);
+  },
+
+  stats(){
+    return {
+      beneficiaries:vaccinationState.beneficiaries.length,
+      appointments:vaccinationState.appointments.filter(a=>a.status==="SCHEDULED").length,
+      completed:vaccinationState.vaccinationRecords.length
     };
+  }
+};
 
-    localStorage.setItem("lastVaccination", JSON.stringify(record));
-    alert("Vaccination registered successfully (simulation)");
-}
+/* ================= UI ================= */
+const UI = {
+
+  registerBeneficiary(){
+    VaccinationService.registerBeneficiary({
+      name:bName.value, age:+bAge.value, category:bCategory.value, abhaId:bAbha.value
+    });
+    this.update();
+  },
+
+  checkEligibility(){
+    const v = VaccinationService.checkEligibility();
+    eligibilityResult.innerText="Eligible Vaccines: "+v.join(", ");
+    eligibilityResult.classList.remove("d-none");
+  },
+
+  scheduleAppointment(){
+    VaccinationService.scheduleAppointment(vaccineName.value, apptDate.value);
+    this.update();
+  },
+
+  complete(){ VaccinationService.transition("COMPLETED"); this.update(); },
+  miss(){ VaccinationService.transition("MISSED"); this.update(); },
+
+  update(){
+    const s = VaccinationService.stats();
+    statBeneficiaries.innerText=s.beneficiaries;
+    statAppointments.innerText=s.appointments;
+    statCompleted.innerText=s.completed;
+
+    const a=vaccinationState.appointments.find(x=>x.id===activeAppointmentId);
+    apptStatus.innerText=a?a.status:"N/A";
+
+    completeBtn.disabled=!a||a.status!=="SCHEDULED";
+    missBtn.disabled=!a||a.status!=="SCHEDULED";
+  }
+};
+
+/* ================= LOGGER ================= */
+const Logger={ log:m=>logBox.innerHTML+=`[${new Date().toLocaleTimeString()}] ${m}<br>` };
+
+UI.update();
 </script>
 
 </body>
