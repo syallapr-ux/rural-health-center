@@ -2,6 +2,7 @@ console.log("script.js loaded");
 
 /* =====================================================
    RURAL HEALTH CONNECT – CORE APPLICATION ENGINE
+   (Interview-safe, non-PWA version)
    ===================================================== */
 
 /* -------- GLOBAL STATE -------- */
@@ -20,10 +21,6 @@ function logSystem(msg) {
     console.log("[IRHIS]", msg);
 }
 
-function showSystemMessage(msg) {
-    alert(msg);
-}
-
 /* -------- MOCK BACKEND -------- */
 // Mock values generated to simulate real-time facility load
 async function fetchHealthData() {
@@ -32,7 +29,7 @@ async function fetchHealthData() {
             resolve({
                 emergency: Math.random() > 0.8
             });
-        }, 800);
+        }, 700);
     });
 }
 
@@ -44,14 +41,15 @@ async function syncFacilityData() {
         APP_STATE.cachedData = data;
         APP_STATE.lastSync = Date.now(); // SET FIRST
 
-        updateDepartmentUI(data);        // THEN UPDATE UI
+        updateDepartmentUI(data);
         persistData(data);
 
         if (data.emergency) triggerEmergencyMode();
 
         logSystem("System synced");
     } catch (e) {
-        showSystemMessage("Offline mode active");
+        console.warn("Using local cached data (backend simulation)");
+        restoreData();
     }
 }
 
@@ -60,17 +58,17 @@ function updateDepartmentUI(data) {
     const syncEl = document.getElementById("last-sync");
     if (syncEl) syncEl.innerText = formatTime(APP_STATE.lastSync);
 
-    const emergencyBadge = document.getElementById("emergency-status");
-    const emergencyCard = document.querySelector(".emergency-card");
+    const badge = document.getElementById("emergency-status");
+    const card = document.querySelector(".emergency-card");
 
     if (data.emergency) {
-        emergencyBadge.innerText = "High Load";
-        emergencyBadge.className = "badge bg-danger ms-2";
-        emergencyCard?.classList.add("emergency-active");
+        badge.innerText = "High Load";
+        badge.className = "badge bg-danger ms-2";
+        card?.classList.add("emergency-active");
     } else {
-        emergencyBadge.innerText = "Normal";
-        emergencyBadge.className = "badge bg-success ms-2";
-        emergencyCard?.classList.remove("emergency-active");
+        badge.innerText = "Normal";
+        badge.className = "badge bg-success ms-2";
+        card?.classList.remove("emergency-active");
     }
 }
 
@@ -98,7 +96,7 @@ function restoreData() {
     APP_STATE.lastSync = parsed.timestamp;
 
     updateDepartmentUI(parsed.data);
-    logSystem("Cached data restored");
+    logSystem("Restored cached data");
 }
 
 /* -------- REFERRAL -------- */
@@ -112,5 +110,12 @@ window.addEventListener("load", () => {
     syncFacilityData();
 });
 
-/* Auto sync every 15s */
+/* Auto-sync every 15 seconds */
 setInterval(syncFacilityData, 15000);
+
+/*
+ NOTE:
+ PWA / Service Worker intentionally disabled
+ to avoid cache issues during interview/demo.
+ Can be enabled in production.
+*/
