@@ -39,14 +39,39 @@
 <header class="bg-success text-white py-5 shadow">
     <div class="container">
         <h1 class="fw-bold">Community Health Education</h1>
-        <p class="mb-0">
+        <p class="mb-1">
             Preventive Healthcare, Awareness & Capacity Building for Rural Populations
         </p>
+        <span class="badge bg-light text-success">
+            Offline Accessible
+        </span>
     </div>
 </header>
 
 <!-- ================= MAIN CONTENT ================= -->
 <main class="container my-5">
+
+    <!-- OFFLINE NOTICE (Injected via JS if offline) -->
+
+    <!-- PROGRESS INDICATOR -->
+    <div class="alert alert-success small mb-4">
+        Education Progress:
+        <strong><span id="edu-progress">0%</span></strong> completed
+    </div>
+
+    <!-- AUDIENCE FILTER -->
+    <section class="mb-4">
+        <label class="fw-semibold me-2">Target Audience:</label>
+        <select id="audienceFilter" class="form-select w-auto d-inline" onchange="filterAudience()">
+            <option value="all">All</option>
+            <option value="pregnant">Pregnant Women</option>
+            <option value="adolescent">Adolescents</option>
+            <option value="elderly">Elderly</option>
+        </select>
+        <p class="small text-muted mt-2">
+            Designed for low-literacy and assisted access via ASHA & frontline health workers.
+        </p>
+    </section>
 
     <!-- INTRO -->
     <section class="mb-5">
@@ -56,15 +81,14 @@
                     Health education is a core pillar of the
                     <strong>National Health Mission (NHM)</strong>.
                     This module delivers structured, accessible and
-                    culturally relevant health information to rural communities,
-                    empowering individuals to make informed decisions.
+                    culturally relevant health information to rural communities.
                 </p>
                 <p>
-                    Content is curated based on
+                    Content aligns with
                     <strong>MoHFW</strong>,
                     <strong>ICMR</strong> and
-                    <strong>WHO</strong> guidelines and is designed
-                    for low-literacy and low-connectivity environments.
+                    <strong>WHO</strong> guidelines and supports
+                    low-connectivity environments.
                 </p>
             </div>
         </div>
@@ -75,141 +99,116 @@
         <div class="row g-4">
 
             <!-- MATERNAL -->
-            <div class="col-lg-6">
+            <article class="col-lg-6 edu-card" data-audience="pregnant" aria-label="Maternal Health Education">
                 <div class="card h-100 shadow-sm border-0">
                     <div class="card-body">
                         <h4 class="fw-bold text-primary">
                             <i class="fa-solid fa-person-pregnant me-2"></i>
                             Maternal & Child Health
                         </h4>
-                        <p class="small text-muted">
-                            Safe motherhood and early childhood survival education.
-                        </p>
                         <ul>
-                            <li>Antenatal care (minimum 4 ANC visits)</li>
-                            <li>Institutional delivery importance</li>
-                            <li>Nutrition during pregnancy</li>
-                            <li>Danger signs during pregnancy & post-partum</li>
-                            <li>Breastfeeding and infant nutrition</li>
+                            <li>Minimum 4 ANC visits</li>
+                            <li>Institutional delivery</li>
+                            <li>Pregnancy nutrition</li>
+                            <li>Postnatal danger signs</li>
                         </ul>
                         <div class="alert alert-info small">
-                            <strong>Program linkage:</strong>
-                            Janani Suraksha Yojana (JSY), PMMVY
+                            JSY, PMMVY
                         </div>
+                        <button class="btn btn-sm btn-outline-success"
+                                onclick="markViewed('maternal', event)">
+                            Mark as Viewed
+                        </button>
+                        <button class="btn btn-sm btn-outline-secondary" disabled>
+                            Audio Guide (Coming Soon)
+                        </button>
                     </div>
                 </div>
-            </div>
+            </article>
 
             <!-- NCD -->
-            <div class="col-lg-6">
+            <article class="col-lg-6 edu-card" data-audience="elderly" aria-label="NCD Education">
                 <div class="card h-100 shadow-sm border-0">
                     <div class="card-body">
                         <h4 class="fw-bold text-danger">
                             <i class="fa-solid fa-heart-pulse me-2"></i>
-                            Non-Communicable Diseases (NCDs)
+                            Non-Communicable Diseases
                         </h4>
-                        <p class="small text-muted">
-                            Early detection and lifestyle modification education.
-                        </p>
                         <ul>
-                            <li>Hypertension & diabetes awareness</li>
-                            <li>Dietary salt & sugar reduction</li>
-                            <li>Physical activity recommendations</li>
-                            <li>Tobacco & alcohol risk counselling</li>
+                            <li>Diabetes & BP awareness</li>
+                            <li>Salt & sugar reduction</li>
+                            <li>Physical activity</li>
+                            <li>Tobacco cessation</li>
                         </ul>
                         <div class="alert alert-warning small">
-                            <strong>Screening supported:</strong>
                             NPCDCS Program
                         </div>
+                        <button class="btn btn-sm btn-outline-success"
+                                onclick="markViewed('ncd', event)">
+                            Mark as Viewed
+                        </button>
                     </div>
                 </div>
-            </div>
+            </article>
 
             <!-- COMMUNICABLE -->
-            <div class="col-lg-6">
+            <article class="col-lg-6 edu-card" data-audience="all" aria-label="Communicable Disease Education">
                 <div class="card h-100 shadow-sm border-0">
                     <div class="card-body">
                         <h4 class="fw-bold text-success">
                             <i class="fa-solid fa-virus me-2"></i>
                             Communicable Diseases
                         </h4>
-                        <p class="small text-muted">
-                            Prevention, early reporting and treatment compliance.
-                        </p>
                         <ul>
-                            <li>Tuberculosis symptoms & DOTS adherence</li>
+                            <li>TB symptoms & DOTS</li>
                             <li>Malaria & dengue prevention</li>
-                            <li>Water-borne disease prevention</li>
-                            <li>Hygiene & sanitation practices</li>
+                            <li>Safe water & sanitation</li>
                         </ul>
                         <div class="alert alert-success small">
-                            <strong>Linked missions:</strong>
-                            NTEP, NVBDCP, Swachh Bharat
+                            NTEP, NVBDCP
                         </div>
+                        <button class="btn btn-sm btn-outline-success"
+                                onclick="markViewed('communicable', event)">
+                            Mark as Viewed
+                        </button>
                     </div>
                 </div>
-            </div>
+            </article>
 
             <!-- ADOLESCENT -->
-            <div class="col-lg-6">
+            <article class="col-lg-6 edu-card" data-audience="adolescent" aria-label="Adolescent Health Education">
                 <div class="card h-100 shadow-sm border-0">
                     <div class="card-body">
                         <h4 class="fw-bold text-secondary">
                             <i class="fa-solid fa-children me-2"></i>
                             Adolescent Health
                         </h4>
-                        <p class="small text-muted">
-                            Life-skills education and preventive guidance.
-                        </p>
                         <ul>
-                            <li>Menstrual hygiene management</li>
+                            <li>Menstrual hygiene</li>
                             <li>Anemia prevention</li>
                             <li>Mental health awareness</li>
-                            <li>Substance abuse prevention</li>
                         </ul>
                         <div class="alert alert-secondary small">
-                            <strong>Program:</strong>
-                            Rashtriya Kishor Swasthya Karyakram (RKSK)
+                            RKSK Program
                         </div>
+                        <button class="btn btn-sm btn-outline-success"
+                                onclick="markViewed('adolescent', event)">
+                            Mark as Viewed
+                        </button>
                     </div>
                 </div>
-            </div>
+            </article>
 
-        </div>
-    </section>
-
-    <!-- DIGITAL DELIVERY -->
-    <section class="mb-5">
-        <div class="card shadow-sm border-0">
-            <div class="card-body">
-                <h3 class="fw-bold mb-3">
-                    <i class="fa-solid fa-mobile-screen-button me-2"></i>
-                    Digital Education Delivery
-                </h3>
-                <p>
-                    This module is designed to support:
-                </p>
-                <ul>
-                    <li>Offline-first access via PWA caching</li>
-                    <li>Multilingual expansion (regional languages)</li>
-                    <li>Audio-visual learning for low-literacy users</li>
-                    <li>Future API integration with health content repositories</li>
-                </ul>
-                <p class="small text-muted">
-                    Content delivery can be dynamically personalized based on
-                    age group, gender and risk profile using ABDM-linked metadata.
-                </p>
-            </div>
         </div>
     </section>
 
 </main>
 
 <!-- ================= FOOTER ================= -->
-<footer class="bg-dark text-light py-4 mt-5">
+<footer class="bg-dark text-light py-4">
     <div class="container text-center small">
         <p class="mb-1">
-            Health Education Initiative | National Health Mission (Simulation)
+            Health Education Initiative | NHM (Simulation)
         </p>
         <p class="mb-0">
             Rural Health Connect | Public Health Awareness Platform
@@ -217,8 +216,75 @@
     </div>
 </footer>
 
+<!-- ================= JS ================= -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="script.js"></script>
+
+<script>
+const topics = ["maternal","ncd","communicable","adolescent"];
+
+/* Restore filter + viewed state + progress */
+window.addEventListener("load", () => {
+
+    // Restore audience filter
+    const savedAudience = localStorage.getItem("edu_audience");
+    if (savedAudience) {
+        document.getElementById("audienceFilter").value = savedAudience;
+        filterAudience();
+    }
+
+    // Restore viewed buttons
+    document.querySelectorAll("[onclick^='markViewed']").forEach(btn => {
+        const topic = btn.getAttribute("onclick").match(/'(.*?)'/)[1];
+        if (localStorage.getItem("edu_" + topic) === "viewed") {
+            btn.innerText = "Viewed ✓";
+            btn.classList.remove("btn-outline-success");
+            btn.classList.add("btn-success");
+            btn.disabled = true;
+        }
+    });
+
+    // Offline notice
+    if (!navigator.onLine) {
+        const note = document.createElement("div");
+        note.className = "alert alert-warning small";
+        note.innerText = "Offline mode: Educational content available without internet.";
+        document.querySelector("main").prepend(note);
+    }
+
+    updateProgress();
+});
+
+/* Audience filtering with persistence */
+function filterAudience() {
+    const selected = document.getElementById("audienceFilter").value;
+    localStorage.setItem("edu_audience", selected);
+
+    document.querySelectorAll(".edu-card").forEach(card => {
+        const audience = card.dataset.audience;
+        card.style.display =
+            (selected === "all" || audience === selected || audience === "all")
+            ? "block" : "none";
+    });
+}
+
+/* Mark education as viewed */
+function markViewed(topic, event) {
+    localStorage.setItem("edu_" + topic, "viewed");
+    const btn = event.target;
+    btn.innerText = "Viewed ✓";
+    btn.classList.remove("btn-outline-success");
+    btn.classList.add("btn-success");
+    btn.disabled = true;
+    updateProgress();
+}
+
+/* Progress calculation */
+function updateProgress() {
+    const done = topics.filter(t => localStorage.getItem("edu_" + t)).length;
+    document.getElementById("edu-progress").innerText =
+        Math.round((done / topics.length) * 100) + "%";
+}
+</script>
 
 </body>
 </html>
