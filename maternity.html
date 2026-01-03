@@ -12,13 +12,12 @@
     .error { border: 2px solid #dc3545; }
     .high-risk-row { background-color: #fff3cd; }
     .referred-row { background-color: #f8d7da; }
-    .success-msg { color: #28a745; }
-    .alert { padding: 10px; }
 </style>
 </head>
 
 <body class="bg-light">
 
+<!-- NAVBAR -->
 <nav class="navbar navbar-dark bg-primary shadow">
 <div class="container">
 <span class="navbar-brand fw-bold">
@@ -28,6 +27,7 @@ Maternal & Child Health Portal
 </div>
 </nav>
 
+<!-- HEADER -->
 <header class="bg-dark text-white py-4">
 <div class="container">
 <h3 class="fw-bold">Maternity & Maternal Health Services</h3>
@@ -56,7 +56,7 @@ Maternal & Child Health Portal
 
 <div class="row g-3">
 <input class="form-control" placeholder="Mother Name" id="mother">
-<input class="form-control" placeholder="ABHA / Aadhaar" id="abha">
+<input class="form-control" placeholder="ABHA / Aadhaar (10–14 digits)" id="abha">
 <input class="form-control" type="number" placeholder="Gestational Age (weeks)" id="weeks">
 <select class="form-select" id="risk">
 <option value="">Risk Category</option>
@@ -68,8 +68,10 @@ Maternal & Child Health Portal
 
 <button class="btn btn-primary mt-3" onclick="registerANC()">Register ANC</button>
 
+<div id="msgBox" class="alert d-none mt-3"></div>
+
 <div class="alert alert-info mt-3 small">
-Data stored locally (simulating RCH / HMIS backend).
+Data stored locally to simulate RCH / HMIS backend.
 </div>
 </div>
 </div>
@@ -81,7 +83,11 @@ Data stored locally (simulating RCH / HMIS backend).
 <table class="table table-bordered bg-white">
 <thead class="table-light">
 <tr>
-<th>ANC ID</th><th>Name</th><th>Risk</th><th>Status</th>
+<th>ANC ID</th>
+<th>Name</th>
+<th>Weeks</th>
+<th>Status</th>
+<th>Action</th>
 </tr>
 </thead>
 <tbody id="riskTable"></tbody>
@@ -95,75 +101,118 @@ Maternal Health Module – Simulation of NHM Systems
 </footer>
 
 <script>
-// Retrieve data from localStorage, or initialize as empty array if no data exists
-let data = JSON.parse(localStorage.getItem("ancData")) || [];
+/* ---------------- STORAGE SERVICE (Backend-ready) ---------------- */
+const StorageService = {
+    get() {
+        return JSON.parse(localStorage.getItem("ancData")) || [];
+    },
+    save(data) {
+        localStorage.setItem("ancData", JSON.stringify(data));
+    }
+};
 
-// Update Dashboard with counts
-function updateDashboard() {
-    document.getElementById("activeCount").innerText = data.length;
-    document.getElementById("riskCount").innerText = data.filter(d => d.risk==="High Risk").length;
-    document.getElementById("deliveryCount").innerText = Math.floor(data.length * 0.4);
-    document.getElementById("jsyCount").innerText = Math.floor(data.length * 0.3);
+let data = StorageService.get();
+
+/* ---------------- UI MESSAGE HANDLER ---------------- */
+function showMessage(type, text) {
+    const box = document.getElementById("msgBox");
+    box.className = `alert alert-${type}`;
+    box.innerText = text;
+    box.classList.remove("d-none");
 }
 
-// Render High-Risk Table
+/* ---------------- DASHBOARD ---------------- */
+function updateDashboard() {
+    document.getElementById("activeCount").innerText = data.length;
+    document.getElementById("riskCount").innerText = data.filter(d => d.risk === "High Risk").length;
+
+    document.getElementById("deliveryCount").innerText =
+        data.filter(d => d.weeks >= 37).length;
+
+    document.getElementById("jsyCount").innerText =
+        data.filter(d => d.weeks >= 37).length;
+}
+
+/* ---------------- HIGH RISK TABLE ---------------- */
 function renderTable() {
     const table = document.getElementById("riskTable");
     table.innerHTML = "";
+
     data.filter(d => d.risk === "High Risk").forEach(d => {
         table.innerHTML += `
         <tr class="${d.status === 'Referred' ? 'referred-row' : 'high-risk-row'}">
             <td>${d.id}</td>
             <td>${d.name}</td>
-            <td>${d.risk}</td>
+            <td>${d.weeks}</td>
             <td>${d.status}</td>
+            <td>
+                ${d.status !== "Referred" ? 
+                `<button class="btn btn-sm btn-danger" onclick="referCase('${d.id}')">Refer</button>` 
+                : "-"}
+            </td>
         </tr>`;
     });
 }
 
-// Register ANC Case
+/* ---------------- REFER CASE ---------------- */
+function referCase(id) {
+    data = data.map(d =>
+        d.id === id ? { ...d, status: "Referred" } : d
+    );
+    StorageService.save(data);
+    renderTable();
+    showMessage("warning", "Case referred to higher facility");
+}
+
+/* ---------------- ANC REGISTRATION ---------------- */
 function registerANC() {
-    let m = document.getElementById("mother").value,
-        a = document.getElementById("abha").value,
-        w = document.getElementById("weeks").value,
-        r = document.getElementById("risk").value;
+    const m = document.getElementById("mother").value.trim();
+    const a = document.getElementById("abha").value.trim();
+    const w = Number(document.getElementById("weeks").value);
+    const r = document.getElementById("risk").value;
 
-    // Clear any previous error highlights
     document.querySelectorAll(".form-control, .form-select").forEach(f => f.classList.remove("error"));
+    document.getElementById("msgBox").classList.add("d-none");
 
-    // Validate input fields
-    if (!m || !a || !w || !r || a.length < 10) {
-        document.querySelectorAll(".form-control, .form-select").forEach(f => !f.value && f.classList.add("error"));
-        alert("Please fill all fields correctly");
+    if (!m || !a || !w || !r) {
+        showMessage("danger", "All fields are required");
         return;
     }
 
-    // Generate ANC ID and add to data
+    if (!/^\d{10,14}$/.test(a)) {
+        showMessage("danger", "Enter a valid ABHA/Aadhaar number");
+        document.getElementById("abha").classList.add("error");
+        return;
+    }
+
+    if (w < 1 || w > 42) {
+        showMessage("danger", "Gestational age must be between 1 and 42 weeks");
+        document.getElementById("weeks").classList.add("error");
+        return;
+    }
+
     data.push({
-        id: "ANC-" + (1000 + data.length),
+        id: "ANC-" + Date.now(),
         name: m,
+        abha: a,
+        weeks: w,
         risk: r,
-        status: r === "High Risk" ? "Under Monitoring" : "Normal"
+        status: r === "High Risk" ? "Under Monitoring" : "Normal",
+        registeredOn: new Date().toISOString()
     });
 
-    // Store the updated data in localStorage
-    localStorage.setItem("ancData", JSON.stringify(data));
-
-    // Update Dashboard and High-Risk Table
+    StorageService.save(data);
     updateDashboard();
     renderTable();
 
-    // Display success message
-    alert("ANC Registered Successfully");
+    showMessage("success", "ANC registered successfully");
 
-    // Reset the form fields
     document.querySelectorAll("input,select").forEach(i => i.value = "");
 }
 
-// Initial data loading
+/* ---------------- INITIAL LOAD ---------------- */
 updateDashboard();
 renderTable();
-
 </script>
 
 </body>
