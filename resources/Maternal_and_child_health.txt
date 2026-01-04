@@ -1,1 +1,29 @@
-
+Maternal and Child Health (MCH) focuses on the physical, mental, and social well-being of women during pregnancy, childbirth, and the postpartum period, as well as the health of infants and children under five. For 2026, healthcare modules prioritize a "life-course approach" that integrates services across different stages of life to improve survival and long-term health outcomes.
+1. Core Components of Maternal Care
+Comprehensive maternal care is delivered through a continuum of three critical phases:
+Antenatal Care (ANC): Regular monitoring during pregnancy to prevent complications.
+Registration: Early registration (ideally within the first trimester) to establish baseline health.
+Minimum Visits: WHO recommends at least eight antenatal contacts.
+Services: Blood pressure monitoring, hemoglobin (Hb) estimation, screening for gestational diabetes, HIV/Syphilis testing, and iron-folic acid (IFA) supplementation.
+Intranatal Care: Care during labor and delivery to ensure a safe birth.
+Skilled Attendance: Delivery supervised by trained professionals (Skilled Birth Attendants).
+Clean Practices: Adhering to the "five cleans" (clean hands, surface, cord cutting, cord tie, and cord care) to prevent infection.
+Postnatal Care (PNC): Care for the mother and newborn during the first six weeks after birth.
+Schedule: Essential visits at 24 hours, 3 days, 7–14 days, and 6 weeks postpartum.
+2. Essential Child Health Services
+Child health interventions for 2026 focus on ending preventable deaths and ensuring children are developmentally "on-track".
+Newborn Care: Immediate assessment, skin-to-skin contact, thermal protection, and early initiation of breastfeeding (within one hour).
+Immunization: Routine vaccinations according to national schedules (e.g., BCG, Hepatitis B).
+Nutrition: Promotion of exclusive breastfeeding for the first six months and management of malnutrition.
+Growth Monitoring: Systematic tracking of height and weight to detect stunting or wasting.
+3. Key Health Indicators for 2026
+Success in MCH is measured against global targets, particularly Sustainable Development Goal 3:
+Maternal Mortality Ratio (MMR): Aiming for less than 70 deaths per 100,000 live births globally by 2030.
+Neonatal Mortality Rate: Reducing to at least as low as 12 per 1,000 live births in every country.
+Under-Five Mortality Rate: Targeting at least as low as 25 per 1,000 live births.
+4. 2026 Strategic Priorities
+Current strategies emphasize several cross-cutting themes:
+Digital Health: Using mobile apps and telemedicine to expand access in remote areas.
+Respectful Care: Moving beyond clinical safety to prioritize "respectful maternity care" that honors a woman's dignity and autonomy.
+Adolescent Health: Including adolescence as a distinct life stage to prevent early pregnancy complications.
+Integrated RMNCAH+N: Linking Reproductive, Maternal, Newborn, Child, and Adolescent health with Nutrition for a holistic care pathway.
