@@ -16,58 +16,66 @@
 <body class="bg-light">
 
 <!-- ================= NAVBAR ================= -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm sticky-top">
     <div class="container">
         <a class="navbar-brand fw-bold" href="index.html">
-            <i class="fa-solid fa-house-medical me-2"></i>Rural Health Connect
+            <i class="fa-solid fa-house-medical me-2"></i>
+            Rural Health Connect
         </a>
         <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#nav">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div id="nav" class="collapse navbar-collapse">
             <ul class="navbar-nav ms-auto fw-semibold">
-                <li class="nav-item"><a class="nav-link" href="index.html">Dashboard</a></li>
+                <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
                 <li class="nav-item"><a class="nav-link" href="departments.html">Departments</a></li>
                 <li class="nav-item"><a class="nav-link active" href="services.html">Services</a></li>
+                <li class="nav-item"><a class="nav-link" href="appointments.html">Appointments</a></li>
                 <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
             </ul>
         </div>
     </div>
 </nav>
 
-<!-- ================= HEADER ================= -->
-<header class="bg-primary text-white py-5 shadow">
+<!-- ================= PAGE HEADER ================= -->
+<header class="bg-primary text-white py-5 shadow-sm">
     <div class="container">
         <h1 class="fw-bold">Digital Health Services</h1>
         <p class="mb-0">
-            Integrated Service Delivery for Community Health Centres (CHC)
+            Citizen-centric healthcare services delivered through a unified digital platform
         </p>
     </div>
 </header>
 
-<!-- ================= MAIN CONTENT ================= -->
+<!-- ================= CONTENT ================= -->
 <main class="container my-5">
 
-    <!-- INTRO -->
+    <!-- INTRODUCTION -->
     <section class="mb-5">
         <div class="card shadow-sm border-0">
             <div class="card-body">
-                <p class="fs-5">
-                    Rural Health Connect delivers a unified digital interface
-                    for critical healthcare services mandated under
+                <p class="fs-5 mb-2">
+                    Rural Health Connect provides an integrated digital interface
+                    for essential healthcare services mandated under
                     <strong>IPHS 2022</strong> and aligned with the
                     <strong>Ayushman Bharat Digital Mission (ABDM)</strong>.
                 </p>
-                <p>
-                    Each service module is designed to function independently,
-                    while sharing a common data and security layer.
+                <p class="mb-0">
+                    The platform is designed to support both
+                    <strong>citizen-facing services</strong> and
+                    <strong>health system operations</strong>,
+                    ensuring accessibility, transparency, and continuity of care.
                 </p>
             </div>
         </div>
     </section>
 
-    <!-- SERVICES GRID -->
+    <!-- SERVICES CATALOG -->
     <section class="mb-5">
+        <h3 class="fw-bold mb-4 text-center">
+            Service Modules Available
+        </h3>
+
         <div class="row g-4">
 
             <!-- OPD -->
@@ -76,19 +84,18 @@
                     <div class="card-body">
                         <h5 class="fw-bold">
                             <i class="fa-solid fa-stethoscope me-2 text-primary"></i>
-                            OPD Registration & Token System
+                            OPD Registration & Appointment System
                         </h5>
                         <p class="small text-muted">
-                            Digital outpatient registration integrated with
-                            ABHA ID / mobile-based identification.
+                            Digital outpatient workflow integrated with ABHA-based identification.
                         </p>
                         <ul class="small">
-                            <li>Department-wise token generation</li>
-                            <li>Date-based appointment slots</li>
-                            <li>Future-ready for e-Hospital API</li>
+                            <li>Department-wise appointment slots</li>
+                            <li>Token-based queue management</li>
+                            <li>Future-ready for e-Hospital integration</li>
                         </ul>
                         <a href="appointments.html" class="btn btn-outline-primary btn-sm">
-                            Access OPD Module
+                            Access OPD Services
                         </a>
                     </div>
                 </div>
@@ -100,18 +107,18 @@
                     <div class="card-body">
                         <h5 class="fw-bold">
                             <i class="fa-solid fa-flask-vial me-2 text-primary"></i>
-                            Diagnostic & Lab Services
+                            Diagnostic & Laboratory Services
                         </h5>
                         <p class="small text-muted">
-                            Centralized lab result access and clinical insights.
+                            Secure access to digital diagnostic reports and clinical summaries.
                         </p>
                         <ul class="small">
-                            <li>ABHA-linked report retrieval</li>
-                            <li>Status flagging (Normal / Borderline)</li>
-                            <li>ICMR guideline-based alerts</li>
+                            <li>ABHA-linked lab report access</li>
+                            <li>Test status and result flagging</li>
+                            <li>ICMR guideline-aligned alerts</li>
                         </ul>
                         <a href="lab-reports.html" class="btn btn-outline-primary btn-sm">
-                            View Diagnostics
+                            View Diagnostic Reports
                         </a>
                     </div>
                 </div>
@@ -123,18 +130,18 @@
                     <div class="card-body">
                         <h5 class="fw-bold">
                             <i class="fa-solid fa-droplet me-2 text-danger"></i>
-                            Blood Bank Management
+                            Blood Bank Services
                         </h5>
                         <p class="small text-muted">
-                            Live blood stock monitoring to reduce emergency delays.
+                            Real-time blood component availability for emergency preparedness.
                         </p>
                         <ul class="small">
-                            <li>Component-wise inventory</li>
-                            <li>Emergency availability visibility</li>
-                            <li>Referral escalation support</li>
+                            <li>Component-wise inventory visibility</li>
+                            <li>Emergency stock status indicators</li>
+                            <li>Referral and escalation support</li>
                         </ul>
                         <a href="blood-bank.html" class="btn btn-outline-danger btn-sm">
-                            Check Blood Stock
+                            Check Blood Availability
                         </a>
                     </div>
                 </div>
@@ -149,12 +156,12 @@
                             Emergency Ambulance Services
                         </h5>
                         <p class="small text-muted">
-                            108-enabled emergency dispatch coordination.
+                            Coordinated emergency response aligned with 108 services.
                         </p>
                         <ul class="small">
-                            <li>Vehicle readiness status</li>
-                            <li>On-call driver assignment</li>
-                            <li>Future GPS integration ready</li>
+                            <li>Vehicle readiness monitoring</li>
+                            <li>On-call driver availability</li>
+                            <li>Scalable for GPS-based dispatch</li>
                         </ul>
                         <a href="ambulance.html" class="btn btn-outline-danger btn-sm">
                             Emergency Dispatch
@@ -172,15 +179,15 @@
                             Telemedicine & e-Consultation
                         </h5>
                         <p class="small text-muted">
-                            Remote specialist access for rural patients.
+                            Remote access to specialist consultation for rural communities.
                         </p>
                         <ul class="small">
-                            <li>e-Sanjeevani integration concept</li>
-                            <li>Referral-linked video consults</li>
-                            <li>Continuity of care support</li>
+                            <li>Conceptual integration with e-Sanjeevani</li>
+                            <li>Referral-linked consultations</li>
+                            <li>Continuity of care documentation</li>
                         </ul>
                         <a href="telemedicine.html" class="btn btn-outline-primary btn-sm">
-                            Start Consultation
+                            Start Tele-Consultation
                         </a>
                     </div>
                 </div>
@@ -195,15 +202,15 @@
                             Community Health Education
                         </h5>
                         <p class="small text-muted">
-                            Preventive healthcare and awareness programs.
+                            Preventive health awareness and citizen education initiatives.
                         </p>
                         <ul class="small">
-                            <li>Maternal & child health education</li>
-                            <li>NCD risk awareness</li>
-                            <li>Government scheme literacy</li>
+                            <li>Maternal and child health education</li>
+                            <li>Non-communicable disease awareness</li>
+                            <li>Government health scheme literacy</li>
                         </ul>
                         <a href="education.html" class="btn btn-outline-success btn-sm">
-                            Health Education
+                            Access Health Education
                         </a>
                     </div>
                 </div>
@@ -212,26 +219,29 @@
         </div>
     </section>
 
-    <!-- TECHNICAL NOTE -->
+    <!-- TECHNICAL DESIGN NOTE -->
     <section>
         <div class="card border-0 shadow-sm bg-white">
             <div class="card-body">
                 <h4 class="fw-bold mb-3">
                     <i class="fa-solid fa-gears me-2"></i>
-                    Technical Design Note
+                    Technical & Architectural Overview
                 </h4>
                 <p>
-                    All services are designed with a
-                    <strong>modular, API-first mindset</strong>.
-                    While this deployment uses static datasets,
-                    the architecture supports seamless backend
-                    integration with:
+                    Rural Health Connect is designed using a
+                    <strong>modular, API-first architecture</strong>.
+                    While this prototype uses simulated data,
+                    the system is capable of seamless integration with:
                 </p>
                 <ul>
-                    <li>e-Hospital / HMIS APIs</li>
-                    <li>ABDM Gateway (FHIR resources)</li>
+                    <li>e-Hospital / HMIS systems</li>
+                    <li>ABDM Gateway using FHIR resources</li>
                     <li>State Health Data Repositories</li>
                 </ul>
+                <p class="mb-0">
+                    This design ensures scalability, interoperability,
+                    and long-term sustainability for government deployments.
+                </p>
             </div>
         </div>
     </section>
@@ -241,11 +251,11 @@
 <!-- ================= FOOTER ================= -->
 <footer class="bg-dark text-light py-4 mt-5">
     <div class="container text-center small">
-        <p class="mb-1">
-            Digital Health Infrastructure | Government of India (Simulation)
+        <p class="mb-1 fw-semibold">
+            Ministry of Health & Family Welfare, Government of India
         </p>
         <p class="mb-0">
-            Rural Health Connect | Static PWA Demonstration
+            Rural Health Connect | Academic & Demonstration Prototype
         </p>
     </div>
 </footer>
