@@ -1,121 +1,124 @@
 console.log("script.js loaded");
 
 /* =====================================================
-   RURAL HEALTH CONNECT – CORE APPLICATION ENGINE
-   (Interview-safe, non-PWA version)
+   RURAL HEALTH CONNECT – SHARED APPLICATION SCRIPT
+   Safe for all modules
    ===================================================== */
 
-/* -------- GLOBAL STATE -------- */
+const USER_ROLE = "public"; // change to "admin" for admin view
+
 const APP_STATE = {
     lastSync: null,
-    emergencyActive: false,
-    cachedData: null
+    cachedData: null,
+    emergencyActive: false
 };
 
-/* -------- UTILITIES -------- */
+/* ---------- PAGE GUARDS ---------- */
+const IS_DEPARTMENTS_PAGE =
+    document.querySelector(".emergency-card") !== null;
+
+/* ---------- UTILITIES ---------- */
 function formatTime(ts) {
     return new Date(ts).toLocaleString();
 }
 
-function logSystem(msg) {
-    console.log("[IRHIS]", msg);
-}
-
-/* -------- MOCK BACKEND -------- */
-// Mock values generated to simulate real-time facility load
+/* ---------- MOCK BACKEND ---------- */
 async function fetchHealthData() {
     return new Promise(resolve => {
         setTimeout(() => {
             resolve({
-                emergency: Math.random() > 0.8
+                emergency: Math.random() > 0.8,
+                beds: 24 + Math.floor(Math.random() * 10),
+                oxygen: "Stable"
             });
-        }, 700);
+        }, 600);
     });
 }
 
-/* -------- DATA SYNC -------- */
-async function syncFacilityData() {
-    try {
-        const data = await fetchHealthData();
-
-        APP_STATE.cachedData = data;
-        APP_STATE.lastSync = Date.now(); // SET FIRST
-
-        updateDepartmentUI(data);
-        persistData(data);
-
-        if (data.emergency) triggerEmergencyMode();
-
-        logSystem("System synced");
-    } catch (e) {
-        console.warn("Using local cached data (backend simulation)");
-        restoreData();
+/* ---------- DEPARTMENTS MODULE ---------- */
+function applyRoleVisibility() {
+    if (USER_ROLE === "public") {
+        document.getElementById("referral-panel")?.remove();
     }
 }
 
-/* -------- UI UPDATE -------- */
 function updateDepartmentUI(data) {
-    const syncEl = document.getElementById("last-sync");
-    if (syncEl) syncEl.innerText = formatTime(APP_STATE.lastSync);
-
     const badge = document.getElementById("emergency-status");
     const card = document.querySelector(".emergency-card");
+    const syncEl = document.getElementById("last-sync");
+
+    if (syncEl && APP_STATE.lastSync) {
+        syncEl.innerText = formatTime(APP_STATE.lastSync);
+    }
+
+    if (!badge || !card) return;
 
     if (data.emergency) {
         badge.innerText = "High Load";
         badge.className = "badge bg-danger ms-2";
-        card?.classList.add("emergency-active");
+        if (USER_ROLE === "admin") {
+            card.classList.add("emergency-active");
+        }
     } else {
         badge.innerText = "Normal";
         badge.className = "badge bg-success ms-2";
-        card?.classList.remove("emergency-active");
+        card.classList.remove("emergency-active");
     }
 }
 
-/* -------- EMERGENCY MODE -------- */
-function triggerEmergencyMode() {
-    if (APP_STATE.emergencyActive) return;
-    APP_STATE.emergencyActive = true;
-    logSystem("Emergency mode activated");
+async function syncFacilityData() {
+    try {
+        const data = await fetchHealthData();
+        APP_STATE.cachedData = data;
+        APP_STATE.lastSync = Date.now();
+
+        updateDepartmentUI(data);
+        updateDashboardStats(data);
+
+        localStorage.setItem("rhc_cache", JSON.stringify({
+            data,
+            timestamp: APP_STATE.lastSync
+        }));
+    } catch {
+        restoreCachedData();
+    }
 }
 
-/* -------- LOCAL STORAGE -------- */
-function persistData(data) {
-    localStorage.setItem("irhis_cache", JSON.stringify({
-        data,
-        timestamp: APP_STATE.lastSync
-    }));
-}
+function restoreCachedData() {
+    const cache = localStorage.getItem("rhc_cache");
+    if (!cache) return;
 
-function restoreData() {
-    const cached = localStorage.getItem("irhis_cache");
-    if (!cached) return;
-
-    const parsed = JSON.parse(cached);
+    const parsed = JSON.parse(cache);
     APP_STATE.cachedData = parsed.data;
     APP_STATE.lastSync = parsed.timestamp;
 
     updateDepartmentUI(parsed.data);
-    logSystem("Restored cached data");
+    updateDashboardStats(parsed.data);
 }
 
-/* -------- REFERRAL -------- */
+/* ---------- DASHBOARD STATS ---------- */
+function updateDashboardStats(data) {
+    const bedsEl = document.getElementById("bed-count");
+    const oxygenEl = document.getElementById("oxygen-status");
+
+    if (bedsEl) bedsEl.innerText = data.beds ?? "--";
+    if (oxygenEl) oxygenEl.innerText = data.oxygen ?? "--";
+}
+
+/* ---------- REFERRAL ---------- */
 function generateReferral() {
-    alert("Digital referral summary generated (FHIR simulation)");
+    alert("Referral request initiated (FHIR simulation)");
 }
 
-/* -------- INIT -------- */
+/* ---------- INIT ---------- */
 window.addEventListener("load", () => {
-    restoreData();
-    syncFacilityData();
+    restoreCachedData();
+
+    if (IS_DEPARTMENTS_PAGE) {
+        applyRoleVisibility();
+        syncFacilityData();
+        setInterval(syncFacilityData, 15000);
+    } else {
+        syncFacilityData();
+    }
 });
-
-/* Auto-sync every 15 seconds */
-setInterval(syncFacilityData, 15000);
-
-/*
- NOTE:
- PWA / Service Worker intentionally disabled
- to avoid cache issues during interview/demo.
- Can be enabled in production.
-*/
