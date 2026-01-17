@@ -10,6 +10,13 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
     <link rel="stylesheet" href="style.css">
+    <!-- EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function() {
+            emailjs.init("YOUR_PUBLIC_KEY"); // replace with your EmailJS public key
+        })();
+    </script>
 </head>
 
 <body class="bg-light">
@@ -29,7 +36,7 @@
     <div class="container">
         <h1 class="fw-bold">Secure OTP Authentication</h1>
         <p class="mb-0">
-            Citizen access using One-Time Password (EmailJS Simulation)
+            Citizen access using One-Time Password (Email-based Simulation)
         </p>
     </div>
 </header>
@@ -39,8 +46,9 @@
 
     <div class="alert alert-info">
         <strong>Technical Note:</strong><br>
-        OTP is sent to the email configured in EmailJS template.
-        In production, OTP delivery would use SMS gateways or ABDM-compliant services.
+        This module simulates OTP-based authentication.
+        In production, OTP delivery would be handled using
+        SMS or email gateways and ABDM-compliant identity services.
     </div>
 
     <div class="row justify-content-center">
@@ -48,19 +56,19 @@
             <div class="card shadow-sm border-0">
                 <div class="card-body">
 
-                    <!-- STEP 1: MOBILE -->
-                    <div id="step-mobile">
+                    <!-- STEP 1: EMAIL -->
+                    <div id="step-email">
                         <h4 class="fw-bold mb-3">
-                            <i class="fa-solid fa-mobile-screen me-2"></i>
-                            Enter Mobile Number
+                            <i class="fa-solid fa-envelope me-2"></i>
+                            Enter Your Email
                         </h4>
 
                         <input
-                            type="tel"
-                            id="mobile"
+                            type="email"
+                            id="email"
                             class="form-control mb-3"
-                            placeholder="10-digit mobile number"
-                            maxlength="10"
+                            placeholder="Enter your email address"
+                            required
                         >
 
                         <button class="btn btn-primary w-100 fw-bold" onclick="sendOTP()">
@@ -114,11 +122,7 @@
     </div>
 </footer>
 
-<!-- ================= SCRIPTS ================= -->
-<!-- EmailJS SDK -->
-<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-
-<!-- Auth Module -->
+<!-- ================= SCRIPT ================= -->
 <script src="auth.js"></script>
 
 </body>
