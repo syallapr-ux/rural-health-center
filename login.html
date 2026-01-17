@@ -18,7 +18,8 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow">
     <div class="container">
         <a class="navbar-brand fw-bold" href="index.html">
-            <i class="fa-solid fa-shield-heart me-2"></i>Rural Health Connect
+            <i class="fa-solid fa-shield-heart me-2"></i>
+            Rural Health Connect
         </a>
     </div>
 </nav>
@@ -26,9 +27,9 @@
 <!-- ================= HEADER ================= -->
 <header class="bg-secondary text-white py-5">
     <div class="container">
-        <h1 class="fw-bold">Secure User Authentication</h1>
+        <h1 class="fw-bold">Secure OTP Authentication</h1>
         <p class="mb-0">
-            Role-based access for healthcare staff (Simulation)
+            Citizen access using One-Time Password (Simulation)
         </p>
     </div>
 </header>
@@ -36,92 +37,69 @@
 <!-- ================= MAIN ================= -->
 <main class="container my-5">
 
-    <!-- INFO -->
     <div class="alert alert-info">
-        <strong>Technical Note:</strong>  
-        This login system simulates authentication using encrypted browser storage.
-        In production, this would be replaced with OAuth2 / JWT / ABDM-compliant APIs.
+        <strong>Technical Note:</strong><br>
+        This module simulates OTP-based authentication.
+        In production, OTP delivery would be handled using
+        SMS gateways and ABDM-compliant identity services.
     </div>
 
-    <div class="row g-4">
-
-        <!-- LOGIN FORM -->
+    <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="card shadow-sm border-0">
                 <div class="card-body">
-                    <h3 class="fw-bold mb-3">
-                        <i class="fa-solid fa-right-to-bracket me-2"></i>
-                        User Login
-                    </h3>
 
-                    <form id="loginForm">
-                        <div class="mb-3">
-                            <label class="form-label">Username</label>
-                            <input type="text" id="loginUsername" class="form-control" required>
-                        </div>
+                    <!-- STEP 1: MOBILE -->
+                    <div id="step-mobile">
+                        <h4 class="fw-bold mb-3">
+                            <i class="fa-solid fa-mobile-screen me-2"></i>
+                            Enter Mobile Number
+                        </h4>
 
-                        <div class="mb-3">
-                            <label class="form-label">Password</label>
-                            <input type="password" id="loginPassword" class="form-control" required>
-                        </div>
+                        <input
+                            type="tel"
+                            id="mobile"
+                            class="form-control mb-3"
+                            placeholder="10-digit mobile number"
+                            maxlength="10"
+                        >
 
-                        <button class="btn btn-success w-100 fw-bold" type="submit">
-                            <i class="fa-solid fa-lock-open me-2"></i>
-                            Login Securely
+                        <button class="btn btn-primary w-100 fw-bold" onclick="sendOTP()">
+                            Send OTP
                         </button>
-                    </form>
+                    </div>
+
+                    <!-- STEP 2: OTP -->
+                    <div id="step-otp" class="d-none">
+                        <h4 class="fw-bold mb-3">
+                            <i class="fa-solid fa-key me-2"></i>
+                            Verify OTP
+                        </h4>
+
+                        <input
+                            type="text"
+                            id="otp"
+                            class="form-control mb-3"
+                            placeholder="Enter OTP"
+                        >
+
+                        <button class="btn btn-success w-100 fw-bold" onclick="verifyOTP()">
+                            Verify & Login
+                        </button>
+                    </div>
+
                 </div>
             </div>
         </div>
-
-        <!-- REGISTER FORM -->
-        <div class="col-md-6">
-            <div class="card shadow-sm border-0">
-                <div class="card-body">
-                    <h3 class="fw-bold mb-3">
-                        <i class="fa-solid fa-user-plus me-2"></i>
-                        Register Staff
-                    </h3>
-
-                    <form id="registerForm">
-                        <div class="mb-2">
-                            <label class="form-label">Username</label>
-                            <input type="text" id="regUsername" class="form-control" required>
-                        </div>
-
-                        <div class="mb-2">
-                            <label class="form-label">Password</label>
-                            <input type="password" id="regPassword" class="form-control" required>
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label">Role</label>
-                            <select id="regRole" class="form-select" required>
-                                <option value="">Select Role</option>
-                                <option value="Admin">Administrator</option>
-                                <option value="Doctor">Doctor</option>
-                                <option value="Staff">Hospital Staff</option>
-                            </select>
-                        </div>
-
-                        <button class="btn btn-primary w-100 fw-bold" type="submit">
-                            <i class="fa-solid fa-user-check me-2"></i>
-                            Register User
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
-
     </div>
 
     <!-- SESSION STATUS -->
     <div class="card mt-5 shadow-sm border-0">
         <div class="card-body">
-            <h4 class="fw-bold">
+            <h5 class="fw-bold">
                 <i class="fa-solid fa-user-shield me-2"></i>
                 Active Session
-            </h4>
+            </h5>
             <p id="sessionStatus" class="text-muted mb-0">
                 No active session
             </p>
@@ -133,75 +111,63 @@
 <!-- ================= FOOTER ================= -->
 <footer class="bg-dark text-light py-4 mt-5">
     <div class="container text-center small">
-        Secure Authentication Module | Rural Health Connect
+        OTP Authentication Module | Rural Health Connect
     </div>
 </footer>
 
 <!-- ================= SCRIPT ================= -->
 <script>
-function hashPassword(pwd) {
-    return btoa(pwd); // simulated encryption (base64)
-}
+let generatedOTP = null;
+let otpExpiry = null;
 
-function getUsers() {
-    return JSON.parse(localStorage.getItem("users")) || [];
-}
+function sendOTP() {
+    const mobile = document.getElementById("mobile").value;
 
-function setUsers(users) {
-    localStorage.setItem("users", JSON.stringify(users));
-}
-
-document.getElementById("registerForm").addEventListener("submit", function(e) {
-    e.preventDefault();
-
-    const users = getUsers();
-    const username = regUsername.value;
-
-    if (users.find(u => u.username === username)) {
-        alert("User already exists!");
+    if (!/^[0-9]{10}$/.test(mobile)) {
+        alert("Please enter a valid 10-digit mobile number");
         return;
     }
 
-    users.push({
-        username,
-        password: hashPassword(regPassword.value),
-        role: regRole.value
-    });
+    generatedOTP = Math.floor(100000 + Math.random() * 900000).toString();
+    otpExpiry = Date.now() + 2 * 60 * 1000; // 2 minutes validity
 
-    setUsers(users);
-    this.reset();
-    alert("User registered successfully!");
-});
+    console.log("Generated OTP (simulation):", generatedOTP);
 
-document.getElementById("loginForm").addEventListener("submit", function(e) {
-    e.preventDefault();
+    document.getElementById("step-mobile").classList.add("d-none");
+    document.getElementById("step-otp").classList.remove("d-none");
 
-    const users = getUsers();
-    const user = users.find(u =>
-        u.username === loginUsername.value &&
-        u.password === hashPassword(loginPassword.value)
-    );
+    alert("OTP sent successfully (simulation)");
+}
 
-    if (!user) {
-        alert("Invalid credentials!");
+function verifyOTP() {
+    const enteredOTP = document.getElementById("otp").value;
+
+    if (!generatedOTP || Date.now() > otpExpiry) {
+        alert("OTP expired. Please request again.");
+        location.reload();
+        return;
+    }
+
+    if (enteredOTP !== generatedOTP) {
+        alert("Invalid OTP");
         return;
     }
 
     localStorage.setItem("session", JSON.stringify({
-        username: user.username,
-        role: user.role,
+        mobile: document.getElementById("mobile").value,
+        role: "Citizen",
         loginTime: new Date().toISOString()
     }));
 
     updateSession();
     alert("Login successful!");
-});
+}
 
 function updateSession() {
     const session = JSON.parse(localStorage.getItem("session"));
     if (session) {
-        sessionStatus.innerHTML = `
-            Logged in as <strong>${session.username}</strong>
+        document.getElementById("sessionStatus").innerHTML = `
+            Logged in as <strong>${session.mobile}</strong>
             (<span class="text-primary">${session.role}</span>)
         `;
     }
