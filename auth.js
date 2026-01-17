@@ -1,85 +1,88 @@
-console.log("auth.js loaded - EmailJS OTP Module");
+console.log("auth.js loaded");
 
 /* =====================================================
-   RURAL HEALTH CONNECT – OTP AUTH MODULE (EMAILJS)
+   RURAL HEALTH CONNECT – OTP AUTH MODULE (EmailJS)
    ===================================================== */
 
 let CURRENT_OTP = null;
 let OTP_EXPIRY = null;
-let USER_MOBILE = null;
-
-/* ---------- CONFIGURATION ---------- */
-const EMAILJS_SERVICE_ID = "-FqUhIyfPk3fcjG2r";    // from EmailJS dashboard
-const EMAILJS_TEMPLATE_ID = "template_cvq0hfg"; // from template details
-const EMAILJS_PUBLIC_KEY  = "your_public_key";  // from EmailJS dashboard
+let USER_EMAIL = null;
 
 /* ---------- SEND OTP ---------- */
 function sendOTP() {
-    const mobile = document.getElementById("mobile")?.value;
+    const email = document.getElementById("email")?.value;
 
-    if (!/^[0-9]{10}$/.test(mobile)) {
-        alert("Please enter a valid 10-digit mobile number");
+    // Basic email validation
+    if (!/^\S+@\S+\.\S+$/.test(email)) {
+        alert("Please enter a valid email address");
         return;
     }
 
-    USER_MOBILE = mobile;
-    CURRENT_OTP = Math.floor(100000 + Math.random() * 900000).toString();
-    OTP_EXPIRY = Date.now() + 15 * 60 * 1000; // 15 minutes
+    USER_EMAIL = email;
+    CURRENT_OTP = Math.floor(100000 + Math.random() * 900000); // 6-digit OTP
+    OTP_EXPIRY = Date.now() + 2 * 60 * 1000; // valid for 2 minutes
 
-    console.log("Generated OTP (demo):", CURRENT_OTP);
-
-    // Prepare email parameters
+    // Prepare EmailJS template params
     const templateParams = {
-        user_mobile: USER_MOBILE,
+        user_email: USER_EMAIL,
         otp_code: CURRENT_OTP
     };
 
-    // Send email using EmailJS
-    emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams, EMAILJS_PUBLIC_KEY)
+    // Send OTP via EmailJS
+    emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", templateParams, "YOUR_PUBLIC_KEY")
         .then(() => {
-            alert("OTP sent successfully to your email!");
-            document.getElementById("step-mobile")?.classList.add("d-none");
-            document.getElementById("step-otp")?.classList.remove("d-none");
+            alert("OTP sent successfully to " + USER_EMAIL);
+            // Show OTP input step
+            document.getElementById("step-email").classList.add("d-none");
+            document.getElementById("step-otp").classList.remove("d-none");
         })
-        .catch((error) => {
-            console.error("EmailJS error:", error);
-            alert("Failed to send OTP. Please try again later.");
+        .catch((err) => {
+            console.error("EmailJS error:", err);
+            alert("Failed to send OTP. Please try again.");
         });
+
+    console.log("Generated OTP (demo):", CURRENT_OTP);
 }
 
 /* ---------- VERIFY OTP ---------- */
 function verifyOTP() {
     const enteredOTP = document.getElementById("otp")?.value;
 
-    if (!CURRENT_OTP || !OTP_EXPIRY || Date.now() > OTP_EXPIRY) {
-        alert("OTP expired. Please request a new one.");
+    if (!CURRENT_OTP || !OTP_EXPIRY) {
+        alert("Session expired. Request a new OTP.");
         location.reload();
         return;
     }
 
-    if (enteredOTP !== CURRENT_OTP) {
+    if (Date.now() > OTP_EXPIRY) {
+        alert("OTP expired. Request a new one.");
+        location.reload();
+        return;
+    }
+
+    if (parseInt(enteredOTP, 10) !== CURRENT_OTP) {
         alert("Invalid OTP");
         return;
     }
 
     // Save session
     localStorage.setItem("session", JSON.stringify({
-        mobile: USER_MOBILE,
+        email: USER_EMAIL,
         role: "Citizen",
-        authType: "EmailOTP",
+        authType: "OTP",
         loginTime: new Date().toISOString()
     }));
 
-    alert("Authentication successful!");
+    alert("Login successful!");
     window.location.href = "index.html";
 }
 
-/* ---------- SESSION DISPLAY ---------- */
+/* ---------- UPDATE SESSION DISPLAY ---------- */
 function updateSession() {
     const session = JSON.parse(localStorage.getItem("session"));
     if (session) {
         document.getElementById("sessionStatus").innerHTML = `
-            Logged in as <strong>${session.mobile}</strong>
+            Logged in as <strong>${session.email}</strong>
             (<span class="text-primary">${session.role}</span>)
         `;
     }
