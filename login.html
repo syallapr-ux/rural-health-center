@@ -39,9 +39,8 @@
 
     <div class="alert alert-info">
         <strong>Technical Note:</strong><br>
-        This module simulates OTP-based authentication.
-        In production, OTP delivery would be handled using
-        SMS gateways and ABDM-compliant identity services.
+        OTP delivery is simulated for frontend demonstration.  
+        In production, this would use SMS/email gateways.
     </div>
 
     <div class="row justify-content-center">
@@ -115,66 +114,26 @@
     </div>
 </footer>
 
+<!-- ================= OTP SIMULATION MODAL ================= -->
+<div id="otpModal" class="d-none" style="
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    border: 2px solid #007bff;
+    padding: 20px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.3);
+    z-index: 9999;
+">
+    <h5 class="text-primary">OTP Sent</h5>
+    <p>To: +91-<span id="otpMobile"></span></p>
+    <p>Your OTP is: <strong id="otpDisplay"></strong></p>
+    <button onclick="closeOtpModal()" class="btn btn-sm btn-primary">Close</button>
+</div>
+
 <!-- ================= SCRIPT ================= -->
-<script>
-let generatedOTP = null;
-let otpExpiry = null;
-
-function sendOTP() {
-    const mobile = document.getElementById("mobile").value;
-
-    if (!/^[0-9]{10}$/.test(mobile)) {
-        alert("Please enter a valid 10-digit mobile number");
-        return;
-    }
-
-    generatedOTP = Math.floor(100000 + Math.random() * 900000).toString();
-    otpExpiry = Date.now() + 2 * 60 * 1000; // 2 minutes validity
-
-    console.log("Generated OTP (simulation):", generatedOTP);
-
-    document.getElementById("step-mobile").classList.add("d-none");
-    document.getElementById("step-otp").classList.remove("d-none");
-
-    alert("OTP sent successfully (simulation)");
-}
-
-function verifyOTP() {
-    const enteredOTP = document.getElementById("otp").value;
-
-    if (!generatedOTP || Date.now() > otpExpiry) {
-        alert("OTP expired. Please request again.");
-        location.reload();
-        return;
-    }
-
-    if (enteredOTP !== generatedOTP) {
-        alert("Invalid OTP");
-        return;
-    }
-
-    localStorage.setItem("session", JSON.stringify({
-        mobile: document.getElementById("mobile").value,
-        role: "Citizen",
-        loginTime: new Date().toISOString()
-    }));
-
-    updateSession();
-    alert("Login successful!");
-}
-
-function updateSession() {
-    const session = JSON.parse(localStorage.getItem("session"));
-    if (session) {
-        document.getElementById("sessionStatus").innerHTML = `
-            Logged in as <strong>${session.mobile}</strong>
-            (<span class="text-primary">${session.role}</span>)
-        `;
-    }
-}
-
-updateSession();
-</script>
+<script src="auth.js"></script>
 
 </body>
 </html>
