@@ -29,7 +29,7 @@
     <div class="container">
         <h1 class="fw-bold">Secure OTP Authentication</h1>
         <p class="mb-0">
-            Citizen access using One-Time Password (Simulation)
+            Citizen access using One-Time Password (EmailJS Simulation)
         </p>
     </div>
 </header>
@@ -39,8 +39,8 @@
 
     <div class="alert alert-info">
         <strong>Technical Note:</strong><br>
-        OTP delivery is simulated for frontend demonstration.  
-        In production, this would use SMS/email gateways.
+        OTP is sent to the email configured in EmailJS template.
+        In production, OTP delivery would use SMS gateways or ABDM-compliant services.
     </div>
 
     <div class="row justify-content-center">
@@ -114,25 +114,11 @@
     </div>
 </footer>
 
-<!-- ================= OTP SIMULATION MODAL ================= -->
-<div id="otpModal" class="d-none" style="
-    position: fixed;
-    top: 20%;
-    left: 50%;
-    transform: translateX(-50%);
-    background: white;
-    border: 2px solid #007bff;
-    padding: 20px;
-    box-shadow: 0 0 15px rgba(0,0,0,0.3);
-    z-index: 9999;
-">
-    <h5 class="text-primary">OTP Sent</h5>
-    <p>To: +91-<span id="otpMobile"></span></p>
-    <p>Your OTP is: <strong id="otpDisplay"></strong></p>
-    <button onclick="closeOtpModal()" class="btn btn-sm btn-primary">Close</button>
-</div>
+<!-- ================= SCRIPTS ================= -->
+<!-- EmailJS SDK -->
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 
-<!-- ================= SCRIPT ================= -->
+<!-- Auth Module -->
 <script src="auth.js"></script>
 
 </body>
