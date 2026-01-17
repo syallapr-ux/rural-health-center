@@ -1,12 +1,17 @@
-console.log("auth.js loaded");
+console.log("auth.js loaded - EmailJS OTP Module");
 
 /* =====================================================
-   RURAL HEALTH CONNECT – OTP AUTH MODULE (SIMULATED)
+   RURAL HEALTH CONNECT – OTP AUTH MODULE (EMAILJS)
    ===================================================== */
 
 let CURRENT_OTP = null;
 let OTP_EXPIRY = null;
 let USER_MOBILE = null;
+
+/* ---------- CONFIGURATION ---------- */
+const EMAILJS_SERVICE_ID = "-FqUhIyfPk3fcjG2r";    // from EmailJS dashboard
+const EMAILJS_TEMPLATE_ID = "template_cvq0hfg"; // from template details
+const EMAILJS_PUBLIC_KEY  = "your_public_key";  // from EmailJS dashboard
 
 /* ---------- SEND OTP ---------- */
 function sendOTP() {
@@ -19,21 +24,27 @@ function sendOTP() {
 
     USER_MOBILE = mobile;
     CURRENT_OTP = Math.floor(100000 + Math.random() * 900000).toString();
-    OTP_EXPIRY = Date.now() + 2 * 60 * 1000; // 2 minutes
+    OTP_EXPIRY = Date.now() + 15 * 60 * 1000; // 15 minutes
 
-    // Show OTP in modal for demo
-    document.getElementById("otpMobile").innerText = USER_MOBILE;
-    document.getElementById("otpDisplay").innerText = CURRENT_OTP;
-    document.getElementById("otpModal").classList.remove("d-none");
+    console.log("Generated OTP (demo):", CURRENT_OTP);
 
-    // Switch steps
-    document.getElementById("step-mobile")?.classList.add("d-none");
-    document.getElementById("step-otp")?.classList.remove("d-none");
-}
+    // Prepare email parameters
+    const templateParams = {
+        user_mobile: USER_MOBILE,
+        otp_code: CURRENT_OTP
+    };
 
-/* ---------- CLOSE MODAL ---------- */
-function closeOtpModal() {
-    document.getElementById("otpModal").classList.add("d-none");
+    // Send email using EmailJS
+    emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams, EMAILJS_PUBLIC_KEY)
+        .then(() => {
+            alert("OTP sent successfully to your email!");
+            document.getElementById("step-mobile")?.classList.add("d-none");
+            document.getElementById("step-otp")?.classList.remove("d-none");
+        })
+        .catch((error) => {
+            console.error("EmailJS error:", error);
+            alert("Failed to send OTP. Please try again later.");
+        });
 }
 
 /* ---------- VERIFY OTP ---------- */
@@ -41,7 +52,7 @@ function verifyOTP() {
     const enteredOTP = document.getElementById("otp")?.value;
 
     if (!CURRENT_OTP || !OTP_EXPIRY || Date.now() > OTP_EXPIRY) {
-        alert("OTP expired. Please request again.");
+        alert("OTP expired. Please request a new one.");
         location.reload();
         return;
     }
@@ -55,15 +66,15 @@ function verifyOTP() {
     localStorage.setItem("session", JSON.stringify({
         mobile: USER_MOBILE,
         role: "Citizen",
-        authType: "OTP",
+        authType: "EmailOTP",
         loginTime: new Date().toISOString()
     }));
 
-    alert("Login successful!");
+    alert("Authentication successful!");
     window.location.href = "index.html";
 }
 
-/* ---------- SESSION STATUS ---------- */
+/* ---------- SESSION DISPLAY ---------- */
 function updateSession() {
     const session = JSON.parse(localStorage.getItem("session"));
     if (session) {
