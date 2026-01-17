@@ -1,72 +1,77 @@
 // location.js
 
-const locateBtn = document.getElementById("locateBtn");
-const locationStatus = document.getElementById("locationStatus");
-const healthcareResults = document.getElementById("healthcareResults");
+document.getElementById("locateBtn").addEventListener("click", () => {
+    const locationStatus = document.getElementById("locationStatus");
+    const resultsDiv = document.getElementById("healthcareResults");
+    resultsDiv.innerHTML = "";
+    locationStatus.textContent = "Detecting your location...";
 
-// Function to fetch nearby healthcare centers using OpenStreetMap Nominatim API
-async function fetchHealthcareCenters(lat, lon) {
-    // Clear previous results
-    healthcareResults.innerHTML = "";
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            async (position) => {
+                const lat = position.coords.latitude;
+                const lon = position.coords.longitude;
+                locationStatus.textContent = `Your location: ${lat.toFixed(5)}, ${lon.toFixed(5)}`;
 
-    // OpenStreetMap Nominatim search URL
-    const endpoint = `https://nominatim.openstreetmap.org/search?format=json&amenity=hospital&amenity=clinic&limit=10&lat=${lat}&lon=${lon}`;
+                // Fetch nearby healthcare centers
+                const query = `${lat},${lon}`;
+                const radius = 5000; // in meters
+                const types = ["hospital", "clinic", "pharmacy"]; // healthcare types to search
 
-    try {
-        const response = await fetch(endpoint, {
-            headers: { "User-Agent": "RuralHealthConnect/1.0" } // polite header
-        });
-        const data = await response.json();
+                let allCenters = [];
 
-        if (data.length === 0) {
-            healthcareResults.innerHTML = `<p class="text-warning">No nearby healthcare centers found.</p>`;
-            return;
-        }
+                for (const type of types) {
+                    const url = `https://nominatim.openstreetmap.org/search?format=json&amenity=${type}&limit=10&lat=${lat}&lon=${lon}&radius=${radius}`;
+                    try {
+                        const response = await fetch(url, {
+                            headers: {
+                                "Accept-Language": "en"
+                            }
+                        });
+                        const data = await response.json();
+                        // map the results to include type
+                        const mapped = data.map(item => ({
+                            name: item.name || item.display_name.split(",")[0],
+                            type: type,
+                            lat: item.lat,
+                            lon: item.lon,
+                            address: item.display_name
+                        }));
+                        allCenters = allCenters.concat(mapped);
+                    } catch (error) {
+                        console.error("Error fetching data for type:", type, error);
+                    }
+                }
 
-        // Show each result
-        data.forEach(center => {
-            const col = document.createElement("div");
-            col.className = "col-md-6 col-lg-4";
+                if (allCenters.length === 0) {
+                    resultsDiv.innerHTML = "<p class='text-muted'>No nearby healthcare centers found.</p>";
+                    return;
+                }
 
-            col.innerHTML = `
-                <div class="card shadow-sm h-100">
-                    <div class="card-body">
-                        <h6 class="fw-bold">${center.display_name.split(",")[0]}</h6>
-                        <p class="mb-1"><small>Type: ${center.type}</small></p>
-                        <p class="mb-0"><small>Coordinates: ${center.lat}, ${center.lon}</small></p>
-                    </div>
-                </div>
-            `;
-            healthcareResults.appendChild(col);
-        });
-    } catch (error) {
-        console.error(error);
-        healthcareResults.innerHTML = `<p class="text-danger">Error fetching healthcare centers.</p>`;
-    }
-}
-
-// Function to get user location
-function getUserLocation() {
-    locationStatus.textContent = "Detecting location...";
-    healthcareResults.innerHTML = "";
-
-    if (!navigator.geolocation) {
+                // Display results
+                resultsDiv.innerHTML = "";
+                allCenters.forEach(center => {
+                    const col = document.createElement("div");
+                    col.classList.add("col-md-4");
+                    col.innerHTML = `
+                        <div class="card shadow-sm h-100">
+                            <div class="card-body">
+                                <h6 class="fw-bold">${center.name}</h6>
+                                <p class="mb-1"><small>Type: ${center.type}</small></p>
+                                <p class="mb-1"><small>Address: ${center.address}</small></p>
+                                <p class="mb-0"><small>Coordinates: ${parseFloat(center.lat).toFixed(5)}, ${parseFloat(center.lon).toFixed(5)}</small></p>
+                            </div>
+                        </div>
+                    `;
+                    resultsDiv.appendChild(col);
+                });
+            },
+            (error) => {
+                locationStatus.textContent = "Unable to retrieve your location. Please allow location access.";
+                console.error(error);
+            }
+        );
+    } else {
         locationStatus.textContent = "Geolocation is not supported by your browser.";
-        return;
     }
-
-    navigator.geolocation.getCurrentPosition(
-        position => {
-            const { latitude, longitude } = position.coords;
-            locationStatus.textContent = `Your location: ${latitude.toFixed(4)}, ${longitude.toFixed(4)}`;
-            fetchHealthcareCenters(latitude, longitude);
-        },
-        error => {
-            locationStatus.textContent = "Unable to retrieve your location.";
-            console.error(error);
-        }
-    );
-}
-
-// Event listener for the button
-locateBtn.addEventListener("click", getUserLocation);
+});
